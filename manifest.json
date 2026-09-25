@@ -1,13 +1,9 @@
 {
-  "name": "TOK — Tock",
+  "name": "TOK",
   "short_name": "TOK",
-  "description": "TOK — gioco Tock multiplayer",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#050B14",
-  "theme_color": "#07111F",
-  "orientation": "portrait-primary",
-  "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"}
-  ]
+  "background_color": "#070A13",
+  "theme_color": "#070A13",
+  "icons": []
 }
