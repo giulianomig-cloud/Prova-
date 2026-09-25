@@ -29,6 +29,15 @@
 .side{display:grid;grid-template-rows:auto auto 1fr;gap:12px;min-width:0}.players-panel,.events-panel,.cards-panel{border:1px solid var(--line);background:rgba(10,14,22,.78);border-radius:22px;padding:16px}.players{display:grid;grid-template-columns:1fr 1fr;gap:8px}.player{padding:10px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid transparent}.player.active{border-color:rgba(126,231,255,.5);box-shadow:0 0 20px rgba(126,231,255,.08)}.player-name{font-weight:900;font-size:.78rem}.player-meta{font-size:.62rem;color:#707b8e;margin-top:4px}.event-list{display:grid;gap:7px;max-height:230px;overflow:auto}.event{font-size:.68rem;color:#9ba6b8;padding:8px;border-bottom:1px solid rgba(255,255,255,.05)}.cards-bottom{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.card3d{width:74px;height:104px;border-radius:13px;background:linear-gradient(145deg,#fff,#dce5ef);color:#0b0f16;border:1px solid #fff;box-shadow:0 12px 24px rgba(0,0,0,.38);display:grid;place-items:center;font-size:1.3rem;font-weight:950;transition:transform .18s,box-shadow .18s}.card3d:hover{transform:translateY(-10px) rotateX(7deg);box-shadow:0 25px 35px rgba(0,0,0,.5)}.card3d.black{color:#0c111a}.card3d.reds{color:#cf2037}.card3d.disabled{opacity:.45}.section-title{font-size:.65rem;text-transform:uppercase;letter-spacing:.18em;color:#69758a;font-weight:900;margin-bottom:10px}.chat-fab{position:fixed;right:22px;bottom:104px;width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:#121a27;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.4);z-index:90}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(12px);z-index:200;display:grid;place-items:center;padding:18px}.modal{width:min(620px,100%);border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#172031,#070a10);padding:24px;box-shadow:0 40px 100px rgba(0,0,0,.7)}.modal h2{margin:0 0 10px}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.choice{padding:18px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:16px;color:#fff;text-align:left}.choice:hover{border-color:rgba(126,231,255,.5)}.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:500;padding:12px 16px;border-radius:999px;background:#111927;border:1px solid var(--line);box-shadow:0 15px 45px rgba(0,0,0,.5);font-size:.75rem;font-weight:800}.win{position:fixed;inset:0;z-index:400;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(126,231,255,.12),rgba(0,0,0,.88) 55%);backdrop-filter:blur(14px)}.win-card{width:min(650px,92vw);text-align:center;padding:42px;border:1px solid rgba(255,255,255,.14);border-radius:30px;background:linear-gradient(145deg,#172335,#070a10);box-shadow:0 40px 120px rgba(0,0,0,.8)}.win-title{font-size:clamp(3rem,9vw,7rem);font-weight:950;letter-spacing:-.1em}.win-team{font-size:1.2rem;color:#9eabc0;margin:12px 0 28px}
 @media(max-width:950px){.zero-home{grid-template-columns:1fr}.hero-table{order:-1;height:46vh;min-height:320px}.lobby-grid{grid-template-columns:1fr}.game-main{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.events-panel{display:none}.stage{min-height:62vh}}@media(max-width:600px){.zero-screen{padding:12px}.brand{font-size:4.5rem}.choice-grid{grid-template-columns:1fr}.side{grid-template-columns:1fr}.players-panel{display:block}.card3d{width:60px;height:86px}.game{padding:8px}.board3d{width:94%}.pawn{width:6.3%}}
 </style><style>.board-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateZ(1px);width:27%;aspect-ratio:1.7;border-radius:18px;background:linear-gradient(145deg,#182536,#080d15);border:1px solid rgba(126,231,255,.2);box-shadow:inset 0 0 25px rgba(126,231,255,.08),0 12px 20px rgba(0,0,0,.28);display:grid;place-items:center;align-content:center;color:#dceeff;letter-spacing:.18em;font-weight:1000;text-align:center;z-index:2}.board-core span{font-size:clamp(18px,3vw,34px);line-height:1}.board-core small{font-size:clamp(5px,.8vw,9px);letter-spacing:.32em;color:#71879f;margin-top:5px}.board-face:before{content:"";position:absolute;inset:6%;border:1px solid rgba(255,255,255,.045);border-radius:25px;pointer-events:none;transform:translateZ(1px)}</style>
+<style id="tok-functional-ui">
+.functional-game{min-height:100vh;padding:14px 18px 28px;box-sizing:border-box;color:#eaf0fb;background:radial-gradient(circle at 50% 15%,rgba(20,37,68,.42),transparent 38%),#05070d}
+.game-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;max-width:1500px;margin:0 auto 12px;padding:10px 14px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(8,12,21,.82);backdrop-filter:blur(16px);position:sticky;top:10px;z-index:30;box-shadow:0 18px 60px rgba(0,0,0,.28)}
+.brand-small{font-weight:900;letter-spacing:.22em;font-size:1rem}.room-small{font-size:.58rem;color:#65728a;letter-spacing:.12em;margin-top:2px}.game-actions{display:flex;justify-content:flex-end;gap:6px}.icon-btn{width:36px;height:36px;border-radius:11px;border:1px solid rgba(255,255,255,.08);background:#0d1422;color:#dce5f4;cursor:pointer}.turn-core{padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#0b1220;font-size:.68rem;letter-spacing:.12em;font-weight:800;display:flex;align-items:center;gap:8px}.turn-core.mine{box-shadow:0 0 0 1px rgba(0,140,255,.25),0 0 30px rgba(0,140,255,.12)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;box-shadow:0 0 10px currentColor}.dot.red{background:#e45d68;color:#e45d68}.dot.green{background:#45c28a;color:#45c28a}.dot.yellow{background:#e6b84d;color:#e6b84d}.dot.blue{background:#4d9fe5;color:#4d9fe5}
+.game-layout-functional{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}.board-column{min-width:0}.functional-board{min-height:calc(100vh - 120px);display:flex;align-items:center;justify-content:center}.functional-board .board3d{width:min(76vw,900px)}.game-sidebar{display:flex;flex-direction:column;gap:12px}.status-functional,.exchange-functional,.hand-functional,.events-functional,.lobby-table{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(10,15,25,.78);box-shadow:0 16px 45px rgba(0,0,0,.2);padding:14px}.status-main{display:flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.06em}.status-main.mine{color:#fff}.last-event{margin-left:auto;color:#69778f;font-size:.58rem}.status-seats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}.player-seat{display:flex;align-items:center;gap:8px;padding:9px;border-radius:12px;background:#0b111d;border:1px solid rgba(255,255,255,.05);font-size:.68rem}.player-seat b{display:block}.player-seat small{display:block;color:#65728a;font-size:.52rem;margin-top:2px}.seat-state{margin-left:auto;color:#4b586e;font-size:.65rem}.player-seat.online .seat-state{color:#54d19a}.exchange-functional h2{font-size:1rem;margin:5px 0}.exchange-functional p{color:#77859d;font-size:.7rem}.exchange-cards,.hand-cards{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.exchange-status{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}.exchange-dot{font-size:.5rem;letter-spacing:.08em;color:#59677d;display:flex;gap:5px;align-items:center}.exchange-dot.done{color:#70d7a8}.exchange-dot .dot{width:7px;height:7px}.card-3d{position:relative;min-width:62px;min-height:86px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(145deg,#f8fbff,#cbd5e3);color:#101827;box-shadow:0 10px 24px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.9);font-weight:900;font-size:1rem;cursor:pointer;transition:transform .16s,box-shadow .16s}.card-3d:hover:not(:disabled){transform:translateY(-8px) rotateX(5deg);box-shadow:0 18px 34px rgba(0,0,0,.4)}.card-3d.reds{color:#c83f4b}.card-3d.disabled,.card-3d:disabled{opacity:.42;cursor:default}.hand-functional .eyebrow,.events-functional .eyebrow,.lobby-copy .eyebrow,.bot-box .eyebrow{color:#63718a;font-size:.55rem;letter-spacing:.16em}.event-row{font-size:.62rem;color:#9ba7ba;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}.event-row:last-child{border-bottom:0}.bottom-hand-slot{display:none}.functional-lobby{max-width:1100px;margin:40px auto}.lobby-table{text-align:center;padding:30px}.lobby-copy h1{font-size:clamp(2rem,5vw,4rem);margin:7px 0;letter-spacing:-.05em}.lobby-copy p{color:#78869e;font-size:.8rem}.seat-grid-functional{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0}.bot-box{max-width:680px;margin:15px auto;padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:16px;text-align:left}.bot-actions{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:8px;padding:8px 0}.bot-actions b{font-size:.68rem}.secondary-3d{border:1px solid rgba(255,255,255,.1);background:#111a2a;color:#d8e1ef;border-radius:10px;padding:8px 10px;font-size:.58rem;cursor:pointer}.start-game-btn{margin-top:10px;min-width:220px}.start-game-btn:disabled{opacity:.35;cursor:not-allowed}.functional-game .board-lines{filter:drop-shadow(0 2px 2px rgba(0,0,0,.45))}
+@media(max-width:980px){.game-layout-functional{grid-template-columns:1fr}.game-sidebar{display:grid;grid-template-columns:1fr 1fr}.functional-board{min-height:auto}.functional-board .board3d{width:min(94vw,760px)}.bottom-hand-slot{display:block}.game-sidebar .hand-functional{display:none}.seat-grid-functional{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.game-top{grid-template-columns:1fr auto}.turn-core{grid-column:1/-1;grid-row:2;justify-content:center}.game-actions{gap:3px}.game-sidebar{display:flex}.seat-grid-functional{grid-template-columns:1fr 1fr}.player-seat{padding:7px}.game-actions .icon-btn{width:32px;height:32px}.lobby-table{padding:18px}}
+</style>
 </head>
 <body><div id="app"></div><div id="zero-toasts"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" crossorigin="anonymous"></script>
@@ -8387,12 +8396,6 @@ setInterval(checkForNewVersion, VERSION_CHECK_INTERVAL_MS);
   function renderManualLobby(r,p){manualLobby(r,p)}
   function renderNameRecoveryScreen(r){manualLobby(r,currentState?.players||{})}
   function renderDraftNameScreen(r){draftName(r)}
-  function renderDraftScreen(s){renderGame(s)}
-  function renderDraftWaiting(s){renderGame(s)}
-  function renderPairDrawScreen(s){renderGame(s)}
-  function renderPairChoiceButtons(){ }
-  function renderSoloColorChoice(s){renderGame(s)}
-  function renderDraftFinalizing(s){renderGame(s)}
   function renderGameShell(){if(currentState)renderGame(currentState);else home()}
   function renderDealerDrawScreen(s){renderGame(s)}
   function renderStartControls(s){renderGame(s)}
@@ -8408,6 +8411,94 @@ setInterval(checkForNewVersion, VERSION_CHECK_INTERVAL_MS);
   function showPawnChoice(active,card,options){const m=document.createElement('div');m.className='overlay';m.innerHTML=`<div class="modal"><h2>Choose pawn</h2><div class="choice-grid">${options.map((o,i)=>`<button class="choice" data-i="${i}">Pawn ${o.pawnIndex+1}</button>`).join('')}</div><button class="secondary" id="close">CANCEL</button></div>`;document.body.appendChild(m);m.querySelector('#close').onclick=()=>m.remove();m.querySelectorAll('[data-i]').forEach(b=>b.onclick=async()=>{const o=options[+b.dataset.i];m.remove();await playMove(active,card,o)})}
   function openJackPicker(active,card){const opts=jackableTargets(currentState,active);const m=document.createElement('div');m.className='overlay';m.innerHTML=`<div class="modal"><h2>JACK · SWAP</h2><p>Choose two pawns.</p><div class="choice-grid">${opts.map((o,i)=>`<button class="choice" data-i="${i}">${colorName[o.color]} · Pawn ${o.pawnIndex+1}</button>`).join('')}</div><button class="secondary" id="cancel">CANCEL</button></div>`;document.body.appendChild(m);let picked=[];m.querySelector('#cancel').onclick=()=>m.remove();m.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{picked.push(opts[+b.dataset.i]);if(picked.length===2){m.remove();playMove(active,card,{type:'jack',a:picked[0],b:picked[1]})}})}
   function openSevenSplitter(active,card){let alloc={};const m=document.createElement('div');m.className='overlay';const list=(currentState.pawns[active]||[]).map((p,i)=>p>=0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid rgba(255,255,255,.06)"><span>Pawn ${i+1}</span><input type="number" min="0" max="7" value="0" data-p="${i}" style="width:70px;background:#0a0f18;color:#fff;border:1px solid #263247;border-radius:8px;padding:7px"></div>`:'').join('');m.innerHTML=`<div class="modal"><h2>7 · DISTRIBUTE</h2><p>Distribute exactly 7 steps. The engine validates the final move.</p>${list}<button class="primary" id="go" style="margin-top:14px">CONFIRM 7</button><button class="secondary" id="cancel" style="margin-top:8px">CANCEL</button></div>`;document.body.appendChild(m);m.querySelector('#cancel').onclick=()=>m.remove();m.querySelector('#go').onclick=async()=>{const d=[];m.querySelectorAll('[data-p]').forEach(i=>{const n=+i.value||0;if(n)d.push({pawnIndex:+i.dataset.p,steps:n})});try{await playMove(active,card,{type:'seven',distribution:d});m.remove()}catch(e){toast(describeError(e))}}}
+  /* ============================================================
+     FUNCTIONAL GAME LAYER
+     The 3D presentation is only a skin. Every action below delegates to
+     the original game engine: startGame, submitExchangeCard, onCardClick,
+     playMove, assignBotToColor, chat, replay and the Firebase transaction
+     layer. Nothing here decides game rules.
+     ============================================================ */
+  function seatCard(state,c){
+    const p=state?.players?.[c];
+    const online=presenceState?.[c] || (p?.isBot ? true : false);
+    return `<div class="player-seat ${c} ${online?'online':''}">
+      <span class="dot ${c}"></span><div><b>${esc(p?.name||colorName(c))}</b><small>${p?.isBot?'BOT · '+(p.botLevel||'easy'):colorName(c)}</small></div>
+      <span class="seat-state">${online?'●':'○'}</span></div>`;
+  }
+  function gameTop(state){
+    const active=state?.turnColor;
+    return `<div class="game-top">
+      <div><div class="brand-small">TOK</div><div class="room-small">ROOM · ${esc(myRoomId||'')}</div></div>
+      <div class="turn-core ${active===myColor?'mine':''}"><span class="dot ${active||'red'}"></span>${state?.phase==='playing'?(active===myColor?'YOUR TURN':'TURN · '+colorName(active)):String(state?.phase||'').toUpperCase()}</div>
+      <div class="game-actions"><button class="icon-btn" onclick="toggleSoundMuted()">${soundMuted?'🔇':'🔊'}</button><button class="icon-btn" onclick="openRulesPanel()">?</button><button class="icon-btn" onclick="openLogPicker()">☷</button><button class="icon-btn" onclick="openChatPicker()">💬</button><button class="icon-btn" onclick="shareInviteLink(myRoomId)">↗</button></div>
+    </div>`;
+  }
+  function boardHtml(state){
+    return `<div class="board-stage functional-board"><div class="board3d"><div class="board-face"><div class="board-core"><span>TOK</span><small>TORVAJANICA</small></div>${boardConnections()}${boardCells(state)}${pawns(state)}</div></div></div>`;
+  }
+  function lobbyGameHtml(state){
+    const missing=COLORS.filter(c=>!state.players?.[c]);
+    const botButtons=missing.map(c=>`<div class="bot-actions"><span class="dot ${c}"></span><b>${colorName(c)}</b><button class="secondary-3d" onclick="assignBotToColor(myRoomId,'${c}',()=>{},'easy')">BOT EASY</button><button class="secondary-3d" onclick="assignBotToColor(myRoomId,'${c}',()=>{},'hard')">BOT HARD</button></div>`).join('');
+    const canStart=!missing.length;
+    return `<div class="lobby-table">
+      <div class="lobby-copy"><div class="eyebrow">TABLE READY</div><h1>La tavola è pronta.</h1><p>Completa i quattro posti oppure assegna un bot. Poi avvia la partita.</p></div>
+      <div class="seat-grid-functional">${COLORS.map(c=>seatCard(state,c)).join('')}</div>
+      ${missing.length?`<div class="bot-box"><div class="eyebrow">OPEN SEATS</div>${botButtons}</div>`:''}
+      <button class="primary-3d start-game-btn" ${canStart?'':'disabled'} onclick="startGame()">${canStart?'START GAME →':'ATTENDI 4 GIOCATORI'}</button>
+    </div>`;
+  }
+  function exchangeHtml(state){
+    if(state.phase!=='exchanging') return '';
+    const done=!!state.pendingExchange?.[myColor];
+    const partner=PARTNER_OF[myColor];
+    const cards=state.hands?.[myColor]||[];
+    return `<div class="exchange-functional"><div><div class="eyebrow">BLIND EXCHANGE</div><h2>${done?'Carta inviata':'Passa una carta a '+esc(playerName(state,partner))}</h2><p>${done?'In attesa degli altri giocatori.':'Scegli una carta dalla tua mano.'}</p></div>${done?'':'<div class="exchange-cards">'+cards.map(c=>`<button class="card-3d" onclick="sendExchangeCard('${c}')">${cardText(c)}</button>`).join('')+'</div>'}<div class="exchange-status">${COLORS.map(c=>`<span class="exchange-dot ${state.pendingExchange?.[c]?'done':''}"><i class="dot ${c}"></i>${state.pendingExchange?.[c]?'✓':'WAIT'}</span>`).join('')}</div></div>`;
+  }
+  function handHtml(state){
+    if(state.phase!=='playing') return '';
+    const active=activeColorFor(state,myColor);
+    const playable=state.turnColor===myColor || active===myColor;
+    return `<div class="hand-functional"><div class="eyebrow">${playable?'YOUR HAND':'HAND'}</div><div class="hand-cards">${(state.hands?.[myColor]||[]).map(c=>`<button class="card-3d ${playable?'':'disabled'}" ${playable?'':'disabled'} onclick="onCardClick('${c}',event)">${cardText(c)}</button>`).join('')}</div></div>`;
+  }
+  function statusHtml(state){
+    const turn=state.turnColor;
+    const mine=turn===myColor;
+    const last=state.lastCardPlayed;
+    return `<div class="status-functional"><div class="status-main ${mine?'mine':''}"><span class="dot ${turn||'red'}"></span><b>${state.phase==='playing'?(mine?'TOCCA A TE':'TURNO DI '+esc(playerName(state,turn))):String(state.phase||'').toUpperCase()}</b>${last?`<span class="last-event">${esc(playerName(state,last.color))} · ${esc(cardLabel(last.card))}</span>`:''}</div><div class="status-seats">${COLORS.map(c=>seatCard(state,c)).join('')}</div></div>`;
+  }
+  function logHtml(state){
+    const logs=(state.log||[]).slice(-8).reverse();
+    return `<div class="events-functional"><div class="eyebrow">RECENT EVENTS</div>${logs.map(x=>`<div class="event-row">${esc(x)}</div>`).join('')||'<div class="event-row">Nessun evento.</div>'}</div>`;
+  }
+  function renderGameFunctional(state){
+    currentState=state;
+    const root=clearApp();
+    if(!root) return;
+    if(state?.winnerTeam){
+      root.innerHTML=`<main class="game functional-game">${gameTop(state)}${boardHtml(state)}</main>`;
+      setTimeout(()=>renderWin(state),50);
+      return;
+    }
+    if(state?.phase==='lobby'){
+      root.innerHTML=`<main class="game functional-game">${gameTop(state)}<section class="functional-lobby">${lobbyGameHtml(state)}</section>${logHtml(state)}</main>`;
+      return;
+    }
+    root.innerHTML=`<main class="game functional-game">${gameTop(state)}<div class="game-layout-functional"><section class="board-column">${boardHtml(state)}</section><aside class="game-sidebar">${statusHtml(state)}${exchangeHtml(state)}${handHtml(state)}${logHtml(state)}</aside></div><div class="bottom-hand-slot">${state.phase==='playing'?handHtml(state):''}</div></main>`;
+  }
+  renderGame = renderGameFunctional;
+
+  // Keep the new presentation hooks functional instead of replacing actions
+  // with visual placeholders.
+  renderStartControls = function(state){ renderGameFunctional(state); };
+  renderExchangeControls = function(state){ renderGameFunctional(state); };
+  renderPlayerStatus = function(state){ if(currentState) renderGameFunctional(state); };
+  renderTurnIndicator = function(state){ if(currentState) renderGameFunctional(state); };
+  renderHand = function(state){ if(currentState) renderGameFunctional(state); };
+  renderChat = function(state){ /* chat is opened on demand */ };
+  renderChatFab = function(state){ /* chat button lives in gameTop */ };
+  renderLog = function(state){ if(currentState) renderGameFunctional(state); };
+  renderDealerDrawScreen = function(state){ if(state?.dealerDraw) { renderGameFunctional(state); setTimeout(()=>{ try{ animateDealerDraw(state.dealerDraw.sequence); }catch(e){} },50); } };
+
   // Override presentation hooks used by the existing controller. Rules never live here.
   Object.assign(window,{renderLobby,renderModeChoice,renderManualLobby,renderNameRecoveryScreen,renderDraftNameScreen,renderDraftScreen,renderDraftWaiting,renderPairDrawScreen,renderPairChoiceButtons,renderSoloColorChoice,renderDraftFinalizing,renderGameShell,renderDealerDrawScreen,renderStartControls,renderExchangeControls,renderPlayerStatus,renderTurnIndicator,renderHand,renderChat,renderChatFab,renderLog,renderWinBanner,showPawnChoice,openJackPicker,openSevenSplitter});
   // The engine calls this whenever Firebase state changes.
