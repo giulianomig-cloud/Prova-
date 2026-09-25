@@ -8561,4 +8561,82 @@ body{background:radial-gradient(circle at 50% 20%,#111d31 0,#050810 45%,#020307 
  renderWinBanner=(state)=>{if(state?.phase!=='finished')return;oldWin(state)};
 })();
 </script>
+
+<style id="tok-v07-playable-css">
+.playable{min-height:100vh;background:radial-gradient(circle at 50% 18%,#16223a 0,#080d18 48%,#02040a 100%);color:#eef5ff;font-family:Inter,system-ui,sans-serif;padding:18px;box-sizing:border-box}.phead{height:54px;display:flex;align-items:center;gap:16px;max-width:1400px;margin:auto}.plogo{font-size:28px;font-weight:1000;letter-spacing:-.08em}.plogo span{color:#5ee7ff}.proom{font-size:10px;letter-spacing:.18em;color:#71809a}.pactions{margin-left:auto;display:flex;gap:8px}.pactions button{width:42px;height:42px;border-radius:12px;border:1px solid #263650;background:#0c1424;color:#dce7f5;font-size:17px}.playgrid{max-width:1400px;margin:8px auto 130px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}.pboard{width:min(78vw,860px);aspect-ratio:1;margin:auto;perspective:1200px}.pboard-face{position:relative;width:100%;height:100%;border-radius:26px;background:linear-gradient(145deg,#17243a,#07101d);box-shadow:0 30px 55px #000b, inset 0 0 0 1px #31445f;transform:rotateX(18deg);transform-style:preserve-3d;overflow:hidden}.pboard-face:after{content:"";position:absolute;inset:0;border-radius:26px;box-shadow:inset 0 0 80px #0009;pointer-events:none}.p-line{position:absolute;height:3px;background:#30415a;transform-origin:left center;z-index:1}.p-line.home{background:linear-gradient(90deg,var(--pc),#2d3a50)}.pcell{position:absolute;transform:translate(-50%,-50%);width:6.6%;aspect-ratio:1;border-radius:50%;border:1px solid #60728d;background:radial-gradient(circle at 35% 30%,#fff4,#7b8da7 16%,#172438 62%);box-shadow:0 8px 12px #0009,inset 0 2px 4px #fff2;z-index:5;padding:0}.pcell.base{border:2px solid var(--pc,#fff)}.pcell.marker{box-shadow:0 0 0 2px var(--pc,#fff),0 8px 15px #0009}.pcell.target{border-color:#fff;box-shadow:0 0 0 3px #5ee7ff,0 0 24px #5ee7ff,0 8px 12px #0009;animation:ptarget 1s infinite alternate}.homecell.red{--pc:#ff4b61}.homecell.green{--pc:#35df91}.homecell.yellow{--pc:#ffd34d}.homecell.blue{--pc:#4b91ff}.ppawn{position:absolute;transform:translate(-50%,-50%) translateZ(35px);width:7%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 22%,#fff,var(--pc) 25%,#07101c 85%);border:2px solid #fff9;box-shadow:0 12px 15px #000b,0 0 20px var(--pc);z-index:20;display:grid;place-items:center}.ppawn span{font-size:10px;font-weight:1000;color:#07101c;text-shadow:0 1px #fff8}.pcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:24%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;align-content:center;background:radial-gradient(circle,#233b59,#0b1422);border:1px solid #49617e;box-shadow:0 0 50px #0009,inset 0 0 30px #0009;z-index:4}.pcenter b{font-size:42px;letter-spacing:-.1em}.pcenter b span{color:#5ee7ff}.pcenter small{font-size:7px;letter-spacing:.35em;color:#8291a8}.pside{border:1px solid #22314a;border-radius:20px;background:#09111eeb;padding:15px;box-shadow:0 20px 40px #0007}.ptitle{font-size:9px;letter-spacing:.22em;color:#6f819c;font-weight:900;margin:8px 0}.turn{padding:12px;border-radius:12px;background:#0d1828;color:#9aabc2;font-weight:900;font-size:12px}.turn.mine{color:#5ee7ff;box-shadow:inset 0 0 0 1px #5ee7ff33}.pplayer{display:grid;grid-template-columns:10px 1fr;gap:8px;padding:8px;border-radius:10px}.pplayer.active{background:#5ee7ff10}.pplayer i{width:9px;height:9px;border-radius:50%;margin-top:4px;box-shadow:0 0 10px currentColor}.pplayer b{font-size:11px}.pplayer small{grid-column:2;color:#6d7e97;font-size:8px}.pevents{max-height:190px;overflow:auto;color:#8493aa;font-size:9px;line-height:1.45}.pevents div{padding:5px 0;border-bottom:1px solid #ffffff08}.phand{position:fixed;left:0;right:0;bottom:0;padding:12px 14px 16px;background:linear-gradient(180deg,transparent,#02050c 30%);z-index:100}.hand-title{text-align:center;font-size:9px;letter-spacing:.2em;color:#72849f;margin-bottom:7px}.hand-row{display:flex;justify-content:center;gap:8px}.pcard{width:68px;height:94px;border-radius:13px;border:1px solid #fff8;background:linear-gradient(145deg,#fff,#aeb9c9);color:#101827;font-size:23px;font-weight:1000;box-shadow:0 14px 25px #0009;cursor:pointer;transition:.15s transform}.pcard.red{color:#d92d45}.pcard.sel{transform:translateY(-10px);outline:3px solid #5ee7ff}.pcard.off{opacity:.45;cursor:not-allowed}.pcell:disabled{cursor:default;opacity:1}@keyframes ptarget{to{transform:translate(-50%,-50%) scale(1.1)}}@media(max-width:800px){.playable{padding:10px}.playgrid{grid-template-columns:1fr;margin-bottom:125px}.pside{display:none}.pboard{width:96vw}.pboard-face{transform:rotateX(10deg)}.pcard{width:58px;height:82px;font-size:20px}.pcenter b{font-size:30px}}
+</style>
+<script id="tok-v07-playable">
+(function(){
+  let selectedCard = null;
+  let selectedOptions = [];
+  const A={red:'#ff4b61',green:'#35df91',yellow:'#ffd34d',blue:'#4b91ff'};
+  const N={red:'ROSSO',green:'VERDE',yellow:'GIALLO',blue:'BLU'};
+  const S={hearts:'♥',diamonds:'♦',clubs:'♣',spades:'♠'};
+  const esc2=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const pos=c=>({x:(c.x/BOARD.boardSizeMm)*100,y:(c.y/BOARD.boardSizeMm)*100});
+  const cardText2=c=>{const [r,s]=String(c).split('-');return r+(S[s]||'')};
+  function clearSelection(){selectedCard=null;selectedOptions=[];}
+  function destinationFor(o,color){
+    if(o.type==='enter') return BOARD.loopCells[BOARD.baseIndex[color]];
+    if(o.type==='move' && o.path?.length) return o.path[o.path.length-1]>=1000 ? BOARD.homePaths[color][o.path[o.path.length-1]-1000] : BOARD.loopCells[o.path[o.path.length-1]];
+    return null;
+  }
+  function optionKey(o){return JSON.stringify(o)}
+  async function selectCard(card,evt){
+    if(!currentState || currentState.phase!=='playing') return;
+    if(currentState.turnColor!==myColor && activeColorFor(currentState,myColor)!==currentState.turnColor){ showToast('Non è il tuo turno.'); return; }
+    if(moveInFlight) return;
+    const active=activeColorFor(currentState,myColor);
+    if(!active){showToast('La tua squadra ha già portato tutte le pedine a casa.');return;}
+    const opts=legalMovesForCard(currentState,active,card);
+    if(!opts.length){ await onCardClick(card,evt); return; }
+    if(opts.length===1 && opts[0].type==='move' || opts.length===1 && opts[0].type==='enter'){
+      selectedCard=card;selectedOptions=opts;renderPlayableGame(currentState);return;
+    }
+    await onCardClick(card,evt);
+  }
+  async function chooseDestination(index){
+    const o=selectedOptions[index]; const card=selectedCard;
+    if(!o||!card) return;
+    clearSelection(); renderPlayableGame(currentState);
+    await playMove(activeColorFor(currentState,myColor),card,o);
+  }
+  function board(state){
+    let h='<div class="pboard"><div class="pboard-face">';
+    for(let i=0;i<BOARD.loopCells.length;i++){
+      const a=pos(BOARD.loopCells[i]),b=pos(BOARD.loopCells[(i+1)%BOARD.loopCells.length]);
+      const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
+      h+=`<i class="p-line" style="left:${a.x}%;top:${a.y}%;width:${L}%;transform:rotate(${ang}deg)"></i>`;
+    }
+    for(const c of BOARD.order){let prev=BOARD.loopCells[BOARD.baseIndex[c]];for(const p of BOARD.homePaths[c]){const a=pos(prev),b=pos(p);const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;h+=`<i class="p-line home" style="left:${a.x}%;top:${a.y}%;width:${L}%;transform:rotate(${ang}deg);--pc:${A[c]}"></i>`;prev=p}}
+    BOARD.loopCells.forEach((c,i)=>{const P=pos(c);const active=selectedOptions.some(o=>{const d=destinationFor(o,activeColorFor(state,myColor));return d===c});const cls=c.isBase?'base '+c.baseColor:c.isMarker?'marker '+c.markerColor:'';h+=`<button type="button" class="pcell ${cls} ${active?'target':''}" data-loop="${i}" ${active?'':'disabled'} style="left:${P.x}%;top:${P.y}%" onclick="window.__tokChooseLoop(${i})"></button>`});
+    for(const c of BOARD.order) BOARD.homePaths[c].forEach((p,hi)=>{const P=pos(p);const active=selectedOptions.some(o=>o.type==='move'&&o.path?.at(-1)===1000+hi&&activeColorFor(state,myColor)===c);h+=`<button type="button" class="pcell homecell ${c} ${active?'target':''}" ${active?'':'disabled'} style="left:${P.x}%;top:${P.y}%" onclick="window.__tokChooseHome('${c}',${hi})"></button>`});
+    for(const c of BOARD.order)(state.pawns?.[c]||[]).forEach((pp,i)=>{const cell=pp>=1000?BOARD.homePaths[c][pp-1000]:BOARD.loopCells[pp];if(!cell)return;const P=pos(cell);h+=`<div class="ppawn" style="left:${P.x}%;top:${P.y}%;--pc:${A[c]}"><span>${i+1}</span></div>`});
+    h+='<div class="pcenter"><b>T<span>O</span>K</b><small>TORVAJANICA</small></div></div></div>';return h;
+  }
+  function cards(state){
+    if(state.phase!=='playing') return '';
+    const active=state.turnColor===myColor || activeColorFor(state,myColor)===state.turnColor;
+    return `<div class="phand"><div class="hand-title">${active?'YOUR TURN · CHOOSE A CARD':'YOUR HAND'}</div><div class="hand-row">${(state.hands?.[myColor]||[]).map(c=>`<button type="button" class="pcard ${/hearts|diamonds/.test(c)?'red':''} ${active?'':'off'} ${selectedCard===c?'sel':''}" ${active?'':'disabled'} onclick="window.__tokSelectCard('${c}',event)">${cardText2(c)}</button>`).join('')}</div></div>`;
+  }
+  function side(state){
+    const turn=state.turnColor;
+    return `<aside class="pside"><div class="ptitle">TABLE</div><div class="turn ${turn===myColor?'mine':''}">${state.phase==='playing'?(turn===myColor?'YOUR TURN':'TURN · '+N[turn]):String(state.phase||'').toUpperCase()}</div><div class="ptitle">PLAYERS</div>${COLORS.map(c=>{const p=state.players?.[c]||{};return `<div class="pplayer ${turn===c?'active':''}"><i style="background:${A[c]}"></i><b>${esc2(p.name||N[c])}</b><small>${N[c]} · ${(state.pawns?.[c]||[]).filter(x=>x>=1000).length}/4</small></div>`}).join('')}<div class="ptitle">EVENTS</div><div class="pevents">${(state.log||[]).slice(-6).reverse().map(x=>`<div>${esc2(x)}</div>`).join('')||'Tavolo pronto.'}</div></aside>`;
+  }
+  function renderPlayableGame(state){
+    currentState=state;
+    const root=document.getElementById('app'); if(!root)return;
+    root.innerHTML=`<main class="playable"><header class="phead"><div class="plogo">T<span>O</span>K</div><div class="proom">ROOM · ${esc2(myRoomId||'')}</div><div class="pactions"><button type="button" onclick="toggleSoundMuted()">${soundMuted?'🔇':'🔊'}</button><button type="button" onclick="openRulesPanel()">?</button><button type="button" onclick="openChatPicker()">💬</button></div></header><div class="playgrid"><section>${board(state)}</section>${side(state)}</div>${cards(state)}</main>`;
+  }
+  window.__tokSelectCard=selectCard;
+  window.__tokChooseLoop=async i=>{const idx=selectedOptions.findIndex(o=>{const d=destinationFor(o,activeColorFor(currentState,myColor));return d===BOARD.loopCells[i]});if(idx>=0)await chooseDestination(idx);};
+  window.__tokChooseHome=async(c,hi)=>{const idx=selectedOptions.findIndex(o=>o.type==='move'&&o.path?.at(-1)===1000+hi);if(idx>=0)await chooseDestination(idx);};
+  window.renderGame=renderPlayableGame;
+  window.renderGameFunctional=renderPlayableGame;
+  window.renderGameShell=()=>currentState?renderPlayableGame(currentState):renderLobby();
+  window.onStateChange=function(state){if(!state)return;currentState=state;try{maybeAdvanceBotTurn(state)}catch(e){}try{maybeAdvanceBotChat(state)}catch(e){}try{maybePlaySounds(state)}catch(e){}try{recordMoveHistoryIfFresh(state)}catch(e){}renderPlayableGame(state);};
+  // Keep the original Firebase/engine functions. Only the presentation is replaced.
+})();
+</script>
+
 </html>

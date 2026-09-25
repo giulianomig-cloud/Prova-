@@ -1,5 +1,3 @@
-# TOK V06
+# TOK Digital Table V07
 
-Versione progressiva di TOK. Caricare il contenuto di questa cartella nella root del repository GitHub Pages.
-
-File principale: `index.html`.
+Upload all files to the root of a GitHub Pages repository.
