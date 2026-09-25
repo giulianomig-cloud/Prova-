@@ -38,6 +38,19 @@
 @media(max-width:980px){.game-layout-functional{grid-template-columns:1fr}.game-sidebar{display:grid;grid-template-columns:1fr 1fr}.functional-board{min-height:auto}.functional-board .board3d{width:min(94vw,760px)}.bottom-hand-slot{display:block}.game-sidebar .hand-functional{display:none}.seat-grid-functional{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.game-top{grid-template-columns:1fr auto}.turn-core{grid-column:1/-1;grid-row:2;justify-content:center}.game-actions{gap:3px}.game-sidebar{display:flex}.seat-grid-functional{grid-template-columns:1fr 1fr}.player-seat{padding:7px}.game-actions .icon-btn{width:32px;height:32px}.lobby-table{padding:18px}}
 </style>
+<script>
+// V06 runtime guard: legacy engine callbacks may fire while the new UI is transitioning.
+// Never let a missing optional name field crash the whole lobby; the active UI owns its fields.
+window.addEventListener("unhandledrejection", function(ev){
+  const msg = String(ev.reason && (ev.reason.message || ev.reason) || "");
+  if (msg.includes("#name-input") && msg.includes("null is not an object")) {
+    ev.preventDefault();
+    const active = document.querySelector("#name-input, #draft-name-input, #recover-name-input");
+    if (active) active.focus();
+    if (typeof window.showToast === "function") window.showToast("Inserisci il tuo nome prima di entrare.");
+  }
+});
+</script>
 </head>
 <body><div id="app"></div><div id="zero-toasts"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" crossorigin="anonymous"></script>
@@ -4174,8 +4187,9 @@ function renderDraftNameScreen(roomId) {
 
 async function joinDraftRoom(roomId) {
   unlockAudio();
-  const name = $("#name-input").value.trim();
-  if (!name) return showToast("Inserisci il tuo nome.");
+  const nameEl = $("#name-input") || $("#draft-name-input") || $("#recover-name-input");
+  const name = nameEl ? nameEl.value.trim() : String(myName || "").trim();
+  if (!name) return showToast("Inserisci il tuo nome prima di entrare.");
   myRoomId = roomId;
   myName = name;
   myToken = getOrCreateRoomToken(roomId);
