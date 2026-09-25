@@ -1,4 +1,12 @@
-TOK V3 Premium
-Visual skin rebuilt on top of the original TOK game HTML.
-Game logic and BOARD geometry are preserved; the V3 layer is CSS/UI only.
-Firebase configuration remains the one present in the source file.
+TOK — GitHub Pages
+
+Carica TUTTI i file di questa cartella nella root del repository GitHub:
+- index.html
+- manifest.json
+- sw.js
+- icon-192.svg
+- icon-512.svg
+
+Poi attiva GitHub Pages dal branch principale e dalla root (/).
+
+Il motore del gioco e la logica sono derivati dal file TOK ZERO.

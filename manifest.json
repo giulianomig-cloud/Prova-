@@ -2,8 +2,9 @@
   "name": "TOK",
   "short_name": "TOK",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#070A13",
   "theme_color": "#070A13",
-  "icons": []
+  "description": "TOK digital board game"
 }
