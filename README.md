@@ -1,25 +1,12 @@
-# TOK — Digital Table
+# TOK V01
 
-Versione funzionale del nuovo frontend TOK.
+Progressive build 01 of TOK.
 
-## GitHub Pages
-Carica tutti i file nella root del repository e abilita GitHub Pages su `main` / `root`.
+- `index.html` — game
+- `manifest.json` — PWA manifest
+- `sw.js` — service worker
+- `icon-192.png` — app icon
 
-## Funzioni
-- motore TOK originale
-- Firebase Realtime Database
-- lobby manuale
-- modalità estrazione
-- bot easy/hard
-- scambio carte
-- turno e timer
-- movimento
-- catture
-- Jack
-- 7 divisibile
-- casa/vittoria
-- chat
-- log
-- replay
-- audio
-- PWA/service worker
+GitHub Pages: Settings → Pages → Deploy from branch → `main` → `/ (root)`.
+
+This build keeps the original game engine/rules and uses the new presentation bridge. File numbering is progressive: V01, V02, V03…

@@ -8111,7 +8111,8 @@ function showNewVersionBanner(newVersion) {
 setInterval(checkForNewVersion, VERSION_CHECK_INTERVAL_MS);
 </script>
 
-<script id="tok-new-ui-js">
+<script id="tok-v01-ui">
+
 /* ==============================================================
    TOK REBORN — NEW FRONTEND ONLY
    The game engine, Firebase transactions, rules and state schema are not
@@ -8389,35 +8390,6 @@ setInterval(checkForNewVersion, VERSION_CHECK_INTERVAL_MS);
   function renderHandZero(state){const wrap=q('#hand-wrap');if(!wrap)return;const hand=state?.hands?.[myColor]||[];wrap.innerHTML=hand.map(c=>`<button class="card3d ${/hearts|diamonds/.test(c)?'reds':'black'}" data-card="${c}">${cardText(c)}</button>`).join('');wrap.querySelectorAll('[data-card]').forEach(b=>b.onclick=(e)=>window.onCardClick(b.dataset.card,e));}
   function renderExchangeZero(state){const w=q('#exchange-wrap');if(!w)return;const done=!!state.pendingExchange?.[myColor];w.innerHTML=`<div class="section-title">BLIND EXCHANGE</div><div style="font-size:.72rem;color:#aab3c2">${done?'Card sent. Waiting for partner.':'Choose a card below to send to '+esc(playerName(state,PARTNER_OF[myColor]))+'.'}</div>`;}
   function renderLobbyRoomZero(state){/* state lobby is rendered as a compact seat view by the next state update */}
-  function renderDealer(state){renderGame(state);}
-  function renderWin(state){const team=TEAM_LABEL[state.winnerTeam]||state.winnerTeam;const x=document.createElement('div');x.className='win';x.innerHTML=`<div class="win-card"><div class="eyebrow">TABLE COMPLETE</div><div class="win-title">WIN</div><div class="win-team">${esc(team)}</div><button class="primary" id="again">PLAY AGAIN</button></div>`;document.body.appendChild(x);q('#again').onclick=()=>{x.remove();window.startNewGame()};}
-  function renderLobby(){home()}
-  function renderModeChoice(r){mode(r)}
-  function renderManualLobby(r,p){manualLobby(r,p)}
-  function renderNameRecoveryScreen(r){manualLobby(r,currentState?.players||{})}
-  function renderDraftNameScreen(r){draftName(r)}
-  function renderGameShell(){if(currentState)renderGame(currentState);else home()}
-  function renderDealerDrawScreen(s){renderGame(s)}
-  function renderStartControls(s){renderGame(s)}
-  function renderExchangeControls(s){renderExchangeZero(s)}
-  function renderPlayerStatus(s){if(currentState)renderGame(currentState)}
-  function renderTurnIndicator(s){if(currentState)renderGame(currentState)}
-  function renderHand(s){renderHandZero(s)}
-  function renderChat(){ }
-  function renderChatFab(){ }
-  function renderLog(){ }
-  function renderWinBanner(s){if(s?.winnerTeam)renderWin(s)}
-  function openChatPicker(){const m=document.createElement('div');m.className='overlay';m.innerHTML=`<div class="modal"><h2>CHAT</h2><div style="max-height:45vh;overflow:auto;margin:15px 0">${(currentState?.chat||[]).slice(-30).map(x=>`<div style="padding:7px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.75rem"><b>${esc(x.name||x.color||'')}</b> ${esc(x.text||'')}</div>`).join('')||'<span style="color:#788397">No messages.</span>'}</div><div style="display:flex;gap:8px"><input id="zero-chat" class="room-input" style="flex:1" placeholder="Write..."><button class="primary" id="zero-chat-send">SEND</button></div><button class="secondary" style="margin-top:10px" id="close-chat">CLOSE</button></div>`;document.body.appendChild(m);q('#close-chat').onclick=()=>m.remove();q('#zero-chat-send').onclick=async()=>{const v=q('#zero-chat').value.trim();if(v){try{await postChatMessage(currentState,myColor,v);await updateState(myRoomId,s=>{postChatMessage(s,myColor,v)})}catch(e){toast('Chat error')}}};}
-  function showPawnChoice(active,card,options){const m=document.createElement('div');m.className='overlay';m.innerHTML=`<div class="modal"><h2>Choose pawn</h2><div class="choice-grid">${options.map((o,i)=>`<button class="choice" data-i="${i}">Pawn ${o.pawnIndex+1}</button>`).join('')}</div><button class="secondary" id="close">CANCEL</button></div>`;document.body.appendChild(m);m.querySelector('#close').onclick=()=>m.remove();m.querySelectorAll('[data-i]').forEach(b=>b.onclick=async()=>{const o=options[+b.dataset.i];m.remove();await playMove(active,card,o)})}
-  function openJackPicker(active,card){const opts=jackableTargets(currentState,active);const m=document.createElement('div');m.className='overlay';m.innerHTML=`<div class="modal"><h2>JACK · SWAP</h2><p>Choose two pawns.</p><div class="choice-grid">${opts.map((o,i)=>`<button class="choice" data-i="${i}">${colorName[o.color]} · Pawn ${o.pawnIndex+1}</button>`).join('')}</div><button class="secondary" id="cancel">CANCEL</button></div>`;document.body.appendChild(m);let picked=[];m.querySelector('#cancel').onclick=()=>m.remove();m.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{picked.push(opts[+b.dataset.i]);if(picked.length===2){m.remove();playMove(active,card,{type:'jack',a:picked[0],b:picked[1]})}})}
-  function openSevenSplitter(active,card){let alloc={};const m=document.createElement('div');m.className='overlay';const list=(currentState.pawns[active]||[]).map((p,i)=>p>=0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid rgba(255,255,255,.06)"><span>Pawn ${i+1}</span><input type="number" min="0" max="7" value="0" data-p="${i}" style="width:70px;background:#0a0f18;color:#fff;border:1px solid #263247;border-radius:8px;padding:7px"></div>`:'').join('');m.innerHTML=`<div class="modal"><h2>7 · DISTRIBUTE</h2><p>Distribute exactly 7 steps. The engine validates the final move.</p>${list}<button class="primary" id="go" style="margin-top:14px">CONFIRM 7</button><button class="secondary" id="cancel" style="margin-top:8px">CANCEL</button></div>`;document.body.appendChild(m);m.querySelector('#cancel').onclick=()=>m.remove();m.querySelector('#go').onclick=async()=>{const d=[];m.querySelectorAll('[data-p]').forEach(i=>{const n=+i.value||0;if(n)d.push({pawnIndex:+i.dataset.p,steps:n})});try{await playMove(active,card,{type:'seven',distribution:d});m.remove()}catch(e){toast(describeError(e))}}}
-  /* ============================================================
-     FUNCTIONAL GAME LAYER
-     The 3D presentation is only a skin. Every action below delegates to
-     the original game engine: startGame, submitExchangeCard, onCardClick,
-     playMove, assignBotToColor, chat, replay and the Firebase transaction
-     layer. Nothing here decides game rules.
-     ============================================================ */
   function seatCard(state,c){
     const p=state?.players?.[c];
     const online=presenceState?.[c] || (p?.isBot ? true : false);
@@ -8486,24 +8458,22 @@ setInterval(checkForNewVersion, VERSION_CHECK_INTERVAL_MS);
     root.innerHTML=`<main class="game functional-game">${gameTop(state)}<div class="game-layout-functional"><section class="board-column">${boardHtml(state)}</section><aside class="game-sidebar">${statusHtml(state)}${exchangeHtml(state)}${handHtml(state)}${logHtml(state)}</aside></div><div class="bottom-hand-slot">${state.phase==='playing'?handHtml(state):''}</div></main>`;
   }
   renderGame = renderGameFunctional;
-
-  // Keep the new presentation hooks functional instead of replacing actions
-  // with visual placeholders.
-  renderStartControls = function(state){ renderGameFunctional(state); };
-  renderExchangeControls = function(state){ renderGameFunctional(state); };
-  renderPlayerStatus = function(state){ if(currentState) renderGameFunctional(state); };
-  renderTurnIndicator = function(state){ if(currentState) renderGameFunctional(state); };
-  renderHand = function(state){ if(currentState) renderGameFunctional(state); };
-  renderChat = function(state){ /* chat is opened on demand */ };
-  renderChatFab = function(state){ /* chat button lives in gameTop */ };
-  renderLog = function(state){ if(currentState) renderGameFunctional(state); };
-  renderDealerDrawScreen = function(state){ if(state?.dealerDraw) { renderGameFunctional(state); setTimeout(()=>{ try{ animateDealerDraw(state.dealerDraw.sequence); }catch(e){} },50); } };
-
-  // Override presentation hooks used by the existing controller. Rules never live here.
-  Object.assign(window,{renderLobby,renderModeChoice,renderManualLobby,renderNameRecoveryScreen,renderDraftNameScreen,renderDraftScreen,renderDraftWaiting,renderPairDrawScreen,renderPairChoiceButtons,renderSoloColorChoice,renderDraftFinalizing,renderGameShell,renderDealerDrawScreen,renderStartControls,renderExchangeControls,renderPlayerStatus,renderTurnIndicator,renderHand,renderChat,renderChatFab,renderLog,renderWinBanner,showPawnChoice,openJackPicker,openSevenSplitter});
-  // The engine calls this whenever Firebase state changes.
-  window.onStateChange=(state)=>{currentState=state;if(state?.winnerTeam){renderGame(state);setTimeout(()=>renderWin(state),80);return}if(state?.phase==='lobby'){renderGame(state);return}renderGame(state)};
-  document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>home(),0));
+  /* TOK V01 SAFE PRESENTATION BRIDGE */
+  function renderGameFunctional(state){
+    currentState=state; const root=clearApp(); if(!root)return;
+    if(state?.winnerTeam){root.innerHTML=`<main class="game functional-game">${gameTop(state)}${boardHtml(state)}</main>`;setTimeout(()=>{try{renderWin(state)}catch(e){console.error(e)}},40);return;}
+    if(state?.phase==='lobby'){root.innerHTML=`<main class="game functional-game">${gameTop(state)}<section class="functional-lobby">${lobbyGameHtml(state)}</section>${logHtml(state)}</main>`;return;}
+    root.innerHTML=`<main class="game functional-game">${gameTop(state)}<div class="game-layout-functional"><section class="board-column">${boardHtml(state)}</section><aside class="game-sidebar">${statusHtml(state)}${exchangeHtml(state)}${handHtml(state)}${logHtml(state)}</aside></div><div class="bottom-hand-slot">${state.phase==='playing'?handHtml(state):''}</div></main>`;
+  }
+  renderGameShell=function(){if(currentState)renderGameFunctional(currentState);else home();};
+  renderDealerDrawScreen=function(state){renderGameFunctional(state);};
+  renderStartControls=function(state){renderGameFunctional(state);};
+  renderExchangeControls=function(state){renderGameFunctional(state);};
+  renderPlayerStatus=function(){}; renderTurnIndicator=function(){}; renderHand=function(){}; renderChat=function(){}; renderChatFab=function(){}; renderLog=function(){};
+  renderWinBanner=function(state){if(state?.winnerTeam)renderWin(state);};
+  window.showPawnChoice=showPawnChoice;window.openJackPicker=openJackPicker;window.openSevenSplitter=openSevenSplitter;
+  onStateChange=function(state){if(!state)return;currentState=state;try{maybeAdvanceBotTurn(state)}catch(e){console.error(e)}try{maybeAdvanceBotChat(state)}catch(e){console.error(e)}try{maybePlaySounds(state)}catch(e){console.error(e)}try{recordMoveHistoryIfFresh(state)}catch(e){console.error(e)}renderGameFunctional(state);};
+  Object.assign(window,{renderLobby,renderModeChoice,renderManualLobby,renderNameRecoveryScreen,renderDraftNameScreen,renderDraftScreen,renderDraftWaiting,renderPairDrawScreen,renderPairChoiceButtons,renderSoloColorChoice,renderDraftFinalizing,renderGameShell,renderDealerDrawScreen,renderStartControls,renderExchangeControls,renderPlayerStatus,renderTurnIndicator,renderHand,renderChat,renderChatFab,renderLog,renderWinBanner});
 })();
 </script>
 </html>
