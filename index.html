@@ -23,6 +23,41 @@
    ripiegava sul cursive generico di sistema, diverso da telefono a
    telefono. File OFL-1.1 (stessa licenza di Google Fonts), scaricati da
    @fontsource/permanent-marker e @fontsource/plus-jakarta-sans. */
+@font-face {
+  font-family: 'Permanent Marker';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/permanent-marker-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/plus-jakarta-sans-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/plus-jakarta-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/plus-jakarta-sans-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('fonts/plus-jakarta-sans-latin-800-normal.woff2') format('woff2');
+}
 :root {
   color-scheme: light only;
   --ink: #241C15;
@@ -1471,6 +1506,69 @@ button.primary:hover,.primary:hover{filter:brightness(1.08);transform:translateY
   #board-wrap{transform:perspective(1000px) rotateX(1.5deg)}
 }
 
+
+/* ============================================================
+   TOK // 3D REWORK 2.0 — visual layer only
+   No game logic, board coordinates or rules changed.
+   ============================================================ */
+:root{
+  --neo-bg:#040812; --neo-surface:rgba(11,18,34,.72); --neo-surface2:rgba(18,28,48,.86);
+  --neo-white:#F4F7FF; --neo-muted:#8C9AB2; --neo-cyan:#28D7FF; --neo-blue:#397BFF;
+  --neo-violet:#8E6CFF; --neo-pink:#FF4FA3; --neo-gold:#FFC95A;
+}
+html,body{background:#040812!important;color:var(--neo-white)!important;}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif!important;min-height:100dvh;overflow-x:hidden;
+  background:
+   radial-gradient(900px 500px at 10% -5%,rgba(40,215,255,.16),transparent 62%),
+   radial-gradient(800px 500px at 100% 20%,rgba(142,108,255,.14),transparent 60%),
+   radial-gradient(700px 500px at 50% 110%,rgba(255,79,163,.10),transparent 65%),#040812!important;
+}
+body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:
+ repeating-linear-gradient(115deg,rgba(255,255,255,.018) 0 1px,transparent 1px 90px),
+ linear-gradient(180deg,transparent 0 65%,rgba(0,0,0,.28));}
+body:after{content:"";position:fixed;width:55vw;height:55vw;max-width:420px;max-height:420px;left:50%;top:36%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(40,215,255,.09);box-shadow:0 0 80px rgba(40,215,255,.05),inset 0 0 80px rgba(142,108,255,.04);pointer-events:none;z-index:-1;}
+#app{max-width:520px!important;padding:14px 14px 28px!important;perspective:1400px;}
+
+/* HOME = 3D STAGE */
+.lobby-card{overflow:visible!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:8px 4px 18px!important;backdrop-filter:none!important;}
+.lobby-card:before{display:none!important;}
+.app-logo{margin:18px auto 26px!important;transform:translateZ(30px)!important;filter:drop-shadow(0 18px 35px rgba(0,0,0,.55));}
+.app-logo h1{font-size:4.5rem!important;font-weight:800!important;letter-spacing:-.12em!important;color:#fff!important;text-shadow:0 0 18px rgba(40,215,255,.28),0 10px 30px rgba(0,0,0,.65),0 0 45px rgba(142,108,255,.12)!important;}
+.app-logo-dots span{box-shadow:0 0 16px currentColor,0 2px 4px rgba(0,0,0,.7)!important;}
+.lobby-card>p.muted{text-align:center!important;max-width:340px;margin:0 auto 18px!important;color:#9AA8BE!important;}
+#room-input{height:58px!important;background:linear-gradient(180deg,rgba(24,37,61,.82),rgba(7,13,25,.9))!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:18px!important;color:#fff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 15px 35px rgba(0,0,0,.28)!important;text-align:center;font-size:1rem!important;}
+#continue-btn{height:60px!important;margin-top:12px!important;background:linear-gradient(100deg,#20D7FF,#397BFF 55%,#765CFF)!important;border-radius:19px!important;box-shadow:0 14px 35px rgba(40,123,255,.35),0 0 30px rgba(40,215,255,.16),inset 0 1px 0 rgba(255,255,255,.35)!important;transform:translateZ(18px);}
+#continue-btn:active{transform:translateY(2px)!important;}
+.home-divider{opacity:.65!important;color:#71809A!important;margin:24px 0!important;}
+.section-label-row{margin-bottom:10px!important;}
+.section-label{color:#E8EEFA!important;font-weight:800!important;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem!important;}
+.v5-tag{background:rgba(40,215,255,.08)!important;color:#5FE2FF!important;border:1px solid rgba(40,215,255,.18)!important;border-radius:999px!important;}
+.tourney-placeholder{min-height:92px!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:18px!important;background:linear-gradient(145deg,rgba(18,30,52,.82),rgba(5,11,22,.88))!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:22px!important;box-shadow:0 20px 45px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.06)!important;color:#8796AE!important;transform:translateZ(8px);}
+.organize-btn-disabled{margin-top:10px!important;background:rgba(255,255,255,.025)!important;border:1px dashed rgba(255,255,255,.10)!important;border-radius:18px!important;color:#65738A!important;}
+.sound-test-row{margin-top:20px!important;padding-top:15px!important;border-top:1px solid rgba(255,255,255,.07)!important;}
+.sound-test-btn{background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.10)!important;color:#C9D3E4!important;box-shadow:0 8px 20px rgba(0,0,0,.2)!important;}
+.app-meta{color:#56657D!important;}
+
+/* Distinct 3D menu surfaces elsewhere in the game */
+.game-shell{transform-style:preserve-3d;}
+.top-actions-row{border-radius:20px!important;background:linear-gradient(145deg,rgba(19,31,54,.92),rgba(5,10,20,.88))!important;box-shadow:0 18px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08)!important;}
+.identity-row{border-radius:22px!important;background:linear-gradient(145deg,rgba(24,38,64,.9),rgba(6,12,24,.9))!important;box-shadow:0 20px 45px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.07)!important;}
+.turn-line{border-radius:18px!important;background:linear-gradient(100deg,rgba(25,39,67,.92),rgba(8,15,29,.92))!important;box-shadow:0 14px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.07)!important;}
+.status-row{border-radius:22px!important;background:linear-gradient(145deg,rgba(13,24,43,.9),rgba(5,10,20,.92))!important;box-shadow:0 18px 40px rgba(0,0,0,.3)!important;}
+.chat-box{border-radius:22px!important;background:linear-gradient(145deg,rgba(12,22,40,.9),rgba(5,10,19,.92))!important;box-shadow:0 18px 40px rgba(0,0,0,.28)!important;}
+.mode-btn{background:linear-gradient(145deg,rgba(22,36,61,.95),rgba(6,12,23,.95))!important;border:1px solid rgba(255,255,255,.10)!important;color:#EDF3FF!important;box-shadow:0 14px 30px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.06)!important;transform:translateZ(6px);}
+.mode-btn:hover{border-color:rgba(40,215,255,.55)!important;box-shadow:0 16px 35px rgba(40,215,255,.10),0 14px 30px rgba(0,0,0,.28)!important;}
+
+/* BOARD = floating 3D object; SVG geometry untouched */
+#board-wrap{margin:18px -2px 20px!important;padding:10px!important;border-radius:30px!important;background:linear-gradient(145deg,#172943,#070E1B 55%,#02050A)!important;border:1px solid rgba(255,255,255,.13)!important;box-shadow:0 35px 70px rgba(0,0,0,.65),0 12px 0 #02050A,0 0 35px rgba(40,215,255,.08),inset 0 1px 0 rgba(255,255,255,.12)!important;transform:perspective(1200px) rotateX(4deg) translateY(-2px);transform-origin:center top;}
+#board-svg{border-radius:21px!important;box-shadow:inset 0 0 35px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.05)!important;}
+#board-svg circle{filter:drop-shadow(0 3px 2px rgba(0,0,0,.28));}
+
+/* cards become individual physical objects */
+.card-btn{background:linear-gradient(145deg,#263A5A,#081321)!important;border:1px solid rgba(255,255,255,.16)!important;border-radius:10px!important;box-shadow:0 14px 25px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.10)!important;color:#fff!important;transform:translateZ(4px);}
+.card-btn:hover{transform:translateY(-4px) rotateX(2deg)!important;box-shadow:0 20px 30px rgba(0,0,0,.42),0 0 18px rgba(40,215,255,.10)!important;}
+
+@media(max-width:520px){#app{padding:10px 10px 24px!important}.app-logo h1{font-size:3.9rem!important}#board-wrap{transform:perspective(1000px) rotateX(2.5deg);}}
 </style>
 </head>
 <body>
@@ -4541,7 +4639,7 @@ function renderPawns(svg, board, pawns, lastSwap, lastCapture, lastHomeEntry) {
 // Bumped by hand each time a new build is produced — shown in the lobby so
 // it's obvious at a glance whether you're on the latest version, instead
 // of guessing from a stale browser tab or cache.
-const APP_VERSION = "v4.42-3D";
+const APP_VERSION = "v4.41";
 
 let myColor = null;
 let myRoomId = null;
