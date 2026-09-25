@@ -1,4 +1,4 @@
-TOK REBORN
-Nuova interfaccia completa sopra il motore originale.
-Il codice di gioco/BOARD non è stato riscritto.
-Caricare index.html, manifest.json e sw.js nella root di GitHub Pages.
+TOK FINAL — nuova implementazione indipendente.
+Non utilizza la vecchia UI.
+index.html contiene home, tabellone 3D, carte, pedine e motore di gioco.
+manifest.json e sw.js servono per GitHub Pages/PWA.

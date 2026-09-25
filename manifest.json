@@ -1,8 +1,7 @@
 {
-  "name": "TOK \u2014 The Social Board Game",
+  "name": "TOK \u2014 Reborn",
   "short_name": "TOK",
   "start_url": "./index.html",
-  "scope": "./",
   "display": "standalone",
   "background_color": "#050711",
   "theme_color": "#050711"
