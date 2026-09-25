@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TOK - Ultimate 3D Edition (v2026.09.25-FIXED)</title>
+    <title>TOK - Ultimate 3D Edition (v2026.09.25-PATH-FIX)</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -24,21 +24,21 @@
         }
 
         .board-3d {
-            width: 340px;
-            height: 340px;
-            max-width: 90vw;
-            max-height: 90vw;
+            width: 350px;
+            height: 350px;
+            max-width: 92vw;
+            max-height: 92vw;
             background: #0b0f19;
             border: 4px solid #334155;
             border-radius: 20px;
-            transform: rotateX(45deg) rotateZ(-15deg);
+            transform: rotateX(40deg) rotateZ(-15deg);
             transform-style: preserve-3d;
             box-shadow: 0 30px 60px rgba(0,0,0,0.9), inset 0 0 40px rgba(0,0,0,0.8);
             display: grid;
             grid-template-columns: repeat(11, 1fr);
             grid-template-rows: repeat(11, 1fr);
-            gap: 3px;
-            padding: 8px;
+            gap: 2px;
+            padding: 6px;
             position: relative;
         }
 
@@ -46,43 +46,55 @@
             .board-3d {
                 width: 500px;
                 height: 500px;
-                transform: rotateX(50deg) rotateZ(-15deg);
+                transform: rotateX(45deg) rotateZ(-15deg);
             }
         }
 
         .board-cell {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            border-radius: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
         }
 
+        .cell-track {
+            background: rgba(51, 65, 85, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.1);
+        }
+
+        .base-cyan { background: rgba(6, 182, 212, 0.3); border: 1px dashed rgba(6, 182, 212, 0.6); }
+        .base-amber { background: rgba(245, 158, 11, 0.3); border: 1px dashed rgba(245, 158, 11, 0.6); }
+        .base-emerald { background: rgba(16, 185, 129, 0.3); border: 1px dashed rgba(16, 185, 129, 0.6); }
+        .base-purple { background: rgba(168, 85, 247, 0.3); border: 1px dashed rgba(168, 85, 247, 0.6); }
+
         .token-3d {
-            width: 80%;
-            height: 80%;
+            width: 85%;
+            height: 85%;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 900;
             color: #020617;
             cursor: pointer;
-            transform: translateZ(10px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.6), inset 0 2px 3px rgba(255,255,255,0.6);
+            transform: translateZ(12px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.7), inset 0 2px 3px rgba(255,255,255,0.6);
             transition: transform 0.2s ease;
+            z-index: 5;
         }
         .token-3d:hover {
-            transform: translateZ(20px) scale(1.2);
+            transform: translateZ(22px) scale(1.2);
         }
 
-        .token-cyan { background: #06b6d4; box-shadow: 0 0 10px rgba(6,182,212,0.8), inset 0 2px 3px rgba(255,255,255,0.7); }
-        .token-amber { background: #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.8), inset 0 2px 3px rgba(255,255,255,0.7); }
-        .token-emerald { background: #10b981; box-shadow: 0 0 10px rgba(16,185,129,0.8), inset 0 2px 3px rgba(255,255,255,0.7); }
-        .token-purple { background: #a855f7; box-shadow: 0 0 10px rgba(168,85,247,0.8), inset 0 2px 3px rgba(255,255,255,0.7); }
+        .token-cyan { background: #06b6d4; box-shadow: 0 0 12px rgba(6,182,212,0.9), inset 0 2px 3px rgba(255,255,255,0.7); }
+        .token-amber { background: #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.9), inset 0 2px 3px rgba(255,255,255,0.7); }
+        .token-emerald { background: #10b981; box-shadow: 0 0 12px rgba(16,185,129,0.9), inset 0 2px 3px rgba(255,255,255,0.7); }
+        .token-purple { background: #a855f7; box-shadow: 0 0 12px rgba(168,85,247,0.9), inset 0 2px 3px rgba(255,255,255,0.7); }
 
         .card-3d {
             width: 65px;
@@ -112,7 +124,7 @@
         <div class="glass-panel p-6 md:p-10 rounded-3xl max-w-md w-full text-center relative border border-slate-700/50">
             <h1 class="text-5xl font-extrabold tracking-wider bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent mb-1">TOK</h1>
             <p class="text-slate-400 text-xs uppercase tracking-widest mb-1">Ultimate 3D Tactical Experience</p>
-            <p class="text-cyan-400 font-mono text-[10px] mb-6">BUILD: v2026.09.25-MOBILE-FIXED</p>
+            <p class="text-cyan-400 font-mono text-[10px] mb-6">BUILD: v2026.09.25-PATH-FIX</p>
 
             <div class="space-y-3 mb-6 text-left">
                 <label class="block text-[11px] font-semibold text-slate-400 uppercase">Nome Giocatore</label>
@@ -142,7 +154,7 @@
             </div>
 
             <div class="text-[9px] font-mono text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-800/50">
-                v2026.09.25-FIXED
+                v2026.09.25-PATH-FIX
             </div>
 
             <button onclick="resetGame()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-[11px] font-semibold text-slate-300 border border-slate-700">
@@ -156,7 +168,7 @@
 
         <footer class="glass-panel px-3 py-3 z-30 border-t border-slate-800 shrink-0 flex flex-col items-center">
             <div id="game-status-msg" class="text-[11px] font-medium text-cyan-300 mb-2 text-center">
-                Seleziona una carta in basso, poi muovi la pedina sul tabellone
+                Seleziona Asso o Re per uscire dalla base
             </div>
             <div id="player-hand-container" class="flex space-x-2.5 overflow-x-auto max-w-full pb-1 px-1"></div>
         </footer>
@@ -174,25 +186,42 @@
 
     <script>
         const PLAYER_CLASSES = ['token-cyan', 'token-amber', 'token-emerald', 'token-purple'];
+        
+        const BASE_SLOTS = {
+            0: [0, 1, 11, 12],
+            1: [9, 10, 20, 21],
+            2: [99, 100, 110, 111],
+            3: [108, 109, 119, 120]
+        };
+
         let gameState = {
             players: [
-                { id: 0, name: 'Giocatore 1', colorClass: 'token-cyan', team: 0 },
-                { id: 1, name: 'Bot Alfa', colorClass: 'token-amber', team: 1 },
-                { id: 2, name: 'Giocatore 2', colorClass: 'token-emerald', team: 0 },
-                { id: 3, name: 'Bot Beta', colorClass: 'token-purple', team: 1 },
+                { id: 0, name: 'Giocatore 1', colorClass: 'token-cyan', baseClass: 'base-cyan', team: 0 },
+                { id: 1, name: 'Bot Alfa', colorClass: 'token-amber', baseClass: 'base-amber', team: 1 },
+                { id: 2, name: 'Giocatore 2', colorClass: 'token-emerald', baseClass: 'base-emerald', team: 0 },
+                { id: 3, name: 'Bot Beta', colorClass: 'token-purple', baseClass: 'base-purple', team: 1 },
             ],
             currentTurn: 0,
             selectedCard: null,
             selectedToken: null,
             deck: [],
             hands: [[], [], [], []],
-            tokens: [
-                { id: 0, player: 0, pos: -1 }, { id: 1, player: 0, pos: -1 }, { id: 2, player: 0, pos: -1 }, { id: 3, player: 0, pos: -1 },
-                { id: 4, player: 1, pos: -1 }, { id: 5, player: 1, pos: -1 }, { id: 6, player: 1, pos: -1 }, { id: 7, player: 1, pos: -1 },
-                { id: 8, player: 2, pos: -1 }, { id: 9, player: 2, pos: -1 }, { id: 10, player: 2, pos: -1 }, { id: 11, player: 2, pos: -1 },
-                { id: 12, player: 3, pos: -1 }, { id: 13, player: 3, pos: -1 }, { id: 14, player: 3, pos: -1 }, { id: 15, player: 3, pos: -1 },
-            ]
+            tokens: []
         };
+
+        function initTokens() {
+            gameState.tokens = [];
+            for (let p = 0; p < 4; p++) {
+                for (let i = 0; i < 4; i++) {
+                    gameState.tokens.push({
+                        id: p * 4 + i,
+                        player: p,
+                        baseIndex: i,
+                        pos: -1
+                    });
+                }
+            }
+        }
 
         const CARDS_DECK = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
@@ -217,6 +246,7 @@
             document.getElementById('screen-home').classList.add('hidden');
             document.getElementById('screen-game').classList.remove('hidden');
 
+            initTokens();
             initDeck();
             dealCards();
             renderBoard();
@@ -225,7 +255,6 @@
 
         function resetGame() {
             document.getElementById('screen-game').classList.add('hidden');
-            document.getElementById('screen-victory').classList.add('hidden');
             document.getElementById('screen-home').classList.remove('hidden');
         }
 
@@ -233,11 +262,33 @@
             const container = document.getElementById('board-grid-container');
             container.innerHTML = '';
 
+            let allBaseCells = {};
+            Object.keys(BASE_SLOTS).forEach(pId => {
+                BASE_SLOTS[pId].forEach(cellIdx => {
+                    allBaseCells[cellIdx] = gameState.players[pId].baseClass;
+                });
+            });
+
+            let trackCells = new Set();
+            for (let i = 0; i < 11; i++) {
+                trackCells.add(i);
+                trackCells.add(115 + i);
+                trackCells.add(i * 11);
+                trackCells.add(i * 11 + 10);
+            }
+
             for (let row = 0; row < 11; row++) {
                 for (let col = 0; col < 11; col++) {
                     const cellIndex = row * 11 + col;
                     const cellDiv = document.createElement('div');
-                    cellDiv.className = 'board-cell';
+                    
+                    let cellClass = 'board-cell';
+                    if (allBaseCells[cellIndex] !== undefined) {
+                        cellClass += ` ${allBaseCells[cellIndex]}`;
+                    } else if (trackCells.has(cellIndex)) {
+                        cellClass += ' cell-track';
+                    }
+                    cellDiv.className = cellClass;
                     
                     gameState.tokens.forEach(t => {
                         if (t.pos === cellIndex) {
@@ -246,6 +297,19 @@
                             tokenEl.innerText = t.player + 1;
                             tokenEl.onclick = () => selectToken(t.id);
                             cellDiv.appendChild(tokenEl);
+                        }
+                    });
+
+                    gameState.tokens.forEach(t => {
+                        if (t.pos === -1) {
+                            const slots = BASE_SLOTS[t.player];
+                            if (slots[t.baseIndex] === cellIndex) {
+                                const tokenEl = document.createElement('div');
+                                tokenEl.className = `token-3d ${gameState.players[t.player].colorClass}`;
+                                tokenEl.innerText = t.player + 1;
+                                tokenEl.onclick = () => selectToken(t.id);
+                                cellDiv.appendChild(tokenEl);
+                            }
                         }
                     });
 
@@ -277,12 +341,17 @@
         function selectCard(index) {
             gameState.selectedCard = index;
             renderHand();
-            document.getElementById('game-status-msg').innerText = `Carta ${gameState.hands[gameState.currentTurn][index]} scelta. Tocca la tua pedina sul tabellone.`;
+            document.getElementById('game-status-msg').innerText = `Carta ${gameState.hands[gameState.currentTurn][index]} scelta. Tocca una tua pedina.`;
         }
 
         function selectToken(tokenId) {
+            const token = gameState.tokens.find(t => t.id === tokenId);
+            if (!token || token.player !== gameState.currentTurn) {
+                document.getElementById('game-status-msg').innerText = "Non è il turno di questa pedina!";
+                return;
+            }
             if (gameState.selectedCard === null) {
-                document.getElementById('game-status-msg').innerText = "Prima seleziona una carta in basso!";
+                document.getElementById('game-status-msg').innerText = "Seleziona prima una carta in basso!";
                 return;
             }
             gameState.selectedToken = tokenId;
@@ -297,7 +366,8 @@
             
             if (token.pos === -1) {
                 if (cardVal === 'A' || cardVal === 'K') {
-                    token.pos = token.player * 25; 
+                    const startPositions = [1, 54, 119, 66]; 
+                    token.pos = startPositions[token.player];
                 } else {
                     document.getElementById('game-status-msg').innerText = "Serve Asso (1) o Re (13) per uscire dalla base!";
                     return;
@@ -327,14 +397,17 @@
             
             gameState.selectedCard = 0;
             const botTokens = gameState.tokens.filter(t => t.player === gameState.currentTurn);
-            const movableToken = botTokens.find(t => t.pos !== -1) || botTokens[0];
+            let chosenToken = botTokens.find(t => t.pos !== -1) || botTokens[0];
             
-            if (movableToken) {
-                movableToken.pos = movableToken.pos === -1 ? gameState.currentTurn * 25 : (movableToken.pos + 3) % 121;
+            if (chosenToken.pos === -1) {
+                const startPositions = [1, 54, 119, 66];
+                chosenToken.pos = startPositions[chosenToken.player];
+            } else {
+                chosenToken.pos = (chosenToken.pos + 3) % 121;
             }
 
             gameState.hands[gameState.currentTurn].shift();
-            gameState.currentTurn = (gameState.currentTurn + 1) % 4;
+            gameState.currentTrust = (gameState.currentTurn + 1) % 4;
             
             renderBoard();
             updateHUD();
@@ -343,6 +416,7 @@
         function updateHUD() {
             const p = gameState.players[gameState.currentTurn];
             document.getElementById('turn-text').innerText = p.name;
+            document.getElementById('game-status-msg').innerText = `Turno di ${p.name}: Seleziona carta e pedina`;
         }
     </script>
 </body>
