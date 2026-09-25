@@ -3884,7 +3884,12 @@ function selectColor(c) {
 
 async function joinManualRoom(roomId) {
   unlockAudio();
-  const name = $("#name-input").value.trim();
+  const nameEl = document.querySelector('#name-input');
+  if (!nameEl) {
+    showToast('Inserisci il tuo nome prima di entrare.');
+    return;
+  }
+  const name = String(nameEl.value || '').trim();
   if (!myColor) return showToast("Scegli un colore.");
   myRoomId = roomId;
   myName = name || colorLabel(myColor);
@@ -8198,7 +8203,7 @@ setInterval(checkForNewVersion, VERSION_CHECK_INTERVAL_MS);
     }
     p.append(el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'MANUAL ROOM · '+roomId)),el('button',{class:'small-btn',onclick:()=>{stopLobbyListener();renderLobby()}},'← CAMBIA')),
       el('div',{class:'stage-grid'},
-        el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'CHOOSE YOUR SEAT'),el('h1',{style:'font-size:2rem;margin:8px 0'},'Scegli il tuo colore'),el('p',{style:'color:#8794ad;line-height:1.5'},'Il colore selezionato viene mantenuto dal motore e sincronizzato tramite Firebase.'),grid),
+        el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'PLAYER ID'),el('h1',{style:'font-size:2rem;margin:8px 0'},'Scegli il tuo colore'),el('p',{style:'color:#8794ad;line-height:1.5'},'Inserisci il tuo nome e scegli il posto. Il colore selezionato viene mantenuto dal motore e sincronizzato tramite Firebase.'),el('input',{id:'name-input',class:'room-input',placeholder:'NOME GIOCATORE',maxlength:18,value:myName||''}),grid),
         el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'ROOM STATUS'),el('div',{id:'manual-slots',class:'player-list'}),el('button',{id:'join-btn',class:'primary-3d',disabled:true,onclick:()=>joinManualRoom(roomId)},'ENTRA NELLA PARTITA  →'),el('button',{class:'secondary-3d',onclick:()=>shareInviteLink(roomId)},'⌁ INVITA GIOCATORI'))));
     root.appendChild(p); repaint(existingPlayers||{});
     // Keep the existing lobby listener: it will call the original color-section unless we own this hook.
