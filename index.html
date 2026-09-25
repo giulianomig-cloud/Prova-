@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<title>TOK — Digital Table</title>
+<title>TOK — Bellissimo</title>
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#FBF5E9" />
 <!-- Senza questo, Chrome su Android può attivare "Forza colori scuri" e
@@ -15,44 +15,1438 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Tock" />
+<style>
+/* Font in locale (invece del link a Google Fonts) — il service worker
+   mette in cache solo le risorse dello stesso dominio (vedi sw.js), quindi
+   un font caricato da fonts.gstatic.com non veniva mai salvato: aprendo
+   l'app installata offline "Tock" perdeva il carattere disegnato a mano e
+   ripiegava sul cursive generico di sistema, diverso da telefono a
+   telefono. File OFL-1.1 (stessa licenza di Google Fonts), scaricati da
+   @fontsource/permanent-marker e @fontsource/plus-jakarta-sans. */
+@font-face {
+  font-family: 'Permanent Marker';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/permanent-marker-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/plus-jakarta-sans-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/plus-jakarta-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/plus-jakarta-sans-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('fonts/plus-jakarta-sans-latin-800-normal.woff2') format('woff2');
+}
+:root {
+  color-scheme: light only;
+  --ink: #241C15;
+  --cream: #FBF5E9;
+  --panel: #FFFFFF;
+  --panel-border: #E7DCC5;
+  --gold: #C99A3A;
+  --gold-deep: #9C7420;
+  --gold-hover: #D6AA4A;
+  --gold-metallic: linear-gradient(135deg, #F3D98A 0%, #C99A3A 45%, #9C7420 75%, #E9C572 100%);
+  --muted: #A79A82;
+  --muted-2: #8A7F6E;
+  --muted-3: #5A5145;
+  --red: #D9636B;
+  --green: #3FA77E;
+  --yellow: #E3AC33;
+  --blue: #3E8FCB;
+}
 
-<style id="tok-zero-ui">
-:root{--bg:#05070b;--panel:rgba(13,17,25,.82);--line:rgba(255,255,255,.10);--text:#f4f6fb;--muted:#8992a5;--red:#ff465d;--green:#28d98a;--yellow:#ffc83d;--blue:#3f8cff;--accent:#7ee7ff}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 15%,#162033 0,#080b12 38%,#030407 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}
-#app{min-height:100vh}.zero-screen{min-height:100vh;padding:20px;display:grid;place-items:center;position:relative;overflow:hidden}.zero-screen:before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 50% 40%,rgba(126,231,255,.08),transparent 28%),radial-gradient(circle at 15% 85%,rgba(255,70,93,.06),transparent 22%);pointer-events:none}.zero-shell{width:min(1400px,100%);position:relative;z-index:2}
-.zero-home{min-height:calc(100vh - 40px);display:grid;grid-template-columns:1.25fr .75fr;gap:34px;align-items:center}.brand{font-weight:950;font-size:clamp(4rem,10vw,9rem);letter-spacing:-.10em;line-height:.8;text-transform:uppercase;text-shadow:0 12px 50px rgba(0,0,0,.7)}.brand span{color:var(--accent)}.eyebrow{font-size:.72rem;letter-spacing:.3em;color:#788399;text-transform:uppercase;font-weight:800;margin-bottom:18px}.tagline{font-size:1.05rem;color:#9ea8ba;max-width:520px;margin:25px 0 34px}.cta-row{display:flex;gap:12px;flex-wrap:wrap}.primary{border:0;border-radius:16px;padding:15px 24px;background:linear-gradient(135deg,#dffaff,#64dfff);color:#061016;font-weight:950;box-shadow:0 15px 45px rgba(74,220,255,.22)}.secondary{border:1px solid var(--line);border-radius:16px;padding:15px 20px;background:rgba(255,255,255,.045);color:#e9edf5;font-weight:800}.room-input{width:min(360px,100%);border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:rgba(0,0,0,.28);color:#fff;outline:none}.room-input:focus{border-color:rgba(126,231,255,.6);box-shadow:0 0 0 4px rgba(126,231,255,.06)}
-.hero-table{height:min(620px,72vh);min-height:440px;perspective:1400px;display:grid;place-items:center}.table-3d{width:min(590px,80vw);aspect-ratio:1;position:relative;transform:rotateX(58deg) rotateZ(-4deg);transform-style:preserve-3d;filter:drop-shadow(0 45px 45px rgba(0,0,0,.65))}.table-3d:before{content:"";position:absolute;inset:-8%;border-radius:34px;background:linear-gradient(145deg,#202a3a,#090d14 70%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.07),0 25px 0 #020305;transform:translateZ(-28px)}.table-top{position:absolute;inset:0;border-radius:28px;background:radial-gradient(circle at 50% 50%,#17263a,#0b111c 65%,#070a10);border:1px solid rgba(255,255,255,.11);box-shadow:inset 0 0 70px rgba(126,231,255,.04);transform:translateZ(0)}
-.mini-path{position:absolute;inset:11%;border-radius:24%;border:2px solid rgba(126,231,255,.14);box-shadow:0 0 30px rgba(126,231,255,.08),inset 0 0 30px rgba(126,231,255,.04)}.mini-core{position:absolute;inset:29%;border-radius:24px;background:linear-gradient(145deg,#151e2e,#080c13);box-shadow:inset 0 0 25px #000,0 0 35px rgba(126,231,255,.08)}.mini-orb{position:absolute;width:13%;aspect-ratio:1;border-radius:50%;box-shadow:0 0 25px currentColor,0 0 5px #fff;background:currentColor}.orb-r{color:var(--red);left:8%;top:8%}.orb-g{color:var(--green);right:8%;top:8%}.orb-y{color:var(--yellow);right:8%;bottom:8%}.orb-b{color:var(--blue);left:8%;bottom:8%}
-.lobby-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:20px;align-items:stretch}.panel{border:1px solid var(--line);background:linear-gradient(145deg,rgba(23,30,43,.9),rgba(8,11,17,.88));border-radius:24px;padding:24px;box-shadow:0 25px 80px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.04)}.panel h1{margin:0 0 8px;font-size:2rem;letter-spacing:-.05em}.panel p{color:var(--muted)}.seat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.seat{min-height:130px;border-radius:20px;border:1px solid var(--line);padding:16px;position:relative;overflow:hidden;background:rgba(255,255,255,.025)}.seat:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;right:-45px;bottom:-45px;background:var(--seat);opacity:.13;filter:blur(4px)}.seat.red{--seat:var(--red)}.seat.green{--seat:var(--green)}.seat.yellow{--seat:var(--yellow)}.seat.blue{--seat:var(--blue)}.seat-dot{width:14px;height:14px;border-radius:50%;background:var(--seat);box-shadow:0 0 18px var(--seat);display:inline-block}.seat-name{font-weight:900;font-size:1.05rem;margin-top:12px}.seat-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.16em;color:#727d91}.seat.empty .seat-name{color:#5e687a}
-.game{min-height:100vh;padding:14px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}.topbar{display:flex;justify-content:space-between;align-items:center;padding:10px 12px}.brand-small{font-weight:950;letter-spacing:-.06em;font-size:1.6rem}.turn-pill{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:999px;padding:9px 14px;font-size:.75rem;font-weight:900}.game-main{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px}.stage{min-height:0;border:1px solid var(--line);border-radius:28px;background:radial-gradient(circle at 50% 45%,rgba(126,231,255,.045),transparent 35%),linear-gradient(145deg,#0d131d,#05070b);display:grid;place-items:center;overflow:hidden;position:relative}.stage:before{content:"";position:absolute;inset:7%;border:1px solid rgba(255,255,255,.035);border-radius:24px;pointer-events:none}.board-stage{width:min(820px,96vw);aspect-ratio:1;perspective:1800px;display:grid;place-items:center;filter:drop-shadow(0 40px 45px rgba(0,0,0,.38))}.board3d{width:94%;aspect-ratio:1;position:relative;transform:rotateX(49deg) rotateZ(-1deg);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1)}.board3d:before{content:"";position:absolute;inset:-4%;border-radius:38px;background:linear-gradient(145deg,#3a4a60,#101722 55%,#05080d);transform:translateZ(-30px);box-shadow:0 8px 0 #05070b,0 30px 0 #020305,0 55px 80px rgba(0,0,0,.72)}.board3d:after{content:"";position:absolute;inset:-1.5%;border-radius:34px;border:1px solid rgba(126,231,255,.13);transform:translateZ(-14px);box-shadow:inset 0 0 28px rgba(126,231,255,.06)}.board-face{position:absolute;inset:0;border-radius:32px;background:radial-gradient(circle at 50% 46%,#203247 0,#111d2c 42%,#080e17 78%);border:1px solid rgba(255,255,255,.16);transform-style:preserve-3d;box-shadow:inset 0 0 80px rgba(126,231,255,.055),inset 0 0 0 7px rgba(0,0,0,.16)}.cell{position:absolute;width:6.0%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) translateZ(8px);background:radial-gradient(circle at 33% 25%,#52647b 0,#263548 32%,#111b29 72%,#080d15 100%);border:1px solid rgba(255,255,255,.18);box-shadow:0 7px 11px rgba(0,0,0,.62),inset 0 2px 3px rgba(255,255,255,.10),inset 0 -3px 5px rgba(0,0,0,.32);display:grid;place-items:center;transition:box-shadow .2s,transform .2s,filter .2s}.cell.home-red{background:radial-gradient(circle at 35% 25%,#ff8a9a,#8f2638 55%,#300c15);border-color:rgba(255,104,124,.75);box-shadow:0 0 18px rgba(255,70,93,.28),0 7px 11px rgba(0,0,0,.62),inset 0 2px 4px rgba(255,255,255,.16)}.cell.home-green{background:radial-gradient(circle at 35% 25%,#6de0ad,#237957 55%,#0b2b20);border-color:rgba(61,235,157,.75);box-shadow:0 0 18px rgba(40,217,138,.25),0 7px 11px rgba(0,0,0,.62),inset 0 2px 4px rgba(255,255,255,.16)}.cell.home-yellow{background:radial-gradient(circle at 35% 25%,#ffe58a,#a97a17 55%,#3b2a07);border-color:rgba(255,210,75,.78);box-shadow:0 0 18px rgba(255,200,61,.25),0 7px 11px rgba(0,0,0,.62),inset 0 2px 4px rgba(255,255,255,.16)}.cell.home-blue{background:radial-gradient(circle at 35% 25%,#7bc6ff,#245d96 55%,#0a2038);border-color:rgba(74,164,255,.78);box-shadow:0 0 18px rgba(63,140,255,.25),0 7px 11px rgba(0,0,0,.62),inset 0 2px 4px rgba(255,255,255,.16)}.cell.marker-red{border-color:rgba(255,90,110,.8)}.cell.marker-green{border-color:rgba(55,225,151,.8)}.cell.marker-yellow{border-color:rgba(255,213,74,.85)}.cell.marker-blue{border-color:rgba(74,164,255,.85)}.board-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;transform:translateZ(3px)}.board-lines line{stroke:rgba(178,202,225,.20);stroke-width:.75;stroke-linecap:round}.board-lines .home-line{stroke-width:1.5;opacity:.9}.board-lines .home-line.red{stroke:#ff5269}.board-lines .home-line.green{stroke:#2fdd91}.board-lines .home-line.yellow{stroke:#ffd24a}.board-lines .home-line.blue{stroke:#4aa4ff}.cell.base-red{box-shadow:0 0 24px rgba(255,70,93,.25),0 5px 9px rgba(0,0,0,.55)}.cell.base-green{box-shadow:0 0 24px rgba(40,217,138,.25),0 5px 9px rgba(0,0,0,.55)}.cell.base-yellow{box-shadow:0 0 24px rgba(255,200,61,.25),0 5px 9px rgba(0,0,0,.55)}.cell.base-blue{box-shadow:0 0 24px rgba(63,140,255,.25),0 5px 9px rgba(0,0,0,.55)}.cell.legal{animation:legalPulse 1s infinite alternate;border-color:rgba(126,231,255,.8)}@keyframes legalPulse{to{box-shadow:0 0 22px rgba(126,231,255,.65),0 0 5px #fff;transform:translate(-50%,-50%) translateZ(12px) scale(1.08)}}
-.pawn{position:absolute;width:5.6%;aspect-ratio:.78;border-radius:46% 46% 30% 30%;transform:translate(-50%,-72%) translateZ(24px);z-index:30;background:radial-gradient(circle at 34% 17%,#fff 0 4%,rgba(255,255,255,.45) 5%,transparent 12%),linear-gradient(145deg,#f8fbff 0 4%,var(--pc) 16%,#161d27 72%,#05080d 100%);border:1px solid rgba(255,255,255,.35);box-shadow:0 13px 12px rgba(0,0,0,.62),0 0 22px color-mix(in srgb,var(--pc) 52%,transparent),inset 0 2px 3px rgba(255,255,255,.45);transition:left .45s,top .45s,transform .45s;filter:saturate(1.12)}.pawn:after{content:"";position:absolute;left:14%;right:14%;bottom:-12%;height:22%;border-radius:50%;background:rgba(0,0,0,.5);filter:blur(2px)}.pawn.red{--pc:var(--red)}.pawn.green{--pc:var(--green)}.pawn.yellow{--pc:var(--yellow)}.pawn.blue{--pc:var(--blue)}
-.side{display:grid;grid-template-rows:auto auto 1fr;gap:12px;min-width:0}.players-panel,.events-panel,.cards-panel{border:1px solid var(--line);background:rgba(10,14,22,.78);border-radius:22px;padding:16px}.players{display:grid;grid-template-columns:1fr 1fr;gap:8px}.player{padding:10px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid transparent}.player.active{border-color:rgba(126,231,255,.5);box-shadow:0 0 20px rgba(126,231,255,.08)}.player-name{font-weight:900;font-size:.78rem}.player-meta{font-size:.62rem;color:#707b8e;margin-top:4px}.event-list{display:grid;gap:7px;max-height:230px;overflow:auto}.event{font-size:.68rem;color:#9ba6b8;padding:8px;border-bottom:1px solid rgba(255,255,255,.05)}.cards-bottom{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.card3d{width:74px;height:104px;border-radius:13px;background:linear-gradient(145deg,#fff,#dce5ef);color:#0b0f16;border:1px solid #fff;box-shadow:0 12px 24px rgba(0,0,0,.38);display:grid;place-items:center;font-size:1.3rem;font-weight:950;transition:transform .18s,box-shadow .18s}.card3d:hover{transform:translateY(-10px) rotateX(7deg);box-shadow:0 25px 35px rgba(0,0,0,.5)}.card3d.black{color:#0c111a}.card3d.reds{color:#cf2037}.card3d.disabled{opacity:.45}.section-title{font-size:.65rem;text-transform:uppercase;letter-spacing:.18em;color:#69758a;font-weight:900;margin-bottom:10px}.chat-fab{position:fixed;right:22px;bottom:104px;width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:#121a27;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.4);z-index:90}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(12px);z-index:200;display:grid;place-items:center;padding:18px}.modal{width:min(620px,100%);border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#172031,#070a10);padding:24px;box-shadow:0 40px 100px rgba(0,0,0,.7)}.modal h2{margin:0 0 10px}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.choice{padding:18px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:16px;color:#fff;text-align:left}.choice:hover{border-color:rgba(126,231,255,.5)}.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:500;padding:12px 16px;border-radius:999px;background:#111927;border:1px solid var(--line);box-shadow:0 15px 45px rgba(0,0,0,.5);font-size:.75rem;font-weight:800}.win{position:fixed;inset:0;z-index:400;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(126,231,255,.12),rgba(0,0,0,.88) 55%);backdrop-filter:blur(14px)}.win-card{width:min(650px,92vw);text-align:center;padding:42px;border:1px solid rgba(255,255,255,.14);border-radius:30px;background:linear-gradient(145deg,#172335,#070a10);box-shadow:0 40px 120px rgba(0,0,0,.8)}.win-title{font-size:clamp(3rem,9vw,7rem);font-weight:950;letter-spacing:-.1em}.win-team{font-size:1.2rem;color:#9eabc0;margin:12px 0 28px}
-@media(max-width:950px){.zero-home{grid-template-columns:1fr}.hero-table{order:-1;height:46vh;min-height:320px}.lobby-grid{grid-template-columns:1fr}.game-main{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.events-panel{display:none}.stage{min-height:62vh}}@media(max-width:600px){.zero-screen{padding:12px}.brand{font-size:4.5rem}.choice-grid{grid-template-columns:1fr}.side{grid-template-columns:1fr}.players-panel{display:block}.card3d{width:60px;height:86px}.game{padding:8px}.board3d{width:94%}.pawn{width:6.3%}}
-</style><style>.board-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateZ(1px);width:27%;aspect-ratio:1.7;border-radius:18px;background:linear-gradient(145deg,#182536,#080d15);border:1px solid rgba(126,231,255,.2);box-shadow:inset 0 0 25px rgba(126,231,255,.08),0 12px 20px rgba(0,0,0,.28);display:grid;place-items:center;align-content:center;color:#dceeff;letter-spacing:.18em;font-weight:1000;text-align:center;z-index:2}.board-core span{font-size:clamp(18px,3vw,34px);line-height:1}.board-core small{font-size:clamp(5px,.8vw,9px);letter-spacing:.32em;color:#71879f;margin-top:5px}.board-face:before{content:"";position:absolute;inset:6%;border:1px solid rgba(255,255,255,.045);border-radius:25px;pointer-events:none;transform:translateZ(1px)}</style>
-<style id="tok-functional-ui">
-.functional-game{min-height:100vh;padding:14px 18px 28px;box-sizing:border-box;color:#eaf0fb;background:radial-gradient(circle at 50% 15%,rgba(20,37,68,.42),transparent 38%),#05070d}
-.game-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;max-width:1500px;margin:0 auto 12px;padding:10px 14px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(8,12,21,.82);backdrop-filter:blur(16px);position:sticky;top:10px;z-index:30;box-shadow:0 18px 60px rgba(0,0,0,.28)}
-.brand-small{font-weight:900;letter-spacing:.22em;font-size:1rem}.room-small{font-size:.58rem;color:#65728a;letter-spacing:.12em;margin-top:2px}.game-actions{display:flex;justify-content:flex-end;gap:6px}.icon-btn{width:36px;height:36px;border-radius:11px;border:1px solid rgba(255,255,255,.08);background:#0d1422;color:#dce5f4;cursor:pointer}.turn-core{padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#0b1220;font-size:.68rem;letter-spacing:.12em;font-weight:800;display:flex;align-items:center;gap:8px}.turn-core.mine{box-shadow:0 0 0 1px rgba(0,140,255,.25),0 0 30px rgba(0,140,255,.12)}
-.dot{display:inline-block;width:9px;height:9px;border-radius:50%;box-shadow:0 0 10px currentColor}.dot.red{background:#e45d68;color:#e45d68}.dot.green{background:#45c28a;color:#45c28a}.dot.yellow{background:#e6b84d;color:#e6b84d}.dot.blue{background:#4d9fe5;color:#4d9fe5}
-.game-layout-functional{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}.board-column{min-width:0}.functional-board{min-height:calc(100vh - 120px);display:flex;align-items:center;justify-content:center}.functional-board .board3d{width:min(76vw,900px)}.game-sidebar{display:flex;flex-direction:column;gap:12px}.status-functional,.exchange-functional,.hand-functional,.events-functional,.lobby-table{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(10,15,25,.78);box-shadow:0 16px 45px rgba(0,0,0,.2);padding:14px}.status-main{display:flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.06em}.status-main.mine{color:#fff}.last-event{margin-left:auto;color:#69778f;font-size:.58rem}.status-seats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}.player-seat{display:flex;align-items:center;gap:8px;padding:9px;border-radius:12px;background:#0b111d;border:1px solid rgba(255,255,255,.05);font-size:.68rem}.player-seat b{display:block}.player-seat small{display:block;color:#65728a;font-size:.52rem;margin-top:2px}.seat-state{margin-left:auto;color:#4b586e;font-size:.65rem}.player-seat.online .seat-state{color:#54d19a}.exchange-functional h2{font-size:1rem;margin:5px 0}.exchange-functional p{color:#77859d;font-size:.7rem}.exchange-cards,.hand-cards{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.exchange-status{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}.exchange-dot{font-size:.5rem;letter-spacing:.08em;color:#59677d;display:flex;gap:5px;align-items:center}.exchange-dot.done{color:#70d7a8}.exchange-dot .dot{width:7px;height:7px}.card-3d{position:relative;min-width:62px;min-height:86px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(145deg,#f8fbff,#cbd5e3);color:#101827;box-shadow:0 10px 24px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.9);font-weight:900;font-size:1rem;cursor:pointer;transition:transform .16s,box-shadow .16s}.card-3d:hover:not(:disabled){transform:translateY(-8px) rotateX(5deg);box-shadow:0 18px 34px rgba(0,0,0,.4)}.card-3d.reds{color:#c83f4b}.card-3d.disabled,.card-3d:disabled{opacity:.42;cursor:default}.hand-functional .eyebrow,.events-functional .eyebrow,.lobby-copy .eyebrow,.bot-box .eyebrow{color:#63718a;font-size:.55rem;letter-spacing:.16em}.event-row{font-size:.62rem;color:#9ba7ba;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}.event-row:last-child{border-bottom:0}.bottom-hand-slot{display:none}.functional-lobby{max-width:1100px;margin:40px auto}.lobby-table{text-align:center;padding:30px}.lobby-copy h1{font-size:clamp(2rem,5vw,4rem);margin:7px 0;letter-spacing:-.05em}.lobby-copy p{color:#78869e;font-size:.8rem}.seat-grid-functional{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0}.bot-box{max-width:680px;margin:15px auto;padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:16px;text-align:left}.bot-actions{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:8px;padding:8px 0}.bot-actions b{font-size:.68rem}.secondary-3d{border:1px solid rgba(255,255,255,.1);background:#111a2a;color:#d8e1ef;border-radius:10px;padding:8px 10px;font-size:.58rem;cursor:pointer}.start-game-btn{margin-top:10px;min-width:220px}.start-game-btn:disabled{opacity:.35;cursor:not-allowed}.functional-game .board-lines{filter:drop-shadow(0 2px 2px rgba(0,0,0,.45))}
-@media(max-width:980px){.game-layout-functional{grid-template-columns:1fr}.game-sidebar{display:grid;grid-template-columns:1fr 1fr}.functional-board{min-height:auto}.functional-board .board3d{width:min(94vw,760px)}.bottom-hand-slot{display:block}.game-sidebar .hand-functional{display:none}.seat-grid-functional{grid-template-columns:1fr 1fr}}
-@media(max-width:620px){.game-top{grid-template-columns:1fr auto}.turn-core{grid-column:1/-1;grid-row:2;justify-content:center}.game-actions{gap:3px}.game-sidebar{display:flex}.seat-grid-functional{grid-template-columns:1fr 1fr}.player-seat{padding:7px}.game-actions .icon-btn{width:32px;height:32px}.lobby-table{padding:18px}}
+* { box-sizing: border-box; }
+
+html {
+  background: #FBF5E9;
+  color-scheme: light only;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #FBF5E9;
+  color: var(--ink);
+}
+
+/* min-height: 100vh fa "saltare" leggermente il contenuto (es. il
+   tabellone) quando si interagisce con un elemento fisso in basso come il
+   picker del 7 — su mobile (Safari in particolare) l'interazione può far
+   comparire/sparire la barra degli indirizzi, che cambia il valore di
+   100vh e quindi l'altezza minima della pagina. 100dvh segue l'altezza
+   REALE visibile in ogni momento invece di quella "massima teorica", ed
+   è ignorato in automatico dai browser che non lo supportano (restano
+   sul 100vh sopra come fallback). */
+#app { max-width: 480px; margin: 0 auto; padding: calc(26px + env(safe-area-inset-top)) 20px 20px; min-height: 100vh; min-height: 100dvh; }
+
+h1 { font-size: 1.4rem; margin: 0 0 4px; color: var(--ink); }
+.app-logo { display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; transform: rotate(-2deg); }
+.app-logo h1 {
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+  font-weight: 400;
+  font-size: 2.3rem;
+  letter-spacing: 0.01em;
+  color: #3B2A18;
+  margin: 0;
+}
+.app-logo-squiggle { margin-top: 2px; display: block; }
+.app-logo-dots { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.app-logo-dots span { border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.25); aspect-ratio: 1 / 1; }
+.app-logo-dots .ld-red { background: var(--red); }
+.app-logo-dots .ld-green { background: var(--green); }
+.app-logo-dots .ld-yellow { background: var(--yellow); }
+.app-logo-dots .ld-blue { background: var(--blue); }
+.sound-test-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.app-meta { font-size: 0.65rem; color: #A79A82; letter-spacing: 0.02em; opacity: 0.8; margin: 0; }
+.muted { color: #8A7F6E; font-size: 0.9rem; }
+
+.lobby-card, .start-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+/* Scambio alla cieca: qui il mockup (Scambio.dc.html) vuole INVECE una
+   card bianca a sé per l'intestazione/stato, diversa dalla sala d'attesa
+   — non riusa .start-card (ormai trasparente) ma una classe propria. */
+.exchange-card {
+  background: #FFFFFF;
+  border: 1px solid var(--panel-border);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+.exchange-card p { margin: 0 0 6px; }
+.exchange-card p:last-child { margin-bottom: 0; }
+.exchange-pill-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 0.72rem; font-weight: 700; margin-top: 6px; }
+.exchange-pill-row:first-of-type { margin-top: 10px; }
+.exchange-pill-lead { color: var(--muted-3); }
+.exchange-pill-lead.done { color: #4E9770; }
+/* Badge di spunta al posto dell'emoji ✅ — un pallino pieno con icona SVG
+   in tinta, come gli altri indicatori dell'app (log-dot, icon-btn), invece
+   di un emoji che stona con lo stile grafico del resto. */
+.exchange-done-line { display: flex; align-items: center; gap: 8px; }
+.exchange-done-badge {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #4E9770;
+}
+.exchange-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  border-radius: 999px; padding: 3px 9px 3px 6px;
+}
+.exchange-pill .swatch { width: 7px; height: 7px; margin: 0; }
+.exchange-pill.done { background: #E7F4EC; }
+.exchange-pill.waiting { background: #FBF1D8; }
+.exchange-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted-3); margin-bottom: 10px;
+}
+
+/* Intestazione delle schermate di sala d'attesa: logo (pallini + scritta)
+   a sinistra, pulsante "Invita" a destra sulla stessa riga — invece del
+   vecchio titolo centrato + bottone a tutta larghezza sotto. */
+.lobby-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.lobby-header-row .app-logo {
+  align-items: flex-start;
+  margin-bottom: 0;
+}
+.lobby-header-row .app-logo-dots { justify-content: flex-start; gap: 5px; width: 74px; }
+.lobby-header-row .app-logo-dots span { width: 7px; height: 7px; }
+.lobby-header-row .app-logo h1 { text-align: left; font-size: 2rem; }
+
+/* "Etichetta" bianca con il codice stanza, come nel mockup — al posto del
+   codice infilato nel paragrafo di istruzioni. */
+.room-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 22px;
+  width: fit-content;
+}
+.room-tag-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted-3);
+}
+.room-tag-code { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.04em; color: var(--ink); }
+
+#room-input, #name-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1.5px solid var(--panel-border);
+  border-radius: 14px;
+  margin: 8px 0;
+  background: #FFFFFF;
+  color: var(--ink);
+}
+#room-input:focus, #name-input:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+#room-input { text-transform: uppercase; }
+
+/* Squadre raggruppate visivamente: le due pedine dello stesso team stanno
+   nello stesso riquadro tratteggiato, con un badge "VS" al centro tra i
+   due riquadri — così si capisce subito chi gioca con chi. */
+/* Griglia unica 2x2 (non più due grid separate per squadra): così le due
+   card sulla stessa riga (es. rosso+verde, giallo+blu) condividono sempre
+   la stessa altezza — con due grid indipendenti una card senza pulsante
+   bot sotto (es. il tuo colore già scelto) restava più bassa di quella
+   affiancata, con le dimensioni visibilmente diverse. */
+.teams-grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 10px 14px; margin-bottom: 16px; position: relative; }
+/* Filo verticale dietro le due card della stessa colonna (stessa squadra:
+   rosso+giallo a sinistra, verde+blu a destra — vedi TEAM_OF) per far
+   capire a colpo d'occhio che sono in coppia, senza toccare le dimensioni
+   delle card: sta DIETRO (z-index sotto quello di .color-cell) quindi si
+   vede solo nello spazio vuoto tra le due card, come se le collegasse.
+   Posizionato in assoluto (non come cella della grid, per non "rubare"
+   una riga all'auto-placement) — il centro di ogni colonna, con due
+   colonne 1fr e 14px di gap tra loro, è a calc(25% - metà gap) e
+   calc(75% + metà gap) rispetto al contenitore. */
+.team-thread {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  z-index: 0;
+}
+.team-thread-a { left: calc(25% - 3.5px); background: linear-gradient(180deg, var(--red), var(--yellow)); }
+.team-thread-b { left: calc(75% + 3.5px); background: linear-gradient(180deg, var(--green), var(--blue)); }
+.vs-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1.5px solid var(--panel-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(90,65,20,0.18);
+  z-index: 2;
+}
+.vs-badge span {
+  color: var(--muted-3);
+  font-weight: 800;
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Ogni riquadro colore è un'unica card (bordo tratteggiato se libero, bordo
+   pieno se preso/scelto) che contiene sia il pallino+nome sia — quando
+   libero — i pulsanti "assegna al computer": prima erano due blocchi
+   separati (bottone + div sotto), ora sono un solo riquadro come nel mockup. */
+.color-cell {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  padding: 13px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--panel-border);
+  position: relative;
+  z-index: 1; /* sopra il filo .team-thread, che deve restare dietro */
+  /* Altezza fissa (non solo un minimo) uguale al contenuto più alto
+     possibile (libero, con etichetta + due pulsanti impilati) — così le
+     quattro card restano identiche SEMPRE, in ogni stato e combinazione,
+     non solo tra le due della stessa riga. */
+  min-height: 178px;
+  height: 178px;
+  transition: border-color .12s ease, background .12s ease, transform .12s ease;
+}
+/* Il pulsante bot (quando c'è) va in fondo alla card, non subito sotto al
+   nome — così tutte e quattro le card restano della stessa altezza anche
+   quando una (es. il tuo colore già scelto) non ha nessun pulsante sotto. */
+.color-cell > .bot-cell-assign, .color-cell > .bot-btn-remove { margin-top: auto; padding-top: 10px; }
+.bot-assign-label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); margin-bottom: 5px; }
+/* Libero: prima era solo un bordo tratteggiato su sfondo bianco (tanto
+   vuoto, poco invitante); ora bordo pieno più leggero + una leggerissima
+   tinta del colore, così la card si distingue subito anche da lontano. */
+.color-cell.cc-red.cc-free { border-color: #EDD3D5; background: #FDF6F6; }
+.color-cell.cc-green.cc-free { border-color: #D7E9DF; background: #F4FAF7; }
+.color-cell.cc-yellow.cc-free { border-color: #F1E4BB; background: #FDFAEF; }
+.color-cell.cc-blue.cc-free { border-color: #D7E6F0; background: #F4F9FC; }
+.color-cell.cc-taken {
+  border-style: solid;
+  border-width: 1.5px;
+}
+.color-cell.cc-red.cc-taken { background: #F7DCDE; border-color: #E3ABB0; }
+.color-cell.cc-green.cc-taken { background: #DCEFE5; border-color: #9FCFB4; }
+.color-cell.cc-yellow.cc-taken { background: #FBF1D8; border-color: #EFDFB0; }
+.color-cell.cc-blue.cc-taken { background: #DCE9F3; border-color: #9EC3DE; }
+.color-cell.cc-mine {
+  border-style: solid;
+  border-width: 2px;
+  transform: scale(0.98);
+}
+.color-cell.cc-red.cc-mine { background: #F7DCDE; border-color: var(--red); }
+.color-cell.cc-green.cc-mine { background: #DCEFE5; border-color: var(--green); }
+.color-cell.cc-yellow.cc-mine { background: #FBF1D8; border-color: var(--yellow); }
+.color-cell.cc-blue.cc-mine { background: #DCE9F3; border-color: var(--blue); }
+
+.color-card-check {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.color-cell.cc-red .color-card-check { background: var(--red); }
+.color-cell.cc-green .color-card-check { background: var(--green); }
+.color-cell.cc-yellow .color-card-check { background: var(--yellow); }
+.color-cell.cc-blue .color-card-check { background: var(--blue); }
+
+.color-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: none;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+.color-btn:disabled { cursor: default; }
+.color-card-dot {
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+  background: currentColor;
+}
+.cc-free .color-card-dot { opacity: 0.85; }
+.color-red .color-card-dot, .cc-red .color-card-dot { color: var(--red); }
+.color-green .color-card-dot, .cc-green .color-card-dot { color: var(--green); }
+.color-yellow .color-card-dot, .cc-yellow .color-card-dot { color: var(--yellow); }
+.color-blue .color-card-dot, .cc-blue .color-card-dot { color: var(--blue); }
+.color-card-name { font-size: 0.88rem; font-weight: 800; color: var(--ink); }
+.color-card-sub { font-size: 0.7rem; font-weight: 700; margin-top: 2px; }
+.cc-red .color-card-sub { color: #A5424A; }
+.cc-green .color-card-sub { color: #2C7A54; }
+.cc-yellow .color-card-sub { color: #A5842B; }
+.cc-blue .color-card-sub { color: #2E6690; }
+.color-card-free-label { font-size: 0.86rem; font-weight: 800; color: var(--muted-3); margin-bottom: 8px; }
+.bot-btn {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 7px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: #FFFFFF;
+  color: var(--muted-3);
+  cursor: pointer;
+}
+.bot-btn:hover { background: var(--cream); }
+.bot-btn:active { transform: translateY(1px); }
+.bot-btn-remove { color: #A5424A; border-color: #e0b3a8; background: #FFFFFF; }
+/* Due pulsanti affiancati (Normale/Difficile) al posto di uno solo, quando
+   il posto va assegnato al computer — vedi botCell/renderStartControls. */
+.bot-btn-row { display: flex; flex-direction: column; gap: 6px; }
+.bot-btn-row .bot-btn { width: 100%; padding: 7px 4px; }
+
+/* Pulsanti "assegna al computer" per i posti ancora liberi, mostrati nella
+   sala d'attesa (dopo essere entrati) invece che solo nella lobby iniziale. */
+.missing-bots-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+
+.color-red { color: var(--red); }
+.color-green { color: var(--green); }
+.color-yellow { color: var(--yellow); }
+.color-blue { color: var(--blue); }
+
+/* ---- modalità stanza: manuale / estrazione ---- */
+.mode-choice { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+.mode-btn {
+  padding: 16px 16px;
+  border-radius: 16px;
+  border: 1.5px solid var(--panel-border);
+  background: #FFFFFF;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
+}
+.mode-btn:hover { border-color: var(--gold); box-shadow: 0 6px 16px -10px rgba(201,154,58,0.5); }
+.mode-btn:active { border-color: var(--gold); transform: translateY(1px); }
+.mode-btn .mt { font-weight: 800; font-size: 0.94rem; margin-bottom: 3px; color: var(--ink); }
+.mode-btn .ms { font-size: 0.78rem; color: #8A7F6E; line-height: 1.4; }
+
+/* ---- sala d'attesa (modalità estrazione) ---- */
+.waiting-list { list-style: none; padding: 0; margin: 10px 0; }
+.waiting-list li {
+  display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+  background: #FFFFFF; border: 1.5px solid var(--panel-border);
+  border-radius: 12px; margin-bottom: 6px; font-size: 0.88rem; font-weight: 700;
+  color: var(--ink);
+}
+.waiting-list li.pending { opacity: 0.55; font-weight: 500; font-style: italic; background: transparent; border-style: dashed; }
+.waiting-list li .wname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.waiting-list li .bot-btn-remove { flex-shrink: 0; margin-left: 8px; padding: 2px 8px; font-size: 0.72rem; }
+.wdot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.wdot.off { background: #C7BCA4; }
+
+/* ---- estrazione coppie ---- */
+.player-slot {
+  padding: 11px 6px; border-radius: 12px; font-weight: 800; text-align: center;
+  min-height: 18px; display: flex; align-items: center; justify-content: center;
+  font-size: 0.87rem; background: #FFFFFF; border: 1.5px solid var(--panel-border); color: var(--ink);
+}
+.player-slot.spinning { animation: slotShake 0.12s linear infinite; }
+@keyframes slotShake { 0% { transform: translateX(-1px); } 50% { transform: translateX(1px); } 100% { transform: translateX(-1px); } }
+.team-group.ready { animation: teamReadyGlow 1s ease-in-out infinite; }
+@keyframes teamReadyGlow {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(201,154,58,0.4); }
+  50% { box-shadow: 0 0 18px 5px rgba(201,154,58,0.7); }
+}
+
+/* ---- scelta accoppiata colori / colore personale ---- */
+.pair-choice, .solo-choice { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.solo-choice { flex-direction: row; }
+.pair-btn, .solo-btn {
+  padding: 16px; border-radius: 16px; border: none; font-weight: 800;
+  font-size: 0.9rem; cursor: pointer; color: white; display: flex; align-items: center;
+  justify-content: center; gap: 8px; text-align: center;
+  box-shadow: 0 6px 16px -8px rgba(90,65,20,0.35);
+  transition: transform 0.08s ease, filter 0.1s ease;
+}
+.pair-btn:hover, .solo-btn:hover { filter: brightness(1.05); }
+.pair-btn:active, .solo-btn:active { transform: translateY(1px); }
+.solo-btn { flex: 1; }
+.solo-btn:disabled { opacity: 0.45; cursor: default; }
+.pair-ry { background: linear-gradient(90deg, var(--red), var(--yellow)); }
+.pair-gb { background: linear-gradient(90deg, var(--green), var(--blue)); }
+/* .color-* (righe più sopra) imposta solo il COLORE DEL TESTO — utile per
+   badge/icone su sfondo chiaro, ma qui su .solo-btn (testo bianco fisso)
+   serviva anche uno sfondo colorato: senza, il pulsante restava bianco su
+   bianco (testo invisibile). */
+.solo-btn.color-red { background: var(--red); }
+.solo-btn.color-green { background: var(--green); }
+.solo-btn.color-yellow { background: var(--yellow); }
+.solo-btn.color-blue { background: var(--blue); }
+.dot-sm { width: 11px; height: 11px; border-radius: 50%; display: inline-block; border: 1.5px solid rgba(255,255,255,0.7); flex-shrink: 0; }
+
+/* ---- estrazione mazziere (asso di cuori) ---- */
+.dealer-draw-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0 6px;
+}
+.dealer-slot {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 12px 6px 16px; border-radius: 12px; min-height: 92px;
+  position: relative;
+  background: transparent; border: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.dealer-slot-label {
+  font-weight: 700; font-size: 0.78rem; color: var(--muted-3);
+  display: flex; align-items: center; gap: 5px;
+  flex-wrap: wrap; justify-content: center; text-align: center;
+}
+.dealer-slot-label .swatch { width: 8px; height: 8px; margin: 0; }
+.dealer-slot.dealer-winner .dealer-slot-label { font-weight: 800; color: var(--ink); }
+.dealer-slot.dealer-winner {
+  animation: teamReadyGlow 1s ease-in-out infinite;
+  border-radius: 14px;
+}
+.dealer-slot.dealer-winner::before {
+  content: "👑"; position: absolute; top: -16px; font-size: 18px; left: 50%; transform: translateX(-50%);
+}
+.dealer-card-pop { animation: dealerCardPop 0.35s ease-out; }
+@keyframes dealerCardPop {
+  0% { transform: scale(0.4) rotate(-8deg); opacity: 0; }
+  70% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+#dealer-draw-banner {
+  text-align: center; margin-top: 14px; background: linear-gradient(135deg, #F3D98A, #D9A93E);
+  color: #3B2A18; border: none; border-radius: 999px; padding: 10px 18px;
+  font-size: 0.85rem; font-weight: 800; opacity: 0; transform: translateY(-6px);
+  box-shadow: 0 8px 18px -10px rgba(180,130,20,0.55);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#dealer-draw-banner.show { opacity: 1; transform: translateY(0); }
+
+button.primary {
+  width: 100%;
+  padding: 17px 14px;
+  font-size: 1rem;
+  font-weight: 800;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease, background 0.08s ease;
+  box-shadow: 0 8px 20px -8px rgba(201,154,58,0.55);
+}
+/* Link testuale senza bordo/sfondo, come "Cambia stanza" nel mockup —
+   prima riusava lo stesso stile a pillola bianca dei pulsanti bot/suono,
+   che nel mockup invece è un semplice link con icona. */
+.text-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: var(--muted-3);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.text-link-btn:hover { color: var(--ink); }
+button.primary:hover { background: var(--gold-hover); }
+button.primary:active {
+  transform: translateY(1px);
+  filter: brightness(0.96);
+}
+button.primary:disabled {
+  opacity: 0.4;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* Anticipazione della home v5 (torneo): per ora solo un'anteprima NON
+   cliccabile di cosa arriverà (elenco tornei + "Organizza un torneo"),
+   così si vede la futura struttura senza che sembri già funzionante —
+   vedi docs/v5-roadmap.md. */
+.home-divider { display: flex; align-items: center; gap: 10px; margin: 18px 0 14px; }
+.home-divider .hd-line { flex: 1; height: 1px; background: var(--panel-border); }
+.home-divider .hd-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.section-label-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-3); }
+.v5-tag {
+  font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--muted-2); background: #EFEAE0; border-radius: 999px; padding: 3px 8px; flex-shrink: 0;
+}
+.tourney-placeholder {
+  box-sizing: border-box; display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 1.5px dashed var(--panel-border); border-radius: 16px;
+  padding: 16px; color: var(--muted); font-size: 0.82rem; font-weight: 600; text-align: center;
+  margin-bottom: 14px;
+}
+.organize-btn-disabled {
+  all: unset; box-sizing: border-box; width: 100%; display: flex; align-items: center;
+  justify-content: center; gap: 8px; background: transparent; border: 1.5px dashed var(--panel-border);
+  border-radius: 16px; padding: 12px 16px; color: var(--muted); cursor: default;
+}
+.organize-btn-disabled .plus-badge {
+  display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px;
+  border-radius: 50%; background: var(--muted); color: #FFFFFF; font-size: 0.8rem; font-weight: 800; line-height: 1;
+}
+
+/* Passi numerati 1-2-3 nella lobby: guidano l'occhio nell'ordine giusto
+   (nome → colore → entra) invece di lasciare i tre blocchi alla stessa
+   altezza visiva. */
+.step-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #5A5145;
+}
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.68rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+button.secondary {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid var(--ink);
+  background: #FFFFFF;
+  margin: 4px;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.25);
+}
+button.secondary:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25);
+  filter: brightness(0.94);
+}
+button.danger {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #C24A50;
+  color: white;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.35);
+}
+button.danger:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.35);
+  filter: brightness(0.9);
+}
+
+/* Riga in cima: nome stanza a sinistra, pulsanti menu (solo icona) a
+   destra, sulla stessa riga — prima la stanza stava nella riga
+   identità (nome+squadra) più sotto, ora invece ci sta chi sei (vedi
+   .identity-row), qui resta solo il codice stanza. */
+.top-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+/* "Stanza" e il codice ora su due righe impilate (prima erano affiancate
+   sulla stessa riga) — il blocco intero resta centrato in verticale
+   sull'altezza dei pulsanti menu grazie ad align-items:center su
+   .top-actions-row. */
+.top-actions-room {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.top-actions-room-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted-3);
+}
+.top-actions-room-code {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.top-actions-icons { display: flex; gap: 6px; flex-shrink: 0; }
+/* Chi sei + squadra, tra il menu e il tabellone (prima erano insieme al
+   nome stanza nella stessa riga). flex-wrap invece di ellipsis/
+   troncamento: con un nome lungo o uno schermo stretto va a capo, ma il
+   testo resta sempre leggibile per intero. */
+.identity-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.identity-sep { color: var(--muted-3); font-weight: 400; }
+.identity-team {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--muted-3);
+}
+.identity-row .swatch { flex-shrink: 0; }
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid var(--panel-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background .12s ease, border-color .12s ease;
+}
+.icon-btn:hover { background: #F3EBD8; border-color: var(--gold); }
+.icon-btn-muted { background: #F3EBD8; border-color: #C99A3A; }
+/* Coppia di frecce "mossa precedente/successiva" per rivedere più di una
+   mossa indietro (vedi stepReplay) — un'unica capsula invece di due cerchi
+   separati, così occupa meno posto nella barra in alto già affollata di
+   icone, pur restando due bottoni distinti e ben separati al tocco. */
+.icon-btn-pair {
+  height: 34px;
+  border-radius: 17px;
+  background: #FFFFFF;
+  border: 1px solid var(--panel-border);
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.icon-btn-half {
+  width: 30px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background .12s ease;
+}
+.icon-btn-half:hover { background: #F3EBD8; }
+.icon-btn-half:first-child { border-right: 1px solid var(--panel-border); }
+.sound-test-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  padding: 8px 13px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: #FFFFFF;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .12s ease, background .12s ease;
+}
+.sound-test-btn:hover { background: #F3EBD8; border-color: var(--gold); }
+
+#board-wrap {
+  margin-bottom: 10px;
+  padding: 9px;
+  border-radius: 26px;
+  background: linear-gradient(160deg, #F3E3C4, #E9D3A5);
+  border: 1px solid #DEC58F;
+  box-shadow: inset 0 2px 10px rgba(120,90,30,0.12), 0 10px 26px -14px rgba(90,65,20,0.3);
+}
+
+.turn-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--panel-border);
+  border-radius: 16px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.turn-line.my-turn {
+  border: none;
+  background: linear-gradient(135deg, #F3D98A, #D9A93E);
+  box-shadow: 0 8px 18px -10px rgba(180,130,20,0.55);
+  animation: turnPulseScale 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes turnPulseScale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+.turn-timer {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.turn-line.my-turn .turn-timer { color: #6B4E12; opacity: .8; }
+.swatch { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+.swatch-red { background: var(--red); }
+.swatch-green { background: var(--green); }
+.swatch-yellow { background: var(--yellow); }
+.swatch-blue { background: var(--blue); }
+.you-badge { color: #8A7F6E; font-weight: 400; }
+.you-badge-strong {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: rgba(255,255,255,0.55);
+  color: #241C15; font-weight: 800; font-size: 0.72rem;
+  padding: 3px 9px; border-radius: 999px; margin-left: 2px;
+  text-transform: uppercase; letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.last-card-line {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 12px;
+  /* 10px come tutte le altre "card" impilate qui sotto (turn-line,
+     status-row, hand-row, chat-box, #board-wrap) — prima era 8px, unico
+     valore diverso nella pila, distanze non regolari. */
+  margin: 0 0 10px;
+  font-size: 0.78rem; color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+}
+.last-card-text { flex-shrink: 0; }
+.mini-card {
+  position: relative;
+  width: 24px; height: 32px; flex-shrink: 0;
+  border-radius: 4px;
+  border: 1px solid #A79A82;
+  background: linear-gradient(180deg, #fffefb, #f4ecd8);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.8) inset;
+  display: inline-block;
+}
+.mini-card.suit-red { color: #B03040; }
+.mini-card.suit-black { color: #241C15; }
+.mini-card-rank {
+  position: absolute; top: 1px; left: 2px;
+  font-size: 0.55rem; font-weight: 800; line-height: 1;
+}
+.mini-card.mini-card-burned {
+  filter: grayscale(0.7);
+  opacity: 0.75;
+}
+.mini-card-burn-badge {
+  position: absolute; bottom: -5px; right: -5px;
+  font-size: 0.6rem;
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.status-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  border: 1.5px solid var(--panel-border);
+  /* Senza questo, un riquadro con più contenuto degli altri tre (es. il
+     badge offline) non si adattava alla colonna 1fr della griglia sotto,
+     ma la allargava lui — mandando la riga fuori schermo (segnalato). Coi
+     figli già pronti a restringersi (status-name con ellissi, badge/icone
+     "nowrap" ma piccoli), min-width:0 lascia che sia la griglia a
+     comandare la larghezza, non il contenuto più ingombrante. */
+  min-width: 0;
+}
+/* Il giocatore di turno ha il bordo del SUO colore (come nel mockup
+   In-partita.dc.html), non un bordo dorato generico uguale per tutti. */
+.status-chip-active.sc-red { border-color: var(--red); box-shadow: 0 4px 12px -6px rgba(217,99,107,0.4); }
+.status-chip-active.sc-green { border-color: var(--green); box-shadow: 0 4px 12px -6px rgba(63,167,126,0.4); }
+.status-chip-active.sc-yellow { border-color: var(--yellow); box-shadow: 0 4px 12px -6px rgba(227,172,51,0.4); }
+.status-chip-active.sc-blue { border-color: var(--blue); box-shadow: 0 4px 12px -6px rgba(62,143,203,0.4); }
+/* flex:1 + min-width:0 fanno sì che il nome si restringa (ellissi) invece
+   di andare a capo in modo incoerente tra un box e l'altro a seconda che
+   sia presente o no l'icona del mazziere accanto. */
+.status-name { font-weight: 600; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.status-offline-warning {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #A5424A;
+  background: rgba(161,58,47,0.1);
+  border-radius: 6px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.mini-pawns { width: 62px; height: 14px; flex-shrink: 0; }
+.dealer-icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+.hand-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* Mentre una mossa è in salvataggio verso Firebase (vedi moveInFlight):
+   disattiva la mano e lo splitter/picker ancora aperto così non si può
+   avviare una seconda azione in parallelo con la prima non ancora
+   confermata dal server — un tap in più mostra comunque un toast di
+   avviso (vedi playMove/onCardClick), questo è solo il rinforzo visivo. */
+.move-in-flight .hand-row,
+.move-in-flight #picker-wrap {
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+
+
+.card-btn {
+  min-width: 54px;
+  width: 54px;
+  height: 76px;
+  padding: 4px;
+  border-radius: 6px;
+  border: 1.5px solid #A79A82;
+  background: linear-gradient(180deg, #fffefb, #f8f0dc);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.8) inset, 0 0 0 1px rgba(255,255,255,0.55) inset;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.card-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.8) inset;
+}
+.card-btn.suit-red { color: #B03040; }
+.card-btn.suit-black { color: #241C15; }
+.card-btn:disabled { opacity: 0.4; cursor: default; }
+.card-btn.selected { background: var(--gold-metallic); }
+/* Carta ricevuta dal compagno (vedi renderHand/state.lastReceivedCard):
+   bordo dorato spesso + bagliore, invece di toccare il disegno interno
+   della carta (filigrana/indice), per non riaprire quella discussione. */
+.card-btn.received-highlight {
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 0 2px rgba(201,154,58,0.35), 0 4px 10px rgba(201,154,58,0.5), 0 1px 0 rgba(255,255,255,0.8) inset, 0 0 0 1px rgba(255,255,255,0.55) inset;
+}
+.card-btn.card-burning {
+  pointer-events: none;
+  animation: cardBurn 0.45s ease-in forwards;
+}
+@keyframes cardBurn {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  20% { transform: translateY(0) rotate(-6deg); }
+  40% { transform: translateY(0) rotate(6deg); }
+  60% { transform: translateY(0) rotate(-4deg); opacity: 0.85; }
+  100% { transform: translateY(-6px) scale(0.75) rotate(3deg); opacity: 0; }
+}
+
+.card-corner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 0.95;
+}
+.card-corner-tl { top: 4px; left: 4px; }
+.card-corner-br { bottom: 4px; right: 4px; transform: rotate(180deg); }
+.card-corner-suit { width: 10px; height: 10px; }
+.card-center-watermark { opacity: 0.32; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.18)); }
+
+.choice-box {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 0;
+}
+
+/* Bottom sheet: sale dal fondo dello schermo sopra un backdrop scurito,
+   invece del vecchio riquadro incorniciato in linea nella pagina — stesso
+   pattern usato per 7/Jack/Regole (vedi openPicker/closePicker). */
+.picker-backdrop {
+  position: fixed; inset: 0; z-index: 399;
+  background: rgba(36,28,21,0.4);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.picker-backdrop.show { opacity: 1; pointer-events: auto; }
+
+.picker-overlay {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  z-index: 400;
+  border: none;
+  border-radius: 24px 24px 0 0;
+  background: var(--cream);
+  padding: 10px 18px calc(18px + env(safe-area-inset-bottom));
+  max-height: 78vh;
+  overflow-y: auto;
+  box-shadow: 0 -14px 32px rgba(36,28,21,0.28);
+  animation: pickerSlideUp 0.22s ease-out;
+  /* Trascinando la maniglia (vedi setupPickerDragToClose) il pannello
+     segue il dito verso il basso e, oltre una certa soglia, chiude per
+     davvero — come "Annulla"/tap sullo sfondo. Durante il trascinamento la
+     transizione è disattivata via JS (deve seguire il dito 1:1); qui serve
+     solo per lo scatto morbido all'apertura/rilascio e per tornare su
+     quando il trascinamento non basta a chiudere. */
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+@keyframes pickerSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Area toccabile allargata attorno alla maniglia (la sola barretta da 5px
+   sarebbe troppo piccola da afferrare col dito) — vedi openPicker. */
+.picker-handle-zone {
+  display: flex; justify-content: center; align-items: center;
+  padding: 6px 0 12px;
+  cursor: grab;
+  touch-action: none; /* il gesto verticale qui lo gestiamo noi (drag), non lo scroll del browser */
+}
+.picker-handle-zone:active { cursor: grabbing; }
+.picker-handle {
+  width: 40px; height: 5px; border-radius: 999px;
+  background: var(--panel-border);
+}
+.picker-overlay .choice-box {
+  max-height: none;
+  overflow-y: visible;
+  margin-top: 0;
+}
+
+/* Toast: sostituisce alert() per errori/messaggi — non blocca il resto
+   della pagina (vedi showToast/dismissToast). z-index sopra i picker,
+   così un messaggio (es. un errore di rete) resta leggibile anche se
+   spunta mentre un picker è aperto. */
+.toast-overlay {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  max-width: 480px; margin: 0 auto;
+  z-index: 500;
+  padding: 0 18px calc(18px + env(safe-area-inset-bottom));
+  display: flex; justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.toast-overlay.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.toast-box {
+  width: 100%;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 16px;
+  padding: 14px 14px 14px 18px;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 10px 28px rgba(36,28,21,0.4);
+}
+.toast-text { flex: 1; font-size: 0.88rem; font-weight: 600; line-height: 1.4; }
+.toast-ok-btn {
+  flex-shrink: 0;
+  background: var(--gold-metallic);
+  color: var(--ink);
+  border: none; border-radius: 999px;
+  padding: 9px 20px;
+  font-weight: 800; font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* Banner "nuova versione disponibile" — vedi checkForNewVersion. In alto
+   (non in basso come toast/picker) così non si confonde con quelli e non
+   copre i controlli di gioco; non è mai un reload forzato, solo un avviso
+   discreto con un tasto per farlo quando si vuole. */
+.version-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 600;
+  padding: calc(10px + env(safe-area-inset-top)) 14px 10px;
+  background: var(--gold-metallic);
+  color: var(--ink);
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 14px rgba(36,28,21,0.25);
+  animation: versionBannerSlideDown 0.25s ease-out;
+}
+@keyframes versionBannerSlideDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.version-banner-text { flex: 1; font-size: 0.82rem; font-weight: 700; }
+.version-banner-btn {
+  flex-shrink: 0;
+  background: var(--ink); color: var(--cream);
+  border: none; border-radius: 999px;
+  padding: 7px 16px; font-weight: 800; font-size: 0.8rem;
+  cursor: pointer;
+}
+.version-banner-dismiss {
+  flex-shrink: 0;
+  background: transparent; border: none;
+  color: var(--ink); font-size: 1rem; font-weight: 800;
+  cursor: pointer; padding: 4px 6px; opacity: 0.7;
+}
+
+button.secondary.selected {
+  background: var(--gold-metallic);
+  border-color: var(--ink);
+}
+
+/* Riquadro "picker" del 7: una card per pedina (icona a dado + testo +
+   pulsanti tondi -/+), non più una semplice riga di testo — come nel
+   mockup Picker-sette.dc.html. */
+.seven-pips { display: flex; gap: 6px; margin: 12px 0 16px; }
+.seven-pip { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--panel-border); }
+.seven-pip.filled { background: var(--gold); border-color: var(--gold); }
+.seven-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.seven-row.has-steps { background: #FBF1D8; border-color: var(--gold); }
+.seven-row-text { flex-grow: 1; font-size: 0.84rem; font-weight: 700; color: #5A5145; }
+.seven-step-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1.5px solid var(--panel-border); background: var(--cream);
+  font-size: 1.15rem; font-weight: 800; color: #5A5145; cursor: pointer;
+  flex-shrink: 0;
+}
+.seven-row.has-steps .seven-step-btn { background: #FFFFFF; }
+.seven-val {
+  min-width: 18px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.94rem;
+  color: var(--ink);
+}
+
+/* Riquadro "picker" del regolamento: badge quadrato colorato + titolo +
+   corpo, invece di solo testo in fila — come nel mockup Regole.dc.html. */
+.rule-row { display: flex; gap: 12px; margin-bottom: 14px; }
+.rule-icon {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.86rem;
+}
+.rule-title { font-size: 0.84rem; font-weight: 800; margin-bottom: 2px; color: var(--ink); }
+.rule-body { font-size: 0.75rem; font-weight: 600; color: #6B6152; line-height: 1.5; }
+
+/* Picker del Jack: barra di avanzamento a 2 slot (pedina scelta / da
+   scegliere) sopra la griglia di "chip" cliccabili — come nel mockup
+   Picker-jack.dc.html, non più un elenco semplice di bottoni. */
+.jack-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.jack-slot {
+  display: flex; align-items: center; gap: 8px;
+  border-radius: 12px; padding: 8px 12px; font-size: 0.78rem; font-weight: 700;
+  flex: 1; min-width: 0;
+}
+.jack-slot.filled { background: #FBF1D8; border: 1.5px solid var(--gold); color: #6B4E12; }
+.jack-slot.empty {
+  background: #FFFFFF; border: 1.5px dashed var(--panel-border); color: var(--muted-3);
+  justify-content: center;
+}
+.jack-slot span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jack-chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }
+.jack-chip {
+  display: flex; align-items: center; gap: 9px;
+  background: #FFFFFF; border: 1.5px solid var(--panel-border); border-radius: 14px;
+  padding: 10px; cursor: pointer; text-align: left;
+}
+.jack-chip:hover { border-color: var(--gold); }
+.pawn-choice-chips { grid-template-columns: 1fr; margin-bottom: 14px; }
+.jack-chip span { font-size: 0.72rem; font-weight: 700; color: #5A5145; line-height: 1.3; }
+
+.teams-hint {
+  margin-top: -6px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 2vw, 10px);
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow-x: auto;
+}
+.team-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(3px, 1vw, 5px);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  padding: clamp(4px, 1.2vw, 5px) clamp(7px, 2.4vw, 12px);
+  font-size: clamp(0.68rem, 2.6vw, 0.82rem);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.team-plus { opacity: 0.55; margin: 0 1px; font-weight: 700; }
+.team-pill .swatch { margin: 0 !important; flex-shrink: 0; }
+.vs-label { font-size: clamp(0.62rem, 2vw, 0.72rem); font-weight: 700; color: #A79A82; text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; }
+
+.burn-hint {
+  width: 100%;
+  background: #F7DCDE;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+/* Timeline verticale (linea + pallini agganciati), come in Registro.dc.html
+   — non più righe separate da un bordo orizzontale con solo un puntino.
+   Vive dentro il foglio a comparsa aperto dal bottone "Registro" tra i
+   pulsanti menu (vedi openLogPicker), non più in un riquadro fisso nella
+   pagina. */
+.log-timeline { position: relative; max-height: 55vh; overflow-y: auto; }
+.log-timeline::before {
+  content: ""; position: absolute; left: 10px; top: 6px; bottom: 6px; width: 2px;
+  background: var(--panel-border);
+}
+.log-line { padding-bottom: 16px; color: var(--muted-3); display: flex; align-items: flex-start; gap: 12px; position: relative; }
+.log-line:last-child { padding-bottom: 0; }
+.log-dot {
+  width: 21px; height: 21px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1; box-shadow: 0 0 0 3px #FFFFFF;
+}
+.log-text { padding-top: 2px; line-height: 1.4; }
+.log-text b { color: var(--ink); }
+.log-controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.log-toggle {
+  background: none;
+  border: none;
+  color: var(--gold-deep);
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 160px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+/* Dentro il foglio a comparsa la chat è l'unico contenuto (non più una
+   sezione tra tante altre nella pagina), quindi può usare più spazio in
+   verticale invece dei 160px pensati per stare compressa in linea. */
+.picker-overlay .chat-messages { max-height: 48vh; }
+
+/* Bottone rotondo che apre la chat — vedi #chat-wrap in renderGameShell
+   per il perché sta qui (subito sotto le pedine) invece che in fondo alla
+   pagina o incollato allo schermo. */
+.chat-fab-row { display: flex; justify-content: center; flex-shrink: 0; margin-bottom: 10px; }
+.chat-fab {
+  position: relative;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--gold); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 18px -6px rgba(201,154,58,0.55);
+  padding: 0; flex-shrink: 0;
+}
+.chat-fab:hover { background: var(--gold-hover); }
+.chat-fab-badge {
+  position: absolute; top: -4px; right: -4px;
+  background: var(--red); color: #fff; font-size: 0.62rem; font-weight: 800;
+  border-radius: 999px; min-width: 18px; height: 18px; padding: 0 4px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--cream);
+}
+.chat-row { display: flex; align-items: flex-end; gap: 8px; }
+.chat-row.own { justify-content: flex-end; }
+.chat-avatar {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 800; color: #fff;
+}
+.chat-avatar-red { background: var(--red); }
+.chat-avatar-green { background: var(--green); }
+.chat-avatar-yellow { background: var(--yellow); }
+.chat-avatar-blue { background: var(--blue); }
+.chat-bubble-wrap { max-width: 78%; }
+.chat-bubble-name { font-size: 10px; font-weight: 700; margin: 0 0 2px 2px; }
+.chat-bubble-name-red { color: var(--red); }
+.chat-bubble-name-green { color: #2C7A56; }
+.chat-bubble-name-yellow { color: #B8891E; }
+.chat-bubble-name-blue { color: var(--blue); }
+.chat-bubble { border-radius: 14px 14px 14px 4px; padding: 9px 13px; font-size: 13px; font-weight: 600; }
+.chat-bubble-red { background: #F7DCDE; color: #8B3A40; }
+.chat-bubble-green { background: #E7F4EC; color: #2C5940; }
+.chat-bubble-yellow { background: #FBF1D8; color: #6B4E12; }
+.chat-bubble-blue { background: #DCE9F3; color: #2B5A7A; }
+.chat-row.own .chat-bubble { border-radius: 14px 14px 4px 14px; color: #fff; }
+.chat-row.own .chat-bubble-red { background: var(--red); }
+.chat-row.own .chat-bubble-green { background: var(--green); }
+.chat-row.own .chat-bubble-yellow { background: var(--yellow); color: #3B2A0E; }
+.chat-row.own .chat-bubble-blue { background: var(--blue); }
+.chat-input-row { display: flex; gap: 8px; }
+.chat-input-row input {
+  flex: 1;
+  padding: 11px 14px;
+  border: 1.5px solid var(--panel-border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: #FFFFFF;
+}
+.chat-send-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--gold); border: none;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; cursor: pointer;
+}
+.chat-send-btn:hover { background: var(--gold-hover); }
+
+.win-banner-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(36,28,21,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 20px;
+  animation: winFade 0.25s ease-out;
+}
+.win-banner {
+  background: var(--cream);
+  color: var(--ink);
+  text-align: center;
+  padding: 30px 24px;
+  border-radius: 22px;
+  font-weight: 700;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 20px 48px -12px rgba(36,28,21,0.4);
+  animation: winPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 340px;
+  width: 100%;
+}
+@keyframes winFade { from { opacity: 0; } to { opacity: 1; } }
+.win-trophy {
+  line-height: 1; margin: 0 auto 16px; width: 62px; height: 62px;
+  border-radius: 50%; background: linear-gradient(160deg, #F3D98A, #C99A3A);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 18px -8px rgba(180,130,20,0.6);
+}
+.win-eyebrow {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted-3); margin-bottom: 6px;
+}
+.win-team-dots { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 6px; }
+.win-team-dots span { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+.win-banner h2 { margin: 0 0 4px; font-size: 1.3rem; }
+.win-names { margin: 0 0 20px; font-size: 0.82rem; font-weight: 600; color: var(--muted-3); }
+@keyframes winPop {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.confetti-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5000;
+}
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  animation-name: confettiFall;
+  animation-timing-function: cubic-bezier(0.35, 0, 0.65, 1);
+  animation-fill-mode: forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translate(0, 0) rotate(var(--rot0)); opacity: 1; }
+  100% { transform: translate(var(--drift), 110vh) rotate(calc(var(--rot0) + 540deg)); opacity: 0.9; }
+}
+
+.board-cell { cursor: default; }
+
+.conn-lost {
+  background: #C24A50;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 6px 16px -8px rgba(194,74,80,0.5);
+}
+
+.a2hs-hint {
+  margin-top: 14px;
+  background: #FBF1D8;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  justify-content: space-between;
+}
+.a2hs-close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #8A7F6E;
+  flex-shrink: 0;
+}
+
 </style>
-<script>
-// V06 runtime guard: legacy engine callbacks may fire while the new UI is transitioning.
-// Never let a missing optional name field crash the whole lobby; the active UI owns its fields.
-window.addEventListener("unhandledrejection", function(ev){
-  const msg = String(ev.reason && (ev.reason.message || ev.reason) || "");
-  if (msg.includes("#name-input") && msg.includes("null is not an object")) {
-    ev.preventDefault();
-    const active = document.querySelector("#name-input, #draft-name-input, #recover-name-input");
-    if (active) active.focus();
-    if (typeof window.showToast === "function") window.showToast("Inserisci il tuo nome prima di entrare.");
-  }
-});
-</script>
 </head>
-<body><div id="app"></div><div id="zero-toasts"></div>
+<body>
+<div id="app"></div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js" crossorigin="anonymous"></script>
 
@@ -3344,14 +4738,9 @@ async function shareInviteLink(roomId) {
   prompt("Copia questo link per invitare i tuoi amici:", link);
 }
 
-async function continueFromRoomCode(roomCodeArg = "") {
+async function continueFromRoomCode() {
   unlockAudio();
-  // V04: support both the original engine input and the new V02/V03 home input.
-  // The previous build passed the new input value as an argument but the engine
-  // ignored it and queried #room-input, which no longer existed.
-  const input = document.querySelector("#room-input") || document.querySelector("#v02-room");
-  const rawRoomId = roomCodeArg || (input ? input.value : "");
-  const roomId = String(rawRoomId || "").trim().toUpperCase();
+  const roomId = $("#room-input").value.trim().toUpperCase();
   if (!roomId) return showToast("Inserisci un codice stanza.");
   myRoomId = roomId;
 
@@ -3897,12 +5286,7 @@ function selectColor(c) {
 
 async function joinManualRoom(roomId) {
   unlockAudio();
-  const nameEl = document.querySelector('#name-input');
-  if (!nameEl) {
-    showToast('Inserisci il tuo nome prima di entrare.');
-    return;
-  }
-  const name = String(nameEl.value || '').trim();
+  const name = $("#name-input").value.trim();
   if (!myColor) return showToast("Scegli un colore.");
   myRoomId = roomId;
   myName = name || colorLabel(myColor);
@@ -4187,9 +5571,8 @@ function renderDraftNameScreen(roomId) {
 
 async function joinDraftRoom(roomId) {
   unlockAudio();
-  const nameEl = $("#name-input") || $("#draft-name-input") || $("#recover-name-input");
-  const name = nameEl ? nameEl.value.trim() : String(myName || "").trim();
-  if (!name) return showToast("Inserisci il tuo nome prima di entrare.");
+  const name = $("#name-input").value.trim();
+  if (!name) return showToast("Inserisci il tuo nome.");
   myRoomId = roomId;
   myName = name;
   myToken = getOrCreateRoomToken(roomId);
@@ -8049,7 +9432,7 @@ function applyInviteLinkIfPresent() {
   }
   roomId = roomId.trim().toUpperCase();
   if (!roomId) return;
-  const input = document.getElementById("room-input") || document.getElementById("v02-room");
+  const input = document.getElementById("room-input");
   if (input) input.value = roomId;
   try {
     history.replaceState(null, "", location.pathname);
@@ -8135,508 +9518,147 @@ function showNewVersionBanner(newVersion) {
 setInterval(checkForNewVersion, VERSION_CHECK_INTERVAL_MS);
 </script>
 
-<script id="tok-v01-ui">
+<style id="tok-v08-3d">
+:root{--vbg:#050912;--vpanel:rgba(12,19,32,.82);--vline:rgba(255,255,255,.10);--vtext:#eef5ff;--vmuted:#8ea0b9;--vblue:#35c8ff;--vred:#e95c67;--vgreen:#35c48d;--vyellow:#f2c34f;--vnavy:#0b1424}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 50% 8%,#12233b 0,#070d18 42%,#02050b 100%);color:var(--vtext);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+#app{min-height:100vh;width:100%;max-width:none!important}.tok8-home{min-height:100vh;display:grid;place-items:center;padding:28px 18px;position:relative;overflow:hidden}.tok8-home:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 35%,rgba(53,200,255,.12),transparent 35%);pointer-events:none}.tok8-home-card{width:min(760px,100%);padding:38px;border:1px solid var(--vline);border-radius:34px;background:linear-gradient(145deg,rgba(19,31,50,.88),rgba(5,9,17,.94));box-shadow:0 40px 100px rgba(0,0,0,.48);position:relative;z-index:1}.tok8-kicker{letter-spacing:.28em;text-transform:uppercase;font-weight:800;color:#8498b5;font-size:.72rem}.tok8-logo{font-size:clamp(5rem,17vw,9rem);font-weight:1000;letter-spacing:-.08em;line-height:.8;margin:24px 0 30px;background:linear-gradient(135deg,#fff 0 45%,#35c8ff 55% 100%);-webkit-background-clip:text;background-clip:text;color:transparent}.tok8-home p{color:#9fb0c8;font-size:1.05rem;line-height:1.65;max-width:620px}.tok8-form{display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:28px}.tok8-form input,.tok8-manual input{width:100%;min-height:54px;border-radius:16px;border:1px solid var(--vline);background:#07101e;color:#fff;padding:0 17px;font-size:16px}.tok8-primary{border:0;border-radius:16px;background:linear-gradient(135deg,#38d1ff,#2786ff);color:#03101b;font-weight:1000;padding:0 26px;min-height:54px;cursor:pointer;box-shadow:0 14px 30px rgba(39,134,255,.25)}
+/* Legacy lobby/game classes are restyled, not used as the primary shell. */
+.lobby-card{max-width:760px!important;margin:30px auto!important;background:linear-gradient(145deg,rgba(19,31,50,.94),rgba(5,9,17,.97))!important;border:1px solid var(--vline)!important;border-radius:30px!important;color:var(--vtext)!important;box-shadow:0 35px 90px rgba(0,0,0,.5)!important}.lobby-card .muted,.lobby-card p{color:var(--vmuted)!important}.lobby-card input{background:#07101e!important;color:#fff!important;border-color:var(--vline)!important}.lobby-card .primary{background:linear-gradient(135deg,#38d1ff,#2786ff)!important;color:#03101b!important;border:0!important}.mode-choice{gap:14px!important}.mode-btn{background:#0a1423!important;border:1px solid var(--vline)!important;color:#fff!important;border-radius:18px!important}.color-card{background:#0a1423!important;color:#fff!important;border-color:var(--vline)!important}.color-card.selected{box-shadow:0 0 0 2px var(--vblue),0 12px 30px rgba(53,200,255,.18)!important}.bot-btn,.text-link-btn{background:#0b1424!important;color:#dce8f8!important;border-color:var(--vline)!important}
+/* 3D game table */
+.tok8-game{min-height:100vh;padding:14px 14px 28px;display:flex;flex-direction:column;gap:12px;max-width:1400px;margin:0 auto}.tok8-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.tok8-brand{font-weight:1000;letter-spacing:.18em;font-size:.86rem}.tok8-room{font-size:.78rem;color:var(--vmuted)}.tok8-actions{display:flex;gap:7px}.tok8-actions button{width:42px;height:42px;border-radius:14px;border:1px solid var(--vline);background:rgba(11,20,36,.78);color:#dce8f8;cursor:pointer}.tok8-table-wrap{position:relative;display:grid;place-items:center;min-height:min(72vw,780px);overflow:visible}.tok8-table-shadow{position:absolute;width:min(92vw,820px);aspect-ratio:1;border-radius:24%;background:radial-gradient(ellipse at center,rgba(0,0,0,.65),transparent 68%);filter:blur(28px);transform:translateY(40px);pointer-events:none}.tok8-table{width:min(88vw,780px);aspect-ratio:1;position:relative;transform:perspective(1100px) rotateX(48deg) rotateZ(0deg);transform-style:preserve-3d;transition:transform .4s ease}.tok8-board-side{position:absolute;inset:0;border-radius:30px;background:linear-gradient(135deg,#07101c,#02050a);transform:translateZ(-24px);box-shadow:0 28px 35px rgba(0,0,0,.6)}.tok8-board-face{position:absolute;inset:0;border-radius:30px;background:radial-gradient(circle at 50% 45%,#172b43,#0a1627 62%,#06101d);border:2px solid rgba(255,255,255,.13);box-shadow:inset 0 0 0 8px rgba(0,0,0,.12),inset 0 0 50px rgba(53,200,255,.06);transform:translateZ(0);transform-style:preserve-3d}.tok8-grid{position:absolute;inset:3.5%;transform-style:preserve-3d}.tok8-cell{position:absolute;width:7.1%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) translateZ(7px);background:radial-gradient(circle at 35% 30%,#f7fbff 0,#b8c7d8 42%,#5e7187 100%);border:2px solid rgba(255,255,255,.28);box-shadow:0 7px 9px rgba(0,0,0,.5),inset 0 2px 4px rgba(255,255,255,.55);cursor:pointer;transition:transform .18s,box-shadow .18s,filter .18s}.tok8-cell:hover{transform:translate(-50%,-50%) translateZ(12px) scale(1.06)}.tok8-cell.special{background:radial-gradient(circle at 35% 30%,#344e6a,#15263b 60%,#0b1523);border-color:var(--cell-color,#fff)}.tok8-cell.home{background:radial-gradient(circle at 35% 30%,#2d425b,#111f31 65%,#09121f);border-color:var(--cell-color,#fff)}.tok8-cell.legal{box-shadow:0 0 0 5px rgba(53,200,255,.35),0 0 25px rgba(53,200,255,.8),0 9px 12px rgba(0,0,0,.55);filter:brightness(1.25)}.tok8-cell.legal:after{content:"";position:absolute;inset:18%;border-radius:50%;border:2px solid rgba(53,200,255,.9);animation:tokPulse 1s infinite}@keyframes tokPulse{50%{transform:scale(.72);opacity:.45}}
+.tok8-path{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;opacity:.35}.tok8-path i{position:absolute;display:block;width:7px;height:7px;border-radius:50%;background:#8aa0b8;transform:translate(-50%,-50%) translateZ(3px)}
+.tok8-pawn{position:absolute;width:8.2%;aspect-ratio:.72;transform:translate(-50%,-80%) translateZ(28px);transform-style:preserve-3d;z-index:10;pointer-events:none}.tok8-pawn .body{position:absolute;left:10%;right:10%;bottom:8%;top:22%;border-radius:42% 42% 28% 28%;background:linear-gradient(145deg,var(--pawn-hi),var(--pawn) 55%,var(--pawn-dark));border:1px solid rgba(255,255,255,.38);box-shadow:0 12px 10px rgba(0,0,0,.5),inset 3px 3px 4px rgba(255,255,255,.3);transform:translateZ(12px)}.tok8-pawn .head{position:absolute;left:22%;right:22%;top:4%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff9,transparent 20%),linear-gradient(145deg,var(--pawn-hi),var(--pawn));border:1px solid rgba(255,255,255,.4);box-shadow:0 7px 7px rgba(0,0,0,.4);transform:translateZ(18px)}.tok8-pawn .base{position:absolute;left:4%;right:4%;bottom:0;height:20%;border-radius:50%;background:linear-gradient(180deg,var(--pawn),var(--pawn-dark));box-shadow:0 8px 8px rgba(0,0,0,.55);transform:translateZ(3px)}
+.tok8-controls{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:12px;align-items:start}.tok8-panel{background:var(--vpanel);border:1px solid var(--vline);border-radius:20px;padding:14px;backdrop-filter:blur(14px);box-shadow:0 16px 40px rgba(0,0,0,.25)}.tok8-turn{font-size:1rem;font-weight:900}.tok8-hand{display:flex;gap:10px;overflow-x:auto;padding:6px 2px 10px}.tok8-card{flex:0 0 76px;height:108px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:linear-gradient(145deg,#f8fbff,#9fb2c8);color:#07101e;box-shadow:0 12px 18px rgba(0,0,0,.42),inset 0 2px 3px #fff9;position:relative;cursor:pointer;transform:perspective(400px) rotateX(0) translateZ(0);transition:transform .18s,box-shadow .18s}.tok8-card:hover,.tok8-card:focus{transform:translateY(-10px) rotateX(7deg) translateZ(12px);box-shadow:0 22px 28px rgba(0,0,0,.48)}.tok8-card.disabled{opacity:.48;cursor:not-allowed}.tok8-card .rank{position:absolute;left:9px;top:7px;font-weight:1000;font-size:1.25rem}.tok8-card .suit{position:absolute;right:9px;bottom:7px;font-size:1.6rem}.tok8-card.red{color:#bd3045}.tok8-side{display:flex;flex-direction:column;gap:10px}.tok8-side .status-row{display:grid!important;grid-template-columns:1fr 1fr;gap:7px}.tok8-side .status-chip{background:#091425!important;border-color:var(--vline)!important;color:#e8f1fc!important;border-radius:14px!important}.tok8-side .status-name{color:#e8f1fc!important}.tok8-side .mini-pawns circle{stroke-width:2}.tok8-bottom{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}.tok8-bottom .chat-fab{background:linear-gradient(135deg,#1c9ed2,#276cff)!important}.tok8-hidden-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
+/* Keep original pickers usable, but fit them to the new theme. */
+.picker-backdrop{background:rgba(0,0,0,.72)!important;backdrop-filter:blur(8px)}.choice-box,.rules-box{background:#0a1423!important;color:#eef5ff!important;border-color:var(--vline)!important;box-shadow:0 30px 80px rgba(0,0,0,.6)!important}.choice-box .muted,.rules-box .muted{color:var(--vmuted)!important}.win-banner-backdrop{background:rgba(0,0,0,.78)!important}.win-banner{background:linear-gradient(145deg,#10233b,#07101d)!important;color:#fff!important;border-color:rgba(53,200,255,.25)!important}
+@media(max-width:850px){.tok8-game{padding:9px}.tok8-table-wrap{min-height:98vw}.tok8-table{width:92vw}.tok8-controls{grid-template-columns:1fr}.tok8-side{order:2}.tok8-home-card{padding:28px 20px}.tok8-form{grid-template-columns:1fr}.tok8-primary{min-height:52px}.tok8-card{flex-basis:70px;height:100px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
 
-/* ==============================================================
-   TOK REBORN — NEW FRONTEND ONLY
-   The game engine, Firebase transactions, rules and state schema are not
-   replaced. This layer only replaces presentation/rendering and delegates
-   actions to the existing engine functions.
-   ============================================================== */
+<script id="tok-v08-controller">
 (function(){
-  const C = {red:'var(--red)',green:'var(--green)',yellow:'var(--yellow)',blue:'var(--blue)'};
-  const esc = (v)=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  function page(cls=''){ const d=document.createElement('div'); d.className='tok-page '+cls; return d; }
-  function colorName(c){ try{return colorLabel(c)}catch{return c} }
-  function dot(c,cls=''){ return el('span',{class:'dot '+c+' '+cls}); }
-  function card3d(card,enabled,onClick,highlight=false){
-    const rank=card.slice(0,-1), suit=card.slice(-1), red=['♥','♦'].includes(suit);
-    return el('button',{class:'card-3d '+(red?'red ':'')+(highlight?'highlight ':'')+(enabled?'':'disabled'),onclick:onClick,disabled:!enabled},
-      el('span',{class:'card-rank'},rank),el('span',{class:'card-suit'},suit));
+  const V8 = {
+    colors:{red:'#e95c67',green:'#35c48d',yellow:'#f2c34f',blue:'#49a8ff'},
+    hi:{red:'#ff9aa3',green:'#79e3bb',yellow:'#ffe28b',blue:'#91d1ff'},
+    dark:{red:'#8d2c38',green:'#167552',yellow:'#9c7415',blue:'#1f6094'}
+  };
+  const oldBuildBoardSVG = typeof buildBoardSVG === 'function' ? buildBoardSVG : null;
+
+  function roomValue(){const e=document.getElementById('room-input');return e?e.value.trim().toUpperCase():''}
+  function nameValue(){const e=document.getElementById('name-input');return e?e.value.trim():myName||''}
+
+  function v8Home(){
+    const root=document.getElementById('app'); root.innerHTML='';
+    const card=document.createElement('section'); card.className='tok8-home-card';
+    card.innerHTML='<div class="tok8-kicker">TORVAIANICA · DIGITAL TABLE · V08</div><div class="tok8-logo">TOK</div><p>Il gioco originale, con tutte le regole e il multiplayer Firebase, dentro una nuova esperienza da tavolo 3D.</p>';
+    const form=document.createElement('div'); form.className='tok8-form';
+    const inp=document.createElement('input'); inp.id='room-input'; inp.placeholder='CODICE STANZA · es. TORVA1'; inp.value=myRoomId||''; inp.autocomplete='off'; inp.setAttribute('aria-label','Codice stanza');
+    const btn=document.createElement('button'); btn.id='continue-btn'; btn.className='tok8-primary'; btn.textContent='ENTRA NEL TAVOLO'; btn.addEventListener('click',()=>continueFromRoomCode());
+    form.append(inp,btn); card.append(form);
+    const hint=document.createElement('div'); hint.style.cssText='margin-top:18px;color:#6f829e;font-size:.78rem'; hint.textContent='Puoi creare una nuova stanza o entrare in una stanza esistente.'; card.append(hint);
+    root.className=''; root.append(card); root.classList.add('tok8-home');
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter')continueFromRoomCode()});
   }
-  function clearApp(){const r=$('#app'); if(r) r.innerHTML=''; return r;}
 
-  /* ---------- HOME / LOBBY ---------- */
-  renderLobby = function(){
-    const root=clearApp(); const p=page('home');
-    const hero=el('div',{class:'home-hero'},
-      el('div',{class:'home-orbit'}),
-      el('div',{class:'hero-board'},
-        el('div',{class:'board-3d'},el('div',{class:'board-svg-wrap',id:'home-board'})),
-      ),el('i',{class:'hero-pulse hp1'}),el('i',{class:'hero-pulse hp2'}),el('i',{class:'hero-pulse hp3'}));
-    const panel=el('div',{class:'home-panel glass'},
-      el('div',{class:'eyebrow'},'THE SOCIAL BOARD GAME · REBORN'),
-      el('div',{class:'brand'},'TOK'),el('div',{class:'brand-sub'},'A STRATEGIC TABLETOP EXPERIENCE'),
-      el('div',{class:'home-title'},'Il tabellone è vivo.'),
-      el('p',{class:'home-copy'},'Una nuova interfaccia. La stessa partita. Il tabellone resta il cuore dell’esperienza, mentre lobby, HUD, carte e animazioni entrano in una nuova dimensione.'),
-      el('input',{id:'room-input',class:'room-input',placeholder:'CODICE STANZA · ES. TORVA1',value:myRoomId||'',maxlength:14}),
-      el('button',{id:'continue-btn',class:'primary-3d',onclick:continueFromRoomCode},'ENTRA NELLA STANZA  →'),
-      el('button',{class:'secondary-3d',onclick:testSound},'◉ TEST AUDIO'),
-      el('div',{class:'home-links'},el('div',{class:'home-link'},'3D BOARD'),el('div',{class:'home-link'},'ONLINE'),el('div',{class:'home-link'},'4 PLAYERS')),
-      el('div',{style:'margin-top:18px;font-size:.62rem;color:#56627a;letter-spacing:.08em'},`TOK · ${APP_VERSION||''} · 2026`));
-    p.append(hero,panel);root.appendChild(p);
-    try{ const wrap=$('#home-board'); const svg=buildBoardSVG(wrap,BOARD); svg.style.pointerEvents='none'; }catch(e){console.error(e)}
-  };
+  renderLobby=function(){v8Home()};
 
-  renderModeChoice = function(roomId){
-    const root=clearApp(), p=page('stage-page');
-    p.append(el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'NUOVA STANZA · '+roomId)),el('button',{class:'small-btn',onclick:renderLobby},'← CAMBIA')),
-      el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'ROOM PROTOCOL'),el('h1',{style:'font-size:2rem;margin:8px 0 8px;letter-spacing:-.05em'},'Come vuoi giocare?'),el('p',{style:'color:#8794ad;max-width:600px;line-height:1.5'},'Scegli il modo in cui questa stanza assegna i colori. La logica di gioco rimane quella del motore TOK.'),
-        el('div',{class:'mode-grid',style:'margin-top:20px'},
-          el('button',{class:'choice-3d',onclick:()=>pickRoomMode(roomId,'manual')},el('b',{},'MANUALE'),el('span',{},'I giocatori scelgono direttamente i colori e i posti.')),
-          el('button',{class:'choice-3d',onclick:()=>pickRoomMode(roomId,'draw')},el('b',{},'ESTRAZIONE'),el('span',{},'Entrate nella stanza e lasciate al gioco l’assegnazione delle coppie e dei colori.')))));
-    root.appendChild(p);
-  };
+  function addActionButton(parent,label,fn){const b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',fn);parent.append(b);return b}
 
-  renderNameRecoveryScreen = function(roomId){
-    const root=clearApp(), p=page('stage-page');
-    const names=Object.values((currentState&&currentState.players)||{}).filter(Boolean);
-    p.append(el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'RIENTRO · '+roomId)),el('button',{class:'small-btn',onclick:renderLobby},'← CAMBIA')),
-      el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'RECONNECT'),el('h1',{style:'font-size:2rem;margin:8px 0'},'Bentornato.'),el('p',{style:'color:#8794ad;line-height:1.5'},'Sei già presente in questa stanza. Inserisci il nome usato nella partita per recuperare il tuo posto.'),
-        el('input',{id:'recover-name-input',class:'room-input',placeholder:'NOME GIOCATORE',maxlength:18}),
-        el('button',{id:'recover-btn',class:'primary-3d',onclick:()=>recoverByName(roomId)},'RECUPERA POSTO'),
-        el('button',{class:'secondary-3d',onclick:()=>continueAsNewPlayer(roomId)},'SONO UN NUOVO GIOCATORE')));
-    root.appendChild(p);
-  };
+  function build3DBoard(){
+    const wrap=document.getElementById('board-wrap'); wrap.innerHTML='';
+    const stage=document.createElement('div'); stage.className='tok8-table-wrap';
+    const shadow=document.createElement('div'); shadow.className='tok8-table-shadow'; stage.append(shadow);
+    const table=document.createElement('div'); table.className='tok8-table'; table.id='tok8-table';
+    const side=document.createElement('div'); side.className='tok8-board-side';
+    const face=document.createElement('div'); face.className='tok8-board-face';
+    const grid=document.createElement('div'); grid.className='tok8-grid'; grid.id='tok8-grid';
+    face.append(grid); table.append(side,face); stage.append(table); wrap.append(stage);
+    // Transparent SVG overlay: original replay effects remain functional.
+    const ns='http://www.w3.org/2000/svg'; const svg=document.createElementNS(ns,'svg'); svg.setAttribute('viewBox',`0 0 ${BOARD.boardSizeMm} ${BOARD.boardSizeMm}`); svg.classList.add('tok8-hidden-svg'); svg.id='board-svg'; svg.style.opacity='0.42'; svg.style.zIndex='4'; face.append(svg); boardSvg=svg;
+    const line=(a,b,stroke)=>{const l=document.createElementNS(ns,'line');l.setAttribute('x1',a.x);l.setAttribute('y1',a.y);l.setAttribute('x2',b.x);l.setAttribute('y2',b.y);l.setAttribute('stroke',stroke||'rgba(160,190,220,.65)');l.setAttribute('stroke-width','2.2');l.setAttribute('stroke-linecap','round');l.setAttribute('vector-effect','non-scaling-stroke');svg.append(l)};
+    for(let i=0;i<BOARD.loopCells.length;i++) line(BOARD.loopCells[i],BOARD.loopCells[(i+1)%BOARD.loopCells.length]);
+    for(const color of BOARD.order){let prev=BOARD.loopCells[BOARD.baseIndex[color]];for(const p of BOARD.homePaths[color]){line(prev,p,V8.colors[color]);prev=p;}}
+    const all=[];
+    BOARD.loopCells.forEach((c,i)=>all.push({x:c.x,y:c.y,pos:i,color:c.isBase?c.baseColor:(c.isMarker?c.markerColor:null),special:c.isBase||c.isMarker,home:false}));
+    for(const color of BOARD.order) BOARD.homePaths[color].forEach((p,h)=>all.push({x:p.x,y:p.y,pos:1000+h,color, special:true,home:true}));
+    all.forEach(c=>{
+      const d=document.createElement('button'); d.type='button'; d.className='tok8-cell'+(c.special?' special':'')+(c.home?' home':''); d.dataset.pos=String(c.pos); d.style.left=(c.x/BOARD.boardSizeMm*100)+'%'; d.style.top=(c.y/BOARD.boardSizeMm*100)+'%'; if(c.color)d.style.setProperty('--cell-color',V8.colors[c.color]);
+      d.addEventListener('click',()=>v8CellClicked(c.pos)); grid.append(d);
+    });
+    return stage;
+  }
 
-  renderManualLobby = function(roomId, existingPlayers){
-    const root=clearApp(), p=page('stage-page');
-    const colors=COLORS||['red','green','yellow','blue'];
-    const grid=el('div',{class:'color-grid',id:'color-row-wrap'});
-    function repaint(players){
-      grid.innerHTML=''; const taken=new Set(Object.keys(players||{}));
-      colors.forEach(c=>{
-        const pl=players&&players[c];
-        const btn=el('button',{class:'choice-3d color-choice',disabled:!!pl,onclick:()=>selectColor(c)},
-          dot(c),el('b',{},colorName(c).toUpperCase()),el('span',{},pl?`${pl.name||colorName(c)} · OCCUPATO`:'POSTO LIBERO'));
-        grid.appendChild(btn);
-      });
-      const join=$('#join-btn'); if(join) join.disabled=!myColor;
-      const slots=colors.map(c=>{const pl=players&&players[c];return el('div',{class:'player-row'},dot(c),el('span',{style:'flex:1'},pl?pl.name||colorName(c):colorName(c)),pl?el('span',{style:'font-size:.6rem;color:#68758d'},'ONLINE'):el('button',{class:'small-btn',onclick:()=>assignBotToColor(roomId,c,()=>{},'easy')},'BOT'))});
-      const sl=$('#manual-slots'); if(sl){sl.innerHTML='';slots.forEach(x=>sl.appendChild(x))}
-    }
-    p.append(el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'MANUAL ROOM · '+roomId)),el('button',{class:'small-btn',onclick:()=>{stopLobbyListener();renderLobby()}},'← CAMBIA')),
-      el('div',{class:'stage-grid'},
-        el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'PLAYER ID'),el('h1',{style:'font-size:2rem;margin:8px 0'},'Scegli il tuo colore'),el('p',{style:'color:#8794ad;line-height:1.5'},'Inserisci il tuo nome e scegli il posto. Il colore selezionato viene mantenuto dal motore e sincronizzato tramite Firebase.'),el('input',{id:'name-input',class:'room-input',placeholder:'NOME GIOCATORE',maxlength:18,value:myName||''}),grid),
-        el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'ROOM STATUS'),el('div',{id:'manual-slots',class:'player-list'}),el('button',{id:'join-btn',class:'primary-3d',disabled:true,onclick:()=>joinManualRoom(roomId)},'ENTRA NELLA PARTITA  →'),el('button',{class:'secondary-3d',onclick:()=>shareInviteLink(roomId)},'⌁ INVITA GIOCATORI'))));
-    root.appendChild(p); repaint(existingPlayers||{});
-    // Keep the existing lobby listener: it will call the original color-section unless we own this hook.
-    lastColorSectionArgs={roomId,existingPlayers};
-    try{stopLobbyListener();const ref=roomRef(roomId); lobbyListenerRef=ref; ref.on('value',snap=>{const st=snap.val(); if(st){const ps=st.players||{};repaint(ps)} });}catch(e){console.error(e)}
-  };
+  let selectedCard3D=null;
+  let legalTargets3D=[];
+  function clearLegal3D(){legalTargets3D=[];document.querySelectorAll('.tok8-cell.legal').forEach(e=>e.classList.remove('legal'));}
+  function markLegal3D(options){clearLegal3D(); legalTargets3D=options||[]; const seen=new Set(); for(const o of legalTargets3D){let p=null;if(o.type==='enter')p=BOARD.baseIndex[activeColorFor(currentState,myColor)];else if(o.type==='move'&&o.path)p=o.path[o.path.length-1];if(p===null||seen.has(p))continue;seen.add(p);const e=document.querySelector(`.tok8-cell[data-pos="${p}"]`);if(e)e.classList.add('legal');}}
+  async function v8CellClicked(pos){
+    if(!selectedCard3D||!currentState)return;
+    const opts=legalTargets3D.filter(o=>(o.type==='enter'?BOARD.baseIndex[activeColorFor(currentState,myColor)]:o.type==='move'&&o.path?o.path[o.path.length-1]:null)===pos);
+    if(!opts.length)return;
+    clearLegal3D();
+    if(opts.length===1){await playMove(activeColorFor(currentState,myColor),selectedCard3D,opts[0]);selectedCard3D=null;return;}
+    showPawnChoice(activeColorFor(currentState,myColor),selectedCard3D,opts);
+  }
 
-  renderDraftNameScreen = function(roomId){
-    const root=clearApp(), p=page('stage-page');
-    p.append(el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'DRAFT ROOM · '+roomId)),el('button',{class:'small-btn',onclick:renderLobby},'← CAMBIA')),
-      el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'PLAYER ID'),el('h1',{style:'font-size:2rem;margin:8px 0'},'Come ti chiami?'),el('p',{style:'color:#8794ad;line-height:1.5'},'Il nome viene usato in lobby, chat e registro della partita.'),el('input',{id:'draft-name-input',class:'room-input',placeholder:'NOME GIOCATORE',maxlength:18}),el('button',{id:'join-btn',class:'primary-3d',onclick:()=>joinDraftRoom(roomId)},'ENTRA NELLA STANZA  →')));
-    root.appendChild(p);
-  };
-
-  /* ---------- DRAFT ---------- */
-  renderDraftScreen=function(state){
-    if(!state||!state.draft){return renderLobby()}
-    const d=state.draft;
-    if(!d.pairDraw) return renderDraftWaiting(state);
-    if(!d.pairChoices) return renderPairDrawScreen(state);
-    if(d.pairChoices && !d.colorPicks) return renderPairChoiceButtons(state);
-    if(d.colorPicks && Object.keys(d.colorPicks).length<4) return renderSoloColorChoice(state);
-    return renderDraftFinalizing(state);
-  };
-  renderDraftWaiting=function(state){
-    const root=clearApp(), p=page('stage-page'), d=state.draft, players=d.players||{};
-    const names=d.order.map(t=>players[t]).filter(Boolean);
-    const rows=el('div',{class:'player-list'}); names.forEach((n,i)=>rows.appendChild(el('div',{class:'player-row'},el('span',{class:'dot '+(i%2?'blue':'green')}),el('span',{style:'flex:1'},n),el('span',{style:'font-size:.6rem;color:#68758d'},'READY'))));
-    p.append(el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'DRAFT · '+myRoomId)),el('button',{class:'small-btn',onclick:renderLobby},'EXIT')),
-      el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'WAITING ROOM'),el('h1',{style:'font-size:2rem;margin:8px 0'},`${names.length}/4 PLAYERS`),el('p',{style:'color:#8794ad'},names.length===4?'Preparazione estrazione…':'Invita gli altri giocatori o aggiungi un bot.'),rows,
-        el('div',{class:'bot-grid',style:'margin-top:14px'},el('button',{class:'choice-3d',onclick:()=>assignBotToDraft(myRoomId,'easy')},el('b',{},'BOT · NORMALE'),el('span',{},'Aggiungi un avversario controllato dal motore.')),el('button',{class:'choice-3d',onclick:()=>assignBotToDraft(myRoomId,'hard')},el('b',{},'BOT · DIFFICILE'),el('span',{},'Aggiungi il livello avanzato.'))),el('button',{class:'secondary-3d',onclick:()=>shareInviteLink(myRoomId)},'⌁ CONDIVIDI STANZA')));
-    root.appendChild(p);
-  };
-  renderPairDrawScreen=function(state){
-    const root=clearApp(),p=page('stage-page'),d=state.draft; const pairA=(d.pairDraw.pairs||[])[0]||[],pairB=(d.pairDraw.pairs||[])[1]||[];
-    const nm=t=>(d.players||{})[t]||'—';
-    const team=(arr,cls)=>el('div',{class:'team-box'},el('div',{class:'eyebrow'},cls),el('h2',{style:'margin:8px 0 12px'},arr.map(nm).join('  ×  ')),el('div',{style:'color:#8794ad;font-size:.75rem'},'Coppia estratta'));
-    p.append(el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'PAIR DRAW')),el('span',{class:'room-pill'},'RANDOMIZED')),
-      el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'TEAM ASSEMBLY'),el('h1',{style:'font-size:2rem;margin:8px 0'},'Le coppie sono state estratte.'),el('p',{style:'color:#8794ad'},'La composizione viene dal motore di gioco; qui ne mostriamo solo la fase visiva.'),el('div',{class:'team-vs'},team(pairA,'TEAM A'),el('div',{class:'team-vs-badge'},'VS'),team(pairB,'TEAM B'))));
-    root.appendChild(p);
-  };
-  renderPairChoiceButtons=function(state){
-    const root=clearApp(),p=page('stage-page'),idx=typeof myPairIndex==='number'?myPairIndex:0;
-    const top=el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'TEAM COLOR PICK')),el('span',{class:'room-pill'},`PAIR ${idx+1}`));
-    const a=el('button',{class:'choice-3d',onclick:()=>pickColorPair(idx,'RY')},dot('red'),el('b',{},'ROSSO + GIALLO'),el('span',{},'Una delle due squadre fisse.'));
-    const b=el('button',{class:'choice-3d',onclick:()=>pickColorPair(idx,'GB')},dot('green'),el('b',{},'VERDE + BLU'),el('span',{},'L’altra squadra fissa.'));
-    const body=el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'CHOOSE TEAM COLORS'),el('h1',{style:'font-size:2rem;margin:8px 0'},'Scegli la combinazione'),el('p',{style:'color:#8794ad'},'La scelta determina i colori della coppia secondo le regole già presenti nel motore.'),el('div',{class:'mode-grid',style:'margin-top:18px'},a,b));
-    p.append(top,body);root.appendChild(p);
-  };
-  renderSoloColorChoice=function(state){
-    const root=clearApp(),p=page('stage-page'),taken=new Set(Object.keys(state.draft.colorPicks||{}));
-    const grid=el('div',{class:'color-grid',style:'margin-top:18px'});COLORS.forEach(c=>grid.appendChild(el('button',{class:'choice-3d color-choice',disabled:taken.has(c),onclick:()=>pickSoloColor(c)},dot(c),el('b',{},colorName(c).toUpperCase()),el('span',{},taken.has(c)?'GIÀ ASSEGNATO':'PRENDI QUESTO COLORE'))));
-    p.append(el('div',{class:'stage-top'},el('div',{},el('div',{class:'stage-brand'},'TOK'),el('div',{class:'stage-room'},'COLOR ASSIGNMENT')),el('span',{class:'room-pill'},'FINAL STEP')),el('div',{class:'stage-card glass'},el('div',{class:'eyebrow'},'YOUR COLOR'),el('h1',{style:'font-size:2rem;margin:8px 0'},'Scegli il tuo posto'),el('p',{style:'color:#8794ad'},'I colori già scelti non sono disponibili.'),grid));root.appendChild(p);
-  };
-  renderDraftFinalizing=function(state){
-    const root=clearApp(),p=page('stage-page');p.append(el('div',{class:'stage-card glass',style:'text-align:center;padding:50px'},el('div',{class:'eyebrow'},'TOK ONLINE'),el('h1',{style:'font-size:2.4rem;margin:10px 0'},'Preparazione partita…'),el('p',{style:'color:#8794ad'},'Le squadre sono state definite. Il motore sta preparando la partita.')));root.appendChild(p);
-  };
-
-  /* ---------- GAME SHELL ---------- */
-  renderGameShell=function(){
-    const root=clearApp(); const p=page('game-page');
-    const top=el('div',{class:'game-top'},el('div',{class:'game-top-left'},el('div',{class:'game-title'},'TOK'),el('span',{class:'room-pill'},myRoomId||'')),el('div',{class:'game-top-right'},el('button',{class:'icon-3d',title:'Audio',onclick:toggleSoundMuted},soundIconSvg(!!soundMuted)),el('button',{class:'icon-3d',title:'Invita',onclick:()=>shareInviteLink(myRoomId)},'⌁'),el('button',{class:'icon-3d',title:'Esci',onclick:leaveGameToHome},'×')));
-    const layout=el('div',{class:'game-layout'},
-      el('section',{class:'board-panel glass'},el('div',{id:'conn-banner'}),el('div',{id:'turn-indicator'}),el('div',{id:'exchange-wrap'}),el('div',{id:'start-wrap'}),el('div',{class:'board-stage'},el('div',{class:'board-object'},el('div',{class:'board-thickness'}),el('div',{class:'board-face'},el('div',{class:'board-svg-wrap',id:'board-wrap'})),el('div',{class:'board-glow'}))),el('div',{id:'log-wrap'})),
-      el('aside',{class:'side-panel'},el('div',{id:'status-wrap',class:'hud-card glass'}),el('div',{id:'hand-wrap',class:'hand-card glass'}),el('div',{class:'hud-card glass'},el('div',{class:'hud-title'},'MATCH CONTROL'),el('button',{class:'log-link',onclick:openLogPicker},el('span',{},'MATCH LOG'),el('span',{},'OPEN ↗')),el('button',{class:'log-link',onclick:()=>showSheet('REGOLE TOK','Le regole mostrate qui sono quelle del motore di gioco in esecuzione.',[{text:'CHIUDI',fn:closeSheet}])},el('span',{},'RULEBOOK'),el('span',{},'OPEN ↗')))));
-    p.append(top,layout);root.appendChild(p);
-    try{boardSvg=buildBoardSVG($('#board-wrap'),BOARD)}catch(e){console.error(e)}
-    try{watchConnection()}catch(e){}
-  };
-
-  renderTurnIndicator=function(state){
-    const w=$('#turn-indicator'); if(!w)return; w.innerHTML='';
-    if(!state||!state.turnColor)return;
-    const c=state.turnColor; const mine=c===myColor; w.appendChild(el('div',{class:'hud-card glass turn-card',style:`--turn-color:${C[c]}`},el('div',{class:'hud-title'},mine?'YOUR TURN':'CURRENT TURN'),el('div',{class:'turn-main'},el('span',{class:'turn-dot',style:`--turn-color:${C[c]};background:${C[c]}`}),el('div',{},el('div',{class:'turn-name'},playerName(state,c)),el('div',{class:'turn-sub'},colorName(c))),el('div',{class:'timer',id:'turn-timer'},formatElapsed(Date.now()-(state.turnStartedAt||Date.now()))))));
-    ensureTurnTimerRunning();
-  };
-
-  renderPlayerStatus=function(state){
-    const w=$('#status-wrap');if(!w)return;w.innerHTML='';w.appendChild(el('div',{class:'hud-title'},'PLAYERS'));
-    const g=el('div',{class:'players-grid'}); ['red','green','blue','yellow'].forEach(c=>{const ps=(state.players&&state.players[c])||{};const home=(state.pawns&&state.pawns[c]||[]).filter(p=>p>=1000).length;const row=el('div',{class:'player-hud '+(state.turnColor===c?'active':''),style:`--turn-color:${C[c]}`},el('div',{class:'name'},playerName(state,c)),el('div',{class:'meta'},`${colorName(c)} · ${home}/4 HOME`),el('div',{class:'mini-pawn-row'}));(state.pawns&&state.pawns[c]||[-1,-1,-1,-1]).forEach(pos=>row.querySelector('.mini-pawn-row').appendChild(el('i',{class:'mini-pawn '+c+(pos>=1000?' home':'')})));g.appendChild(row)});w.appendChild(g);
-  };
-
-  renderStartControls=function(state){
-    const w=$('#start-wrap');if(!w)return;w.innerHTML='';if(!state||state.phase!=='lobby')return;
-    const missing=COLORS.filter(c=>!state.players[c]);
-    const box=el('div',{class:'hud-card glass'},el('div',{class:'hud-title'},'LOBBY READY'),el('div',{style:'font-size:.8rem;color:#9aa6bc;margin-bottom:10px'},`${COLORS.length-missing.length}/4 seats occupied`));
-    const bots=el('div',{class:'bot-grid'});missing.forEach(c=>bots.appendChild(el('button',{class:'choice-3d',onclick:()=>assignBotToColor(myRoomId,c,()=>{},'easy')},el('b',{},colorName(c).toUpperCase()),el('span',{},'Add bot')))); if(missing.length)box.appendChild(bots);
-    box.appendChild(el('button',{class:'primary-3d',disabled:missing.length>0,onclick:startGame},missing.length?'WAITING FOR PLAYERS':'START MATCH →'));w.appendChild(box);
-  };
-
-  renderExchangeControls=function(state){
-    const w=$('#exchange-wrap');if(!w)return;w.innerHTML='';if(state.phase!=='exchanging')return;const already=!!(state.pendingExchange&&state.pendingExchange[myColor]);const partner=PARTNER_OF[myColor];
-    const box=el('div',{class:'exchange-card-3d'},el('div',{class:'eyebrow'},'BLIND EXCHANGE'),el('h3',{style:'margin:6px 0 5px'},already?'CARD SENT':'Choose a card for '+playerName(state,partner)),el('div',{class:'exchange-status'},COLORS.map(c=>el('span',{class:'exchange-pill-3d'},dot(c),state.pendingExchange&&state.pendingExchange[c]?'READY':'WAITING'))));
-    if(!already){box.appendChild(el('div',{style:'font-size:.68rem;color:#73809a;margin:12px 0 6px'},'SELECT FROM YOUR HAND'));const row=el('div',{class:'cards-row'});(state.hands[myColor]||[]).forEach(c=>row.appendChild(card3d(c,true,()=>sendExchangeCard(c))));box.appendChild(row)}else box.appendChild(el('div',{style:'margin-top:12px;color:#7f8ba4;font-size:.72rem'},'Waiting for the other players…'));
-    w.appendChild(box);
-  };
+  function v8Card(card,enabled){
+    const [r,s]=card.split('-'); const red=s==='hearts'||s==='diamonds'; const b=document.createElement('button'); b.type='button'; b.className='tok8-card '+(red?'red':'')+(enabled?'':' disabled'); b.disabled=!enabled; b.innerHTML=`<span class="rank">${r}</span><span class="suit">${({hearts:'♥',diamonds:'♦',clubs:'♣',spades:'♠'})[s]}</span>`; b.addEventListener('click',()=>v8CardClick(card)); return b;
+  }
+  async function v8CardClick(card){
+    if(!currentState||currentState.phase!=='playing'||currentState.turnColor!==myColor)return;
+    selectedCard3D=card; const active=activeColorFor(currentState,myColor); const options=legalMovesForCard(currentState,active,card);
+    if(!options.length){selectedCard3D=null; return onCardClick(card,{currentTarget:null});}
+    if(options[0].type==='jack'){selectedCard3D=null;return openJackPicker(active,card)}
+    if(options[0].type==='seven'){selectedCard3D=null;return onCardClick(card,{currentTarget:null})}
+    if(options.length===1){clearLegal3D();selectedCard3D=null;return playMove(active,card,options[0])}
+    markLegal3D(options);
+  }
 
   renderHand=function(state){
-    const w=$('#hand-wrap');if(!w)return;w.innerHTML='';const active=state.turnColor===myColor && state.phase==='playing';w.appendChild(el('div',{class:'hud-title'},active?'YOUR HAND':'HAND'));const row=el('div',{class:'cards-row'});(state.hands[myColor]||[]).forEach(c=>row.appendChild(card3d(c,active,()=>onCardClick(c))));w.appendChild(row);if(!row.children.length)w.appendChild(el('div',{style:'color:#66738b;font-size:.72rem'},'No cards available.'));
+    const wrap=document.getElementById('hand-wrap'); if(!wrap)return; wrap.innerHTML='';
+    if(state.phase!=='playing')return;
+    const myTurn=state.turnColor===myColor; const hand=state.hands[myColor]||[];
+    const panel=document.createElement('div'); panel.className='tok8-panel';
+    const title=document.createElement('div'); title.style.cssText='font-weight:900;margin-bottom:7px'; title.textContent=myTurn?'LE TUE CARTE · SCEGLI UNA CARTA':'LE TUE CARTE'; panel.append(title);
+    const row=document.createElement('div'); row.className='tok8-hand'; hand.forEach(c=>row.append(v8Card(c,myTurn))); panel.append(row); wrap.append(panel);
   };
 
-  renderChat=function(state){
-    const wrap=$('#chat-wrap'); if(!wrap){const f=document.createElement('div');f.id='chat-wrap';document.body.appendChild(f)}
-    const messages=state.chat||[]; const unread=chatPickerOpen?0:Math.max(0,messages.length-chatSeenCount); const old=document.querySelector('.chat-fab-row');if(old)old.remove();
-    const b=el('div',{class:'chat-fab-row'},el('button',{class:'chat-fab',onclick:openChatPicker},chatBubbleIconSvg(),unread?el('span',{class:'chat-fab-badge'},unread>99?'99+':String(unread)):''));document.body.appendChild(b);
-  };
-  renderLog=function(state){ if(!$('#log-wrap'))return; const w=$('#log-wrap');w.innerHTML='';const n=(state.log||[]).length;w.appendChild(el('button',{class:'log-link',onclick:openLogPicker},el('span',{},`MATCH LOG · ${n}`),el('span',{},'OPEN ↗'))); };
-
-  /* Dealer reveal uses the same engine result but a new 3D sheet. */
-  renderDealerDrawScreen=function(state){
-    if(!state.dealerDraw){const old=document.getElementById('tok-dealer-sheet');if(old)old.remove();return}
-    if(dealerDrawAnimShown.forRoom===myRoomId)return; dealerDrawAnimShown={forRoom:myRoomId,done:false};
-    const bd=document.createElement('div');bd.id='tok-dealer-sheet';bd.className='picker-backdrop show';const sheet=el('div',{class:'picker-sheet'},el('div',{class:'picker-handle'}),el('button',{class:'picker-close',onclick:closePicker},'×'),el('div',{class:'eyebrow'},'DEALER REVEAL'),el('h2',{style:'margin:7px 0'},'Chi distribuisce per primo?'),el('p',{style:'color:#8290a9;font-size:.75rem'},'Il risultato viene dal motore di gioco.'));
-    const grid=el('div',{class:'players-grid',style:'margin-top:16px'});COLORS.forEach(c=>grid.appendChild(el('div',{id:'dealer-slot-'+c,class:'player-hud'},dot(c),el('div',{class:'name'},playerName(state,c)))));sheet.appendChild(grid);const banner=el('div',{id:'dealer-draw-banner',style:'margin-top:15px;text-align:center;color:#7deaff;font-weight:900'});sheet.appendChild(banner);bd.appendChild(sheet);document.body.appendChild(bd);
-    (async()=>{for(const step of state.dealerDraw.sequence||[]){const slot=document.getElementById('dealer-slot-'+step.color);if(!slot)continue;slot.appendChild(card3d(step.card,true,()=>{}));await new Promise(r=>setTimeout(r,480))}const win=(state.dealerDraw.sequence||[]).slice(-1)[0];if(win){const sl=document.getElementById('dealer-slot-'+win.color);if(sl)sl.style.borderColor=C[win.color];banner.textContent=`${playerName(state,win.color)} distribuisce per primo`; }await new Promise(r=>setTimeout(r,1300));dealerDrawAnimShown.done=true;finishDealerDraw()})();
+  function pawnVars(color){return `--pawn:${V8.colors[color]};--pawn-hi:${V8.hi[color]};--pawn-dark:${V8.dark[color]}`}
+  function posFor(color,pos){if(pos>=1000)return BOARD.homePaths[color][pos-1000];return BOARD.loopCells[pos]}
+  renderPawns=function(_svg,board,pawns){
+    const grid=document.getElementById('tok8-grid'); if(!grid)return;
+    grid.querySelectorAll('.tok8-pawn').forEach(e=>e.remove());
+    COLORS.forEach(color=>pawns[color].forEach((pos,idx)=>{if(pos<0)return;const p=posFor(color,pos);if(!p)return;const d=document.createElement('div');d.className='tok8-pawn';d.dataset.color=color;d.dataset.index=idx;d.style.left=(p.x/BOARD.boardSizeMm*100)+'%';d.style.top=(p.y/BOARD.boardSizeMm*100)+'%';d.style.cssText+=pawnVars(color);d.innerHTML='<div class="base"></div><div class="body"></div><div class="head"></div>';grid.append(d)}));
   };
 
-  renderWinBanner=function(state){
-    const old=document.querySelector('.win-screen');if(old)old.remove();if(state.phase!=='finished')return;
-    const winners=COLORS.filter(c=>TEAM_OF[c]===state.winnerTeam);const names=winners.map(c=>playerName(state,c)).join(' + ');const wins=(state.roomStats&&state.roomStats.wins)||{A:0,B:0};
-    const o=el('div',{class:'win-screen'},el('div',{class:'win-card'},el('div',{class:'win-orb'},'TOK'),el('div',{class:'eyebrow'},'MATCH COMPLETE'),el('h2',{},`${TEAM_LABEL[state.winnerTeam]} VINCE`),el('p',{},names),el('p',{style:'font-size:.7rem'},`SERIES · ${TEAM_LABEL.A} ${wins.A} — ${wins.B} ${TEAM_LABEL.B}`),el('button',{class:'primary-3d',onclick:startNewGame},'PLAY AGAIN →'),el('button',{class:'secondary-3d',onclick:()=>location.href=location.pathname},'RETURN TO LOBBY')));document.body.appendChild(o);launchConfetti(winners);
+  renderGameShell=function(){
+    const root=document.getElementById('app'); root.innerHTML=''; root.className='';
+    const game=document.createElement('main'); game.className='tok8-game';
+    const top=document.createElement('div'); top.className='tok8-top';
+    const brand=document.createElement('div'); brand.innerHTML='<div class="tok8-brand">TOK · DIGITAL TABLE</div><div class="tok8-room">ROOM '+(myRoomId||'—')+'</div>';
+    const actions=document.createElement('div'); actions.className='tok8-actions';
+    addActionButton(actions,'↗',()=>shareInviteLink(myRoomId)); addActionButton(actions,'☰',openLogPicker); addActionButton(actions,'?',openRulesPanel); addActionButton(actions,'⌂',leaveGameToHome);
+    top.append(brand,actions); game.append(top);
+    const conn=document.createElement('div');conn.id='conn-banner';game.append(conn);
+    const dealer=document.createElement('div');dealer.id='dealer-draw-wrap';game.append(dealer);
+    const board=document.createElement('div');board.id='board-wrap';game.append(board); build3DBoard();
+    const controls=document.createElement('div');controls.className='tok8-controls';
+    const main=document.createElement('div'); main.className='tok8-panel'; const t=document.createElement('div');t.id='turn-indicator';main.append(t); const start=document.createElement('div');start.id='start-wrap';main.append(start);const ex=document.createElement('div');ex.id='exchange-wrap';main.append(ex);const hand=document.createElement('div');hand.id='hand-wrap';main.append(hand);controls.append(main);
+    const side=document.createElement('aside');side.className='tok8-side tok8-panel';const status=document.createElement('div');status.id='status-wrap';side.append(status);const chat=document.createElement('div');chat.id='chat-wrap';side.append(chat);controls.append(side);game.append(controls);
+    const picker=document.createElement('div');picker.id='picker-wrap';game.append(picker); root.append(game);
+    watchConnection(); watchPresence(myRoomId); setupOwnPresence(myRoomId,myColor);
+    if(currentState){renderStartControls(currentState);renderExchangeControls(currentState);renderPlayerStatus(currentState);renderTurnIndicator(currentState);renderHand(currentState);renderChat(currentState);renderLog(currentState);renderPawns(boardSvg,BOARD,currentState.pawns,currentState.lastSwap,currentState.lastCapture,currentState.lastHomeEntry)}
   };
 
-  /* New bottom-sheet system. It deliberately does not call the old picker renderer. */
-  openPicker=function(contentEl){
-    closePicker();
-    const bd=document.createElement('div');bd.id='picker-backdrop';bd.className='picker-backdrop show';
-    const sheet=el('div',{class:'picker-sheet'},el('div',{class:'picker-handle'}),el('button',{class:'picker-close',onclick:closePicker},'×'),contentEl);
-    bd.appendChild(sheet);document.body.appendChild(bd);
-    chatPickerOpen = !!document.getElementById('chat-messages');
-    if(chatPickerOpen){chatSeenCount=(currentState&&currentState.chat||[]).length}
-  };
-  closePicker=function(){
-    const bd=document.getElementById('picker-backdrop');if(bd)bd.remove();
-    const dealer=document.getElementById('tok-dealer-sheet');if(dealer)dealer.remove();
-    chatPickerOpen=false;logPickerOpen=false;_sevenRowKeys=null;
-  };
-  showToast=function(message){
-    let t=document.getElementById('tok-toast');if(t)t.remove();
-    t=el('div',{id:'tok-toast',style:'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:800;max-width:min(92vw,560px);padding:13px 16px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(14,20,34,.94);box-shadow:0 18px 45px rgba(0,0,0,.55);color:#eaf1ff;font-size:.76rem;line-height:1.4;backdrop-filter:blur(18px)'},String(message));
-    document.body.appendChild(t);setTimeout(()=>t&&t.remove(),4200);
-  };
-  showSheet=function(title,body,actions){
-    const content=el('div',{},el('div',{class:'eyebrow'},'TOK'),el('h2',{style:'margin:7px 0 10px'},title),el('p',{style:'color:#9aa6bd;line-height:1.55;font-size:.8rem'},body),el('div',{style:'display:flex;gap:8px;flex-wrap:wrap;margin-top:18px'},(actions||[{text:'CHIUDI',fn:closePicker}]).map(a=>el('button',{class:'secondary-3d',style:'width:auto;flex:1',onclick:a.fn},a.text))));
-    openPicker(content);
-  };
-
-  // Preserve the existing Firebase connection indicator, but render it unobtrusively.
-  watchConnection=function(){try{if(!db)return;db.ref('.info/connected').on('value',snap=>{const b=$('#conn-banner');if(!b)return;b.innerHTML='';if(snap.val()===false)b.appendChild(el('div',{class:'error-3d'},'Connessione persa — riconnessione in corso…'))})}catch(e){}}
-
+  // Re-skin legacy manual lobby without breaking its IDs or Firebase flow.
+  const oldManual=renderManualLobby;
+  renderManualLobby=function(roomId,existingPlayers){oldManual(roomId,existingPlayers); const root=document.getElementById('app'); if(root) root.classList.add('tok8-manual');}
+  const oldDraft=renderDraftNameScreen;
+  renderDraftNameScreen=function(roomId){oldDraft(roomId); const root=document.getElementById('app'); if(root) root.classList.add('tok8-manual');}
+  const oldRecovery=renderNameRecoveryScreen;
+  renderNameRecoveryScreen=function(roomId){oldRecovery(roomId); const root=document.getElementById('app'); if(root) root.classList.add('tok8-manual');}
 })();
 </script>
+
 </body>
-<script id="tok-zero-ui-js">
-/* TOK ZERO — presentation layer only. The original game engine, Firebase, bot and rules remain authoritative. */
-(() => {
-  const q = (s)=>document.querySelector(s);
-  const app = ()=>q('#app');
-  const esc = (v)=>String(v??'').replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[m]));
-  const colorHex={red:'#ff465d',green:'#28d98a',yellow:'#ffc83d',blue:'#3f8cff'};
-  const colorName={red:'ROSSO',green:'VERDE',yellow:'GIALLO',blue:'BLU'};
-  const suitSym={hearts:'♥',diamonds:'♦',clubs:'♣',spades:'♠'};
-  function cardText(c){if(!c)return '';const [r,s]=c.split('-');return r+(suitSym[s]||'');}
-  function toast(msg){let x=document.querySelector('.toast');if(x)x.remove();x=document.createElement('div');x.className='toast';x.textContent=msg;document.body.appendChild(x);setTimeout(()=>x.remove(),2600)}
-  window.showToast=toast;
-  function home(){app().innerHTML=`<main class="zero-screen"><div class="zero-shell zero-home"><section><div class="eyebrow">TORVAIANICA · DIGITAL TABLE</div><div class="brand">T<span>O</span>K</div><div class="tagline">Il gioco di squadra. Ricostruito come un tavolo digitale 3D. Il motore originale governa ogni mossa.</div><div class="cta-row"><input id="room-input" class="room-input" maxlength="12" placeholder="CODICE STANZA"><button class="primary" id="continue-btn">ENTER TABLE</button></div><div style="margin-top:16px;color:#5e697c;font-size:.68rem;letter-spacing:.12em">60 CELLE · 4 COLORI · 2 VS 2</div></section><section class="hero-table"><div class="table-3d"><div class="table-top"></div><div class="mini-path"></div><div class="mini-core"></div><i class="mini-orb orb-r"></i><i class="mini-orb orb-g"></i><i class="mini-orb orb-y"></i><i class="mini-orb orb-b"></i></div></section></div></main>`;q('#continue-btn').onclick=window.continueFromRoomCode;}
-  function mode(room){app().innerHTML=`<main class="zero-screen"><div class="zero-shell panel" style="max-width:760px"><div class="eyebrow">NEW TABLE · ${esc(room)}</div><h1>Come vuoi formare la partita?</h1><p>La modalità viene salvata nella stanza e resta quella scelta dal creatore.</p><div class="choice-grid"><button class="choice" id="manual-choice"><b>MANUAL</b><br><small>Scegli i colori dei giocatori.</small></button><button class="choice" id="draw-choice"><b>DRAW</b><br><small>Estrazione automatica di coppie e colori.</small></button></div><button class="secondary" style="margin-top:14px" onclick="renderLobby()">← Change room</button></div></main>`;q('#manual-choice').onclick=()=>window.pickRoomMode(room,'manual');q('#draw-choice').onclick=()=>window.pickRoomMode(room,'draw');}
-  function manualLobby(room,players={}){const seats=COLORS.map(c=>`<div class="seat ${c} ${players[c]?'':'empty'}"><span class="seat-dot"></span><div class="seat-label">${colorName[c]}</div><div class="seat-name">${players[c]?esc(players[c].name):'OPEN SEAT'}</div></div>`).join('');app().innerHTML=`<main class="zero-screen"><div class="zero-shell lobby-grid"><section class="panel"><div class="eyebrow">TABLE ${esc(room)}</div><h1>Build your team</h1><p>Choose a seat, enter your name, then join the table.</p><div class="choice-grid" style="grid-template-columns:1fr 1fr"><button class="choice" id="pick-red">🔴 RED</button><button class="choice" id="pick-green">🟢 GREEN</button><button class="choice" id="pick-yellow">🟡 YELLOW</button><button class="choice" id="pick-blue">🔵 BLUE</button></div><input id="name-input" class="room-input" style="width:100%;margin-top:14px" placeholder="PLAYER NAME" value="${esc(myName||'')}"><button class="primary" id="join-btn" style="width:100%;margin-top:10px">JOIN TABLE</button><button class="secondary" style="width:100%;margin-top:8px" onclick="renderLobby()">← Change room</button></section><section><div class="seat-grid">${seats}</div></section></div></main>`;let picked=myColor;q('#join-btn').disabled=!picked;COLORS.forEach(c=>q('#pick-'+c).onclick=()=>{picked=c;myColor=c;COLORS.forEach(x=>q('#pick-'+x).style.outline=x===c?'2px solid '+colorHex[x]:'none');q('#join-btn').disabled=false});q('#join-btn').onclick=()=>window.joinManualRoom(room);}
-  function draftName(room){app().innerHTML=`<main class="zero-screen"><div class="zero-shell panel" style="max-width:560px"><div class="eyebrow">DRAW TABLE · ${esc(room)}</div><h1>Enter your name</h1><input id="name-input" class="room-input" style="width:100%" placeholder="PLAYER NAME"><button class="primary" id="join-btn" style="width:100%;margin-top:12px">JOIN DRAW</button><button class="secondary" style="width:100%;margin-top:8px" onclick="renderLobby()">← Change room</button></div></main>`;q('#join-btn').onclick=()=>window.joinDraftRoom(room);}
-  function seats(state){return COLORS.map(c=>{const p=state?.players?.[c];const active=state?.phase==='playing'&&state.turnColor===c;return `<div class="player ${active?'active':''}"><div style="color:${colorHex[c]};font-size:.6rem;font-weight:950">● ${colorName[c]}</div><div class="player-name">${esc(p?.name||'OPEN')}</div><div class="player-meta">${p?.isBot?'BOT':'PLAYER'} ${active?'· TURN':''}</div></div>`}).join('')}
-  function boardPointPct(x,y){const w=BOARD.boardSizeMm||472;return {x:x/w*100,y:y/w*100};}
-  function boardCells(state){
-    const b=BOARD.loopCells||[];
-    const w=BOARD.boardSizeMm||472;
-    let html='';
-    // Exact main-loop geometry from the game engine. No approximation or re-layout.
-    for(let i=0;i<b.length;i++){const c=b[i];const q=boardPointPct(c.x,c.y);const cls=['cell'];if(c.isBase)cls.push('base-'+c.baseColor);if(c.isMarker)cls.push('marker-'+c.markerColor);html+=`<div class="${cls.join(' ')}" data-i="${i}" style="left:${q.x}%;top:${q.y}%"></div>`;}
-    // Exact home-path cells. These were missing from the first ZERO renderer and
-    // made the board look disconnected/confusing.
-    for(const color of BOARD.order||COLORS){(BOARD.homePaths[color]||[]).forEach((p,h)=>{const q=boardPointPct(p.x,p.y);html+=`<div class="cell home-${color}" data-home="${color}:${h}" style="left:${q.x}%;top:${q.y}%"></div>`});}
-    return html;
-  }
-  function boardConnections(){
-    const w=BOARD.boardSizeMm||472;
-    const pts=[];
-    for(let i=0;i<(BOARD.loopCells||[]).length;i++){const a=BOARD.loopCells[i],b=BOARD.loopCells[(i+1)%BOARD.loopCells.length];pts.push(`<line x1="${a.x/w*100}" y1="${a.y/w*100}" x2="${b.x/w*100}" y2="${b.y/w*100}"/>`);}
-    for(const color of BOARD.order||COLORS){const base=BOARD.loopCells[BOARD.baseIndex[color]];let prev=base;for(const p of BOARD.homePaths[color]||[]){pts.push(`<line x1="${prev.x/w*100}" y1="${prev.y/w*100}" x2="${p.x/w*100}" y2="${p.y/w*100}" class="home-line ${color}"/>`);prev=p;}}
-    return `<svg class="board-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${pts.join('')}</svg>`;
-  }
-  function pawnPos(p,color,index){if(p===-1||p===undefined)return null;let x=0,y=0;if(p>=1000){const hp=BOARD.homePaths[color]||[];const h=hp[p-1000];if(!h)return null;x=h.x;y=h.y}else{const c=BOARD.loopCells[p];if(!c)return null;x=c.x;y=c.y}return boardPointPct(x,y);}
-  function pawns(state){let html='';for(const c of COLORS){(state.pawns?.[c]||[]).forEach((p,i)=>{const pos=pawnPos(p,c,i);if(!pos)return;html+=`<div class="pawn ${c}" title="${colorName[c]} ${i+1}" style="left:${pos.x}%;top:${pos.y}%"></div>`})}return html}
-  function renderBoard(state){return `<div class="board-stage"><div class="board3d"><div class="board-face"><div class="board-core"><span>TOK</span><small>TORVAJANICA</small></div>${boardConnections()}${boardCells(state)}${pawns(state)}</div></div></div>`}
-  function renderGame(state){currentState=state;const active=state?.turnColor;app().innerHTML=`<main class="game"><div class="topbar"><div class="brand-small">T<span style="color:var(--accent)">O</span>K</div><div class="turn-pill">${state?.phase==='playing'?(active===myColor?'YOUR TURN':'TURN · '+colorName[active]):String(state?.phase||'').toUpperCase()}</div><button class="secondary" style="padding:8px 12px" onclick="openChatPicker()">CHAT</button></div><div class="game-main"><section class="stage">${renderBoard(state)}</section><aside class="side"><div class="players-panel"><div class="section-title">SEATS</div><div class="players">${seats(state)}</div></div><div class="events-panel"><div class="section-title">EVENTS</div><div class="event-list">${(state.log||[]).slice(-8).reverse().map(x=>`<div class="event">${esc(x)}</div>`).join('')||'<div class="event">Table ready.</div>'}</div></div><div class="cards-panel" id="exchange-wrap"><div class="section-title">STATUS</div><div style="color:#8994a7;font-size:.72rem">${state.phase==='exchanging'?'Choose one card to pass to your partner.':'Select a card below to play.'}</div></div></aside></div><div class="cards-bottom" id="hand-wrap"></div></main>`;renderHandZero(state);if(state.phase==='exchanging')renderExchangeZero(state);if(state.phase==='lobby')renderLobbyRoomZero(state);}
-  function renderHandZero(state){const wrap=q('#hand-wrap');if(!wrap)return;const hand=state?.hands?.[myColor]||[];wrap.innerHTML=hand.map(c=>`<button class="card3d ${/hearts|diamonds/.test(c)?'reds':'black'}" data-card="${c}">${cardText(c)}</button>`).join('');wrap.querySelectorAll('[data-card]').forEach(b=>b.onclick=(e)=>window.onCardClick(b.dataset.card,e));}
-  function renderExchangeZero(state){const w=q('#exchange-wrap');if(!w)return;const done=!!state.pendingExchange?.[myColor];w.innerHTML=`<div class="section-title">BLIND EXCHANGE</div><div style="font-size:.72rem;color:#aab3c2">${done?'Card sent. Waiting for partner.':'Choose a card below to send to '+esc(playerName(state,PARTNER_OF[myColor]))+'.'}</div>`;}
-  function renderLobbyRoomZero(state){/* state lobby is rendered as a compact seat view by the next state update */}
-  function seatCard(state,c){
-    const p=state?.players?.[c];
-    const online=presenceState?.[c] || (p?.isBot ? true : false);
-    return `<div class="player-seat ${c} ${online?'online':''}">
-      <span class="dot ${c}"></span><div><b>${esc(p?.name||colorName(c))}</b><small>${p?.isBot?'BOT · '+(p.botLevel||'easy'):colorName(c)}</small></div>
-      <span class="seat-state">${online?'●':'○'}</span></div>`;
-  }
-  function gameTop(state){
-    const active=state?.turnColor;
-    return `<div class="game-top">
-      <div><div class="brand-small">TOK</div><div class="room-small">ROOM · ${esc(myRoomId||'')}</div></div>
-      <div class="turn-core ${active===myColor?'mine':''}"><span class="dot ${active||'red'}"></span>${state?.phase==='playing'?(active===myColor?'YOUR TURN':'TURN · '+colorName(active)):String(state?.phase||'').toUpperCase()}</div>
-      <div class="game-actions"><button class="icon-btn" onclick="toggleSoundMuted()">${soundMuted?'🔇':'🔊'}</button><button class="icon-btn" onclick="openRulesPanel()">?</button><button class="icon-btn" onclick="openLogPicker()">☷</button><button class="icon-btn" onclick="openChatPicker()">💬</button><button class="icon-btn" onclick="shareInviteLink(myRoomId)">↗</button></div>
-    </div>`;
-  }
-  function boardHtml(state){
-    return `<div class="board-stage functional-board"><div class="board3d"><div class="board-face"><div class="board-core"><span>TOK</span><small>TORVAJANICA</small></div>${boardConnections()}${boardCells(state)}${pawns(state)}</div></div></div>`;
-  }
-  function lobbyGameHtml(state){
-    const missing=COLORS.filter(c=>!state.players?.[c]);
-    const botButtons=missing.map(c=>`<div class="bot-actions"><span class="dot ${c}"></span><b>${colorName(c)}</b><button class="secondary-3d" onclick="assignBotToColor(myRoomId,'${c}',()=>{},'easy')">BOT EASY</button><button class="secondary-3d" onclick="assignBotToColor(myRoomId,'${c}',()=>{},'hard')">BOT HARD</button></div>`).join('');
-    const canStart=!missing.length;
-    return `<div class="lobby-table">
-      <div class="lobby-copy"><div class="eyebrow">TABLE READY</div><h1>La tavola è pronta.</h1><p>Completa i quattro posti oppure assegna un bot. Poi avvia la partita.</p></div>
-      <div class="seat-grid-functional">${COLORS.map(c=>seatCard(state,c)).join('')}</div>
-      ${missing.length?`<div class="bot-box"><div class="eyebrow">OPEN SEATS</div>${botButtons}</div>`:''}
-      <button class="primary-3d start-game-btn" ${canStart?'':'disabled'} onclick="startGame()">${canStart?'START GAME →':'ATTENDI 4 GIOCATORI'}</button>
-    </div>`;
-  }
-  function exchangeHtml(state){
-    if(state.phase!=='exchanging') return '';
-    const done=!!state.pendingExchange?.[myColor];
-    const partner=PARTNER_OF[myColor];
-    const cards=state.hands?.[myColor]||[];
-    return `<div class="exchange-functional"><div><div class="eyebrow">BLIND EXCHANGE</div><h2>${done?'Carta inviata':'Passa una carta a '+esc(playerName(state,partner))}</h2><p>${done?'In attesa degli altri giocatori.':'Scegli una carta dalla tua mano.'}</p></div>${done?'':'<div class="exchange-cards">'+cards.map(c=>`<button class="card-3d" onclick="sendExchangeCard('${c}')">${cardText(c)}</button>`).join('')+'</div>'}<div class="exchange-status">${COLORS.map(c=>`<span class="exchange-dot ${state.pendingExchange?.[c]?'done':''}"><i class="dot ${c}"></i>${state.pendingExchange?.[c]?'✓':'WAIT'}</span>`).join('')}</div></div>`;
-  }
-  function handHtml(state){
-    if(state.phase!=='playing') return '';
-    const active=activeColorFor(state,myColor);
-    const playable=state.turnColor===myColor || active===myColor;
-    return `<div class="hand-functional"><div class="eyebrow">${playable?'YOUR HAND':'HAND'}</div><div class="hand-cards">${(state.hands?.[myColor]||[]).map(c=>`<button class="card-3d ${playable?'':'disabled'}" ${playable?'':'disabled'} onclick="onCardClick('${c}',event)">${cardText(c)}</button>`).join('')}</div></div>`;
-  }
-  function statusHtml(state){
-    const turn=state.turnColor;
-    const mine=turn===myColor;
-    const last=state.lastCardPlayed;
-    return `<div class="status-functional"><div class="status-main ${mine?'mine':''}"><span class="dot ${turn||'red'}"></span><b>${state.phase==='playing'?(mine?'TOCCA A TE':'TURNO DI '+esc(playerName(state,turn))):String(state.phase||'').toUpperCase()}</b>${last?`<span class="last-event">${esc(playerName(state,last.color))} · ${esc(cardLabel(last.card))}</span>`:''}</div><div class="status-seats">${COLORS.map(c=>seatCard(state,c)).join('')}</div></div>`;
-  }
-  function logHtml(state){
-    const logs=(state.log||[]).slice(-8).reverse();
-    return `<div class="events-functional"><div class="eyebrow">RECENT EVENTS</div>${logs.map(x=>`<div class="event-row">${esc(x)}</div>`).join('')||'<div class="event-row">Nessun evento.</div>'}</div>`;
-  }
-  function renderGameFunctional(state){
-    currentState=state;
-    const root=clearApp();
-    if(!root) return;
-    if(state?.winnerTeam){
-      root.innerHTML=`<main class="game functional-game">${gameTop(state)}${boardHtml(state)}</main>`;
-      setTimeout(()=>renderWin(state),50);
-      return;
-    }
-    if(state?.phase==='lobby'){
-      root.innerHTML=`<main class="game functional-game">${gameTop(state)}<section class="functional-lobby">${lobbyGameHtml(state)}</section>${logHtml(state)}</main>`;
-      return;
-    }
-    root.innerHTML=`<main class="game functional-game">${gameTop(state)}<div class="game-layout-functional"><section class="board-column">${boardHtml(state)}</section><aside class="game-sidebar">${statusHtml(state)}${exchangeHtml(state)}${handHtml(state)}${logHtml(state)}</aside></div><div class="bottom-hand-slot">${state.phase==='playing'?handHtml(state):''}</div></main>`;
-  }
-  renderGame = renderGameFunctional;
-  /* TOK V01 SAFE PRESENTATION BRIDGE */
-  function renderGameFunctional(state){
-    currentState=state; const root=clearApp(); if(!root)return;
-    if(state?.winnerTeam){root.innerHTML=`<main class="game functional-game">${gameTop(state)}${boardHtml(state)}</main>`;setTimeout(()=>{try{renderWin(state)}catch(e){console.error(e)}},40);return;}
-    if(state?.phase==='lobby'){root.innerHTML=`<main class="game functional-game">${gameTop(state)}<section class="functional-lobby">${lobbyGameHtml(state)}</section>${logHtml(state)}</main>`;return;}
-    root.innerHTML=`<main class="game functional-game">${gameTop(state)}<div class="game-layout-functional"><section class="board-column">${boardHtml(state)}</section><aside class="game-sidebar">${statusHtml(state)}${exchangeHtml(state)}${handHtml(state)}${logHtml(state)}</aside></div><div class="bottom-hand-slot">${state.phase==='playing'?handHtml(state):''}</div></main>`;
-  }
-  renderGameShell=function(){if(currentState)renderGameFunctional(currentState);else home();};
-  renderDealerDrawScreen=function(state){renderGameFunctional(state);};
-  renderStartControls=function(state){renderGameFunctional(state);};
-  renderExchangeControls=function(state){renderGameFunctional(state);};
-  renderPlayerStatus=function(){}; renderTurnIndicator=function(){}; renderHand=function(){}; renderChat=function(){}; renderChatFab=function(){}; renderLog=function(){};
-  renderWinBanner=function(state){if(state?.winnerTeam)renderWin(state);};
-  window.showPawnChoice=showPawnChoice;window.openJackPicker=openJackPicker;window.openSevenSplitter=openSevenSplitter;
-  onStateChange=function(state){if(!state)return;currentState=state;try{maybeAdvanceBotTurn(state)}catch(e){console.error(e)}try{maybeAdvanceBotChat(state)}catch(e){console.error(e)}try{maybePlaySounds(state)}catch(e){console.error(e)}try{recordMoveHistoryIfFresh(state)}catch(e){console.error(e)}renderGameFunctional(state);};
-  Object.assign(window,{renderLobby,renderModeChoice,renderManualLobby,renderNameRecoveryScreen,renderDraftNameScreen,renderDraftScreen,renderDraftWaiting,renderPairDrawScreen,renderPairChoiceButtons,renderSoloColorChoice,renderDraftFinalizing,renderGameShell,renderDealerDrawScreen,renderStartControls,renderExchangeControls,renderPlayerStatus,renderTurnIndicator,renderHand,renderChat,renderChatFab,renderLog,renderWinBanner});
-})();
-</script>
-
-<style id="tok-v02-ui">
-:root{--vbg:#03050a;--vpanel:rgba(11,17,29,.82);--vline:rgba(255,255,255,.10);--cyan:#63e6ff;--red:#ff4b61;--green:#32df91;--yellow:#ffd34d;--blue:#4b91ff}
-body{background:radial-gradient(circle at 50% 20%,#111d31 0,#050810 45%,#020307 100%)!important;color:#edf4ff}
-.v02-home{min-height:100vh;display:grid;place-items:center;padding:28px;position:relative;overflow:hidden}
-.v02-home:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle,rgba(99,230,255,.08),transparent 42%);animation:v02pulse 7s ease-in-out infinite}
-@keyframes v02pulse{50%{transform:scale(1.08);opacity:.65}}
-.v02-home-inner{width:min(1280px,96vw);display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:center;position:relative;z-index:2}
-.v02-brand{font-size:clamp(5rem,12vw,9rem);font-weight:1000;letter-spacing:-.11em;line-height:.78;text-shadow:0 18px 50px #000}
-.v02-brand span{color:var(--cyan)}.v02-kicker{font-size:.68rem;letter-spacing:.3em;color:#7787a2;font-weight:900}.v02-tag{max-width:480px;color:#8e9cb5;line-height:1.6;margin:25px 0 30px}
-.v02-room{display:flex;gap:10px;max-width:520px}.v02-room input{flex:1;background:#0a101c;border:1px solid var(--vline);border-radius:14px;padding:16px;color:white;outline:none}.v02-btn{border:0;border-radius:14px;padding:0 22px;font-weight:1000;letter-spacing:.08em;background:linear-gradient(135deg,#66e8ff,#298cff);color:#021019;box-shadow:0 16px 40px rgba(41,140,255,.25);cursor:pointer}
-.v02-table-wrap{perspective:1200px;display:grid;place-items:center}.v02-table{width:min(700px,52vw);aspect-ratio:1;border-radius:42px;position:relative;transform:rotateX(56deg) rotateZ(-2deg);transform-style:preserve-3d;background:linear-gradient(145deg,#182338,#080c15);box-shadow:0 50px 80px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12)}
-.v02-table:after{content:"";position:absolute;inset:7%;border:1px solid rgba(99,230,255,.12);border-radius:24px;box-shadow:0 0 70px rgba(99,230,255,.08),inset 0 0 50px rgba(0,0,0,.45)}
-.v02-mini-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateZ(12px);width:22%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#18324a,#050912 68%);border:2px solid rgba(99,230,255,.4);box-shadow:0 0 45px rgba(99,230,255,.18)}.v02-mini-core b{font-size:2rem;letter-spacing:-.12em}.v02-mini-core b span{color:var(--cyan)}
-.v02-mini-cell{position:absolute;width:7%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) translateZ(14px);background:#dbe4ee;box-shadow:0 4px 8px #000,0 0 0 2px rgba(255,255,255,.18);border:1px solid #fff}.v02-mini-cell.r{box-shadow:0 0 12px var(--red),0 4px 8px #000}.v02-mini-cell.g{box-shadow:0 0 12px var(--green),0 4px 8px #000}.v02-mini-cell.y{box-shadow:0 0 12px var(--yellow),0 4px 8px #000}.v02-mini-cell.b{box-shadow:0 0 12px var(--blue),0 4px 8px #000}
-.v02-game{min-height:100vh;padding:16px 18px 22px;display:flex;flex-direction:column;gap:12px}.v02-top{height:54px;display:flex;align-items:center;justify-content:space-between}.v02-logo{font-size:1.7rem;font-weight:1000;letter-spacing:-.12em}.v02-logo span{color:var(--cyan)}.v02-turn{padding:9px 14px;border:1px solid var(--vline);background:rgba(7,11,19,.75);border-radius:999px;font-size:.67rem;font-weight:1000;letter-spacing:.12em}.v02-actions{display:flex;gap:7px}.v02-icon{width:40px;height:40px;border-radius:12px;border:1px solid var(--vline);background:#0a101b;color:#b8c5d9;cursor:pointer}
-.v02-layout{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px}.v02-board-panel{min-height:0;border-radius:26px;border:1px solid var(--vline);background:linear-gradient(145deg,rgba(14,22,37,.82),rgba(5,8,14,.88));box-shadow:0 30px 70px rgba(0,0,0,.5);display:grid;place-items:center;overflow:hidden;padding:20px}.v02-board-stage{width:min(82vh,760px,72vw);aspect-ratio:1;perspective:1500px;position:relative}.v02-board{position:absolute;inset:2%;transform:rotateX(48deg) rotateZ(0deg);transform-style:preserve-3d;border-radius:30px;background:linear-gradient(145deg,#172338,#080d17);border:1px solid rgba(255,255,255,.13);box-shadow:0 55px 70px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.14)}
-.v02-board:before{content:"";position:absolute;inset:4%;border-radius:23px;border:1px solid rgba(99,230,255,.13);background:radial-gradient(circle at 50% 48%,rgba(40,70,105,.2),transparent 45%);box-shadow:inset 0 0 55px rgba(0,0,0,.5)}
-.v02-board-cell{position:absolute;width:6.78%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) translateZ(18px);background:radial-gradient(circle at 32% 28%,#ffffff,#c5d0dd 62%,#8795a6);border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 7px rgba(0,0,0,.65),inset 0 1px 2px rgba(255,255,255,.8);z-index:5}.v02-board-cell.base{box-shadow:0 0 0 3px var(--cell-color),0 0 24px var(--cell-color),0 5px 8px #000}.v02-board-cell.marker{box-shadow:0 0 0 2px var(--cell-color),0 0 14px color-mix(in srgb,var(--cell-color) 55%,transparent),0 5px 8px #000}.v02-board-cell.home{background:radial-gradient(circle,#172333,#09101a);box-shadow:0 0 0 2px var(--cell-color),0 0 20px color-mix(in srgb,var(--cell-color) 45%,transparent),0 4px 8px #000}
-.v02-line{position:absolute;height:3px;transform-origin:0 50%;background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(99,230,255,.22),rgba(255,255,255,.05));box-shadow:0 0 8px rgba(99,230,255,.12);z-index:2}.v02-line.home{background:linear-gradient(90deg,var(--cell-color),rgba(255,255,255,.15));box-shadow:0 0 10px color-mix(in srgb,var(--cell-color) 55%,transparent)}
-.v02-pawn{position:absolute;width:5.5%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) translateZ(42px);z-index:20;border:2px solid rgba(255,255,255,.75);box-shadow:0 13px 14px rgba(0,0,0,.65),inset 0 4px 7px rgba(255,255,255,.5),0 0 18px var(--pawn-color);background:radial-gradient(circle at 32% 25%,#fff,var(--pawn-color) 28%,color-mix(in srgb,var(--pawn-color) 62%,#000));transition:left .45s cubic-bezier(.2,.8,.2,1),top .45s cubic-bezier(.2,.8,.2,1)}
-.v02-pawn:after{content:"";position:absolute;inset:22%;border-radius:50%;border:1px solid rgba(255,255,255,.35)}
-.v02-side{border:1px solid var(--vline);border-radius:22px;background:rgba(7,11,19,.78);padding:14px;display:flex;flex-direction:column;gap:10px;overflow:auto}.v02-section{border:1px solid var(--vline);background:rgba(16,23,37,.62);border-radius:16px;padding:13px}.v02-title{font-size:.62rem;letter-spacing:.16em;color:#71819c;font-weight:1000;margin-bottom:9px}.v02-player{display:flex;align-items:center;gap:9px;padding:8px;border-radius:12px}.v02-player.active{background:rgba(99,230,255,.08);outline:1px solid rgba(99,230,255,.18)}.v02-dot{width:9px;height:9px;border-radius:50%;background:var(--pc);box-shadow:0 0 10px var(--pc)}.v02-player b{font-size:.72rem}.v02-player small{display:block;color:#66758e;font-size:.58rem;margin-top:2px}.v02-event{font-size:.63rem;color:#8998b0;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
-.v02-hand{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);display:flex;gap:8px;z-index:100}.v02-card{width:72px;height:100px;border-radius:13px;border:1px solid rgba(255,255,255,.35);background:linear-gradient(145deg,#f5f7fb,#aeb9c8);color:#101827;box-shadow:0 14px 30px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.15);font-size:1.35rem;font-weight:1000;cursor:pointer;transition:.18s transform,.18s filter}.v02-card:hover{transform:translateY(-14px) rotateX(7deg);filter:brightness(1.08)}.v02-card.disabled{opacity:.45;cursor:not-allowed}.v02-card.reds{color:#e8344d}.v02-card.black{color:#111827}
-@media(max-width:900px){.v02-home-inner{grid-template-columns:1fr}.v02-table-wrap{display:none}.v02-layout{grid-template-columns:1fr}.v02-side{display:none}.v02-board-stage{width:min(92vw,700px)}.v02-card{width:58px;height:82px}}
-</style>
-
-<script id="tok-v02-ui-js">
-(()=>{
- const app=()=>document.querySelector('#app'); const esc=v=>String(v??'').replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[m]));
- const CH={red:'#ff4b61',green:'#32df91',yellow:'#ffd34d',blue:'#4b91ff'};
- const CN={red:'ROSSO',green:'VERDE',yellow:'GIALLO',blue:'BLU'};
- const SU={hearts:'♥',diamonds:'♦',clubs:'♣',spades:'♠'};
- function cardText(c){if(!c)return '';let [r,s]=c.split('-');return r+(SU[s]||'')}
- function pos(c){return {x:(c.x/BOARD.boardSizeMm)*100,y:(c.y/BOARD.boardSizeMm)*100}}
- function cellClass(c){return c.isBase?'base':c.isMarker?'marker':''}
- function line(a,b,extra='') {const A=pos(a),B=pos(b),dx=B.x-A.x,dy=B.y-A.y,len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;return `<i class="v02-line ${extra}" style="left:${A.x}%;top:${A.y}%;width:${len}%;transform:rotate(${ang}deg);${extra?`--cell-color:${CH[extra]}`:''}"></i>`}
- function boardHtml(state){
-   let h='<div class="v02-board-stage"><div class="v02-board">';
-   for(let i=0;i<BOARD.loopCells.length;i++) h+=line(BOARD.loopCells[i],BOARD.loopCells[(i+1)%BOARD.loopCells.length]);
-   for(const c of BOARD.order){let prev=BOARD.loopCells[BOARD.baseIndex[c]];for(const p of BOARD.homePaths[c]){h+=line(prev,p,'home');prev=p}}
-   BOARD.loopCells.forEach((c,i)=>{const P=pos(c);const col=c.isBase?CH[c.baseColor]:c.isMarker?CH[c.markerColor]:'';h+=`<div class="v02-board-cell ${cellClass(c)}" style="left:${P.x}%;top:${P.y}%;${col?`--cell-color:${col}`:''}"></div>`});
-   for(const c of BOARD.order) BOARD.homePaths[c].forEach((p)=>{const P=pos(p);h+=`<div class="v02-board-cell home" style="left:${P.x}%;top:${P.y}%;--cell-color:${CH[c]}"></div>`});
-   const pawns=state?.pawns||{}; for(const c of BOARD.order){(pawns[c]||[]).forEach((pp,i)=>{let cell=pp>=1000?BOARD.homePaths[c][pp-1000]:BOARD.loopCells[pp];if(!cell)return;const P=pos(cell);h+=`<div class="v02-pawn" title="${CN[c]} #${i+1}" style="left:${P.x}%;top:${P.y}%;--pawn-color:${CH[c]}"></div>`})}
-   h+='<div class="v02-mini-core" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateZ(10px)"><b>T<span>O</span>K</b></div></div></div>';return h;
- }
- function players(state){return COLORS.map(c=>{const p=state?.players?.[c]||{};const active=state?.turnColor===c;return `<div class="v02-player ${active?'active':''}" style="--pc:${CH[c]}"><i class="v02-dot"></i><div><b>${esc(p.name||CN[c])}</b><small>${CN[c]} · ${((state?.pawns?.[c]||[]).filter(x=>x>=1000).length)}/4 HOME</small></div></div>`}).join('')}
- function events(state){return (state?.log||[]).slice(-7).reverse().map(x=>`<div class="v02-event">${esc(x)}</div>`).join('')||'<div class="v02-event">Tavolo pronto.</div>'}
- function hand(state){if(state?.phase!=='playing')return '';const active=state.turnColor===myColor;return `<div class="v02-hand">${(state.hands?.[myColor]||[]).map(c=>`<button class="v02-card ${/hearts|diamonds/.test(c)?'reds':'black'} ${active?'':'disabled'}" ${active?'':'disabled'} onclick="onCardClick('${c}',event)">${cardText(c)}</button>`).join('')}</div>`}
- function game(state){currentState=state;let turn=state?.turnColor;app().innerHTML=`<main class="v02-game"><header class="v02-top"><div><div class="v02-logo">T<span>O</span>K</div><small style="color:#596a85;font-size:.55rem;letter-spacing:.15em">ROOM · ${esc(myRoomId||'')}</small></div><div class="v02-turn">${state?.phase==='playing'?(turn===myColor?'YOUR TURN':'TURN · '+CN[turn]):String(state?.phase||'').toUpperCase()}</div><div class="v02-actions"><button class="v02-icon" onclick="toggleSoundMuted()">${soundMuted?'🔇':'🔊'}</button><button class="v02-icon" onclick="openRulesPanel()">?</button><button class="v02-icon" onclick="openLogPicker()">☷</button><button class="v02-icon" onclick="openChatPicker()">💬</button></div></header><div class="v02-layout"><section class="v02-board-panel">${boardHtml(state)}</section><aside class="v02-side"><div class="v02-section"><div class="v02-title">PLAYERS</div>${players(state)}</div><div class="v02-section"><div class="v02-title">MATCH EVENTS</div>${events(state)}</div><div class="v02-section" id="v02-controls"><div class="v02-title">STATUS</div><div style="font-size:.68rem;color:#8391aa">${state.phase==='exchanging'?'Scegli una carta da passare al compagno.':state.phase==='playing'?(turn===myColor?'Scegli una carta per giocare.':'Attendi il turno.'):'Preparazione della partita.'}</div></div></aside></div>${hand(state)}</main>`;
-   if(state.phase==='exchanging') renderExchangeControls(state); if(state.phase==='lobby') renderStartControls(state); if(state.phase==='finished') renderWinBanner(state);
- }
- function home(){app().innerHTML=`<main class="v02-home"><div class="v02-home-inner"><section><div class="v02-kicker">TORVAIANICA · DIGITAL TABLE · V02</div><div class="v02-brand">T<span>O</span>K</div><div class="v02-tag">Un tavolo digitale costruito sopra il motore originale TOK. Regole, movimento, Jack, 7, catture e vittoria restano governati dal motore.</div><div class="v02-room"><input id="v02-room" maxlength="12" placeholder="CODICE STANZA"><button class="v02-btn" onclick="continueFromRoomCode(document.querySelector('#v02-room').value)">ENTER TABLE</button></div></section><section class="v02-table-wrap"><div class="v02-table"><div class="v02-mini-core"><b>T<span>O</span>K</b></div>${BOARD.loopCells.map(c=>{const P=pos(c);const cl=c.isBase?'r':c.baseColor==='green'?'g':c.baseColor==='yellow'?'y':c.baseColor==='blue'?'b':'';return `<i class="v02-mini-cell ${cl}" style="left:${P.x}%;top:${P.y}%"></i>`}).join('')}</div></section></div></main>`}
- window.renderGameFunctional=game; window.renderGame=game; window.renderGameShell=()=>currentState?game(currentState):home(); renderLobby=home; window.renderLobby=home; window.onStateChange=(state)=>{if(!state)return;currentState=state;try{maybeAdvanceBotTurn(state)}catch(e){}try{maybeAdvanceBotChat(state)}catch(e){}try{maybePlaySounds(state)}catch(e){}try{recordMoveHistoryIfFresh(state)}catch(e){}game(state)}; 
- // Keep engine controls, but place them in the new sidebar.
- const oldExchange=renderExchangeControls, oldStart=renderStartControls, oldWin=renderWinBanner;
- renderExchangeControls=(state)=>{const w=document.querySelector('#v02-controls');if(!w)return;w.innerHTML='';if(state.phase!=='exchanging')return;const done=!!state.pendingExchange?.[myColor];w.innerHTML=`<div class="v02-title">BLIND EXCHANGE</div><div style="font-size:.7rem;color:#94a2ba;margin-bottom:10px">${done?'Carta inviata. Attendi il compagno.':'Scegli una carta dalla tua mano.'}</div>${done?'':(state.hands?.[myColor]||[]).map(c=>`<button class="v02-card ${/hearts|diamonds/.test(c)?'reds':'black'}" style="width:55px;height:78px;margin:3px" onclick="sendExchangeCard('${c}')">${cardText(c)}</button>`).join('')}`};
- renderStartControls=(state)=>{const w=document.querySelector('#v02-controls');if(!w)return;w.innerHTML='<div class="v02-title">LOBBY</div>';const missing=COLORS.filter(c=>!state.players?.[c]);w.innerHTML+=`<div style="font-size:.68rem;color:#94a2ba;margin-bottom:9px">${4-missing.length}/4 posti occupati</div>`+(missing.length?missing.map(c=>`<button class="v02-icon" title="BOT ${CN[c]}" onclick="assignBotToColor(myRoomId,'${c}',()=>{},'easy')" style="margin:2px">${CN[c][0]}</button>`).join(''):'<button class="v02-btn" style="height:38px" onclick="startGame()">START GAME</button>')};
- renderWinBanner=(state)=>{if(state?.phase!=='finished')return;oldWin(state)};
-})();
-</script>
-
-<style id="tok-v07-playable-css">
-.playable{min-height:100vh;background:radial-gradient(circle at 50% 18%,#16223a 0,#080d18 48%,#02040a 100%);color:#eef5ff;font-family:Inter,system-ui,sans-serif;padding:18px;box-sizing:border-box}.phead{height:54px;display:flex;align-items:center;gap:16px;max-width:1400px;margin:auto}.plogo{font-size:28px;font-weight:1000;letter-spacing:-.08em}.plogo span{color:#5ee7ff}.proom{font-size:10px;letter-spacing:.18em;color:#71809a}.pactions{margin-left:auto;display:flex;gap:8px}.pactions button{width:42px;height:42px;border-radius:12px;border:1px solid #263650;background:#0c1424;color:#dce7f5;font-size:17px}.playgrid{max-width:1400px;margin:8px auto 130px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}.pboard{width:min(78vw,860px);aspect-ratio:1;margin:auto;perspective:1200px}.pboard-face{position:relative;width:100%;height:100%;border-radius:26px;background:linear-gradient(145deg,#17243a,#07101d);box-shadow:0 30px 55px #000b, inset 0 0 0 1px #31445f;transform:rotateX(18deg);transform-style:preserve-3d;overflow:hidden}.pboard-face:after{content:"";position:absolute;inset:0;border-radius:26px;box-shadow:inset 0 0 80px #0009;pointer-events:none}.p-line{position:absolute;height:3px;background:#30415a;transform-origin:left center;z-index:1}.p-line.home{background:linear-gradient(90deg,var(--pc),#2d3a50)}.pcell{position:absolute;transform:translate(-50%,-50%);width:6.6%;aspect-ratio:1;border-radius:50%;border:1px solid #60728d;background:radial-gradient(circle at 35% 30%,#fff4,#7b8da7 16%,#172438 62%);box-shadow:0 8px 12px #0009,inset 0 2px 4px #fff2;z-index:5;padding:0}.pcell.base{border:2px solid var(--pc,#fff)}.pcell.marker{box-shadow:0 0 0 2px var(--pc,#fff),0 8px 15px #0009}.pcell.target{border-color:#fff;box-shadow:0 0 0 3px #5ee7ff,0 0 24px #5ee7ff,0 8px 12px #0009;animation:ptarget 1s infinite alternate}.homecell.red{--pc:#ff4b61}.homecell.green{--pc:#35df91}.homecell.yellow{--pc:#ffd34d}.homecell.blue{--pc:#4b91ff}.ppawn{position:absolute;transform:translate(-50%,-50%) translateZ(35px);width:7%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 22%,#fff,var(--pc) 25%,#07101c 85%);border:2px solid #fff9;box-shadow:0 12px 15px #000b,0 0 20px var(--pc);z-index:20;display:grid;place-items:center}.ppawn span{font-size:10px;font-weight:1000;color:#07101c;text-shadow:0 1px #fff8}.pcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:24%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;align-content:center;background:radial-gradient(circle,#233b59,#0b1422);border:1px solid #49617e;box-shadow:0 0 50px #0009,inset 0 0 30px #0009;z-index:4}.pcenter b{font-size:42px;letter-spacing:-.1em}.pcenter b span{color:#5ee7ff}.pcenter small{font-size:7px;letter-spacing:.35em;color:#8291a8}.pside{border:1px solid #22314a;border-radius:20px;background:#09111eeb;padding:15px;box-shadow:0 20px 40px #0007}.ptitle{font-size:9px;letter-spacing:.22em;color:#6f819c;font-weight:900;margin:8px 0}.turn{padding:12px;border-radius:12px;background:#0d1828;color:#9aabc2;font-weight:900;font-size:12px}.turn.mine{color:#5ee7ff;box-shadow:inset 0 0 0 1px #5ee7ff33}.pplayer{display:grid;grid-template-columns:10px 1fr;gap:8px;padding:8px;border-radius:10px}.pplayer.active{background:#5ee7ff10}.pplayer i{width:9px;height:9px;border-radius:50%;margin-top:4px;box-shadow:0 0 10px currentColor}.pplayer b{font-size:11px}.pplayer small{grid-column:2;color:#6d7e97;font-size:8px}.pevents{max-height:190px;overflow:auto;color:#8493aa;font-size:9px;line-height:1.45}.pevents div{padding:5px 0;border-bottom:1px solid #ffffff08}.phand{position:fixed;left:0;right:0;bottom:0;padding:12px 14px 16px;background:linear-gradient(180deg,transparent,#02050c 30%);z-index:100}.hand-title{text-align:center;font-size:9px;letter-spacing:.2em;color:#72849f;margin-bottom:7px}.hand-row{display:flex;justify-content:center;gap:8px}.pcard{width:68px;height:94px;border-radius:13px;border:1px solid #fff8;background:linear-gradient(145deg,#fff,#aeb9c9);color:#101827;font-size:23px;font-weight:1000;box-shadow:0 14px 25px #0009;cursor:pointer;transition:.15s transform}.pcard.red{color:#d92d45}.pcard.sel{transform:translateY(-10px);outline:3px solid #5ee7ff}.pcard.off{opacity:.45;cursor:not-allowed}.pcell:disabled{cursor:default;opacity:1}@keyframes ptarget{to{transform:translate(-50%,-50%) scale(1.1)}}@media(max-width:800px){.playable{padding:10px}.playgrid{grid-template-columns:1fr;margin-bottom:125px}.pside{display:none}.pboard{width:96vw}.pboard-face{transform:rotateX(10deg)}.pcard{width:58px;height:82px;font-size:20px}.pcenter b{font-size:30px}}
-</style>
-<script id="tok-v07-playable">
-(function(){
-  let selectedCard = null;
-  let selectedOptions = [];
-  const A={red:'#ff4b61',green:'#35df91',yellow:'#ffd34d',blue:'#4b91ff'};
-  const N={red:'ROSSO',green:'VERDE',yellow:'GIALLO',blue:'BLU'};
-  const S={hearts:'♥',diamonds:'♦',clubs:'♣',spades:'♠'};
-  const esc2=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  const pos=c=>({x:(c.x/BOARD.boardSizeMm)*100,y:(c.y/BOARD.boardSizeMm)*100});
-  const cardText2=c=>{const [r,s]=String(c).split('-');return r+(S[s]||'')};
-  function clearSelection(){selectedCard=null;selectedOptions=[];}
-  function destinationFor(o,color){
-    if(o.type==='enter') return BOARD.loopCells[BOARD.baseIndex[color]];
-    if(o.type==='move' && o.path?.length) return o.path[o.path.length-1]>=1000 ? BOARD.homePaths[color][o.path[o.path.length-1]-1000] : BOARD.loopCells[o.path[o.path.length-1]];
-    return null;
-  }
-  function optionKey(o){return JSON.stringify(o)}
-  async function selectCard(card,evt){
-    if(!currentState || currentState.phase!=='playing') return;
-    if(currentState.turnColor!==myColor && activeColorFor(currentState,myColor)!==currentState.turnColor){ showToast('Non è il tuo turno.'); return; }
-    if(moveInFlight) return;
-    const active=activeColorFor(currentState,myColor);
-    if(!active){showToast('La tua squadra ha già portato tutte le pedine a casa.');return;}
-    const opts=legalMovesForCard(currentState,active,card);
-    if(!opts.length){ await onCardClick(card,evt); return; }
-    if(opts.length===1 && opts[0].type==='move' || opts.length===1 && opts[0].type==='enter'){
-      selectedCard=card;selectedOptions=opts;renderPlayableGame(currentState);return;
-    }
-    await onCardClick(card,evt);
-  }
-  async function chooseDestination(index){
-    const o=selectedOptions[index]; const card=selectedCard;
-    if(!o||!card) return;
-    clearSelection(); renderPlayableGame(currentState);
-    await playMove(activeColorFor(currentState,myColor),card,o);
-  }
-  function board(state){
-    let h='<div class="pboard"><div class="pboard-face">';
-    for(let i=0;i<BOARD.loopCells.length;i++){
-      const a=pos(BOARD.loopCells[i]),b=pos(BOARD.loopCells[(i+1)%BOARD.loopCells.length]);
-      const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
-      h+=`<i class="p-line" style="left:${a.x}%;top:${a.y}%;width:${L}%;transform:rotate(${ang}deg)"></i>`;
-    }
-    for(const c of BOARD.order){let prev=BOARD.loopCells[BOARD.baseIndex[c]];for(const p of BOARD.homePaths[c]){const a=pos(prev),b=pos(p);const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;h+=`<i class="p-line home" style="left:${a.x}%;top:${a.y}%;width:${L}%;transform:rotate(${ang}deg);--pc:${A[c]}"></i>`;prev=p}}
-    BOARD.loopCells.forEach((c,i)=>{const P=pos(c);const active=selectedOptions.some(o=>{const d=destinationFor(o,activeColorFor(state,myColor));return d===c});const cls=c.isBase?'base '+c.baseColor:c.isMarker?'marker '+c.markerColor:'';h+=`<button type="button" class="pcell ${cls} ${active?'target':''}" data-loop="${i}" ${active?'':'disabled'} style="left:${P.x}%;top:${P.y}%" onclick="window.__tokChooseLoop(${i})"></button>`});
-    for(const c of BOARD.order) BOARD.homePaths[c].forEach((p,hi)=>{const P=pos(p);const active=selectedOptions.some(o=>o.type==='move'&&o.path?.at(-1)===1000+hi&&activeColorFor(state,myColor)===c);h+=`<button type="button" class="pcell homecell ${c} ${active?'target':''}" ${active?'':'disabled'} style="left:${P.x}%;top:${P.y}%" onclick="window.__tokChooseHome('${c}',${hi})"></button>`});
-    for(const c of BOARD.order)(state.pawns?.[c]||[]).forEach((pp,i)=>{const cell=pp>=1000?BOARD.homePaths[c][pp-1000]:BOARD.loopCells[pp];if(!cell)return;const P=pos(cell);h+=`<div class="ppawn" style="left:${P.x}%;top:${P.y}%;--pc:${A[c]}"><span>${i+1}</span></div>`});
-    h+='<div class="pcenter"><b>T<span>O</span>K</b><small>TORVAJANICA</small></div></div></div>';return h;
-  }
-  function cards(state){
-    if(state.phase!=='playing') return '';
-    const active=state.turnColor===myColor || activeColorFor(state,myColor)===state.turnColor;
-    return `<div class="phand"><div class="hand-title">${active?'YOUR TURN · CHOOSE A CARD':'YOUR HAND'}</div><div class="hand-row">${(state.hands?.[myColor]||[]).map(c=>`<button type="button" class="pcard ${/hearts|diamonds/.test(c)?'red':''} ${active?'':'off'} ${selectedCard===c?'sel':''}" ${active?'':'disabled'} onclick="window.__tokSelectCard('${c}',event)">${cardText2(c)}</button>`).join('')}</div></div>`;
-  }
-  function side(state){
-    const turn=state.turnColor;
-    return `<aside class="pside"><div class="ptitle">TABLE</div><div class="turn ${turn===myColor?'mine':''}">${state.phase==='playing'?(turn===myColor?'YOUR TURN':'TURN · '+N[turn]):String(state.phase||'').toUpperCase()}</div><div class="ptitle">PLAYERS</div>${COLORS.map(c=>{const p=state.players?.[c]||{};return `<div class="pplayer ${turn===c?'active':''}"><i style="background:${A[c]}"></i><b>${esc2(p.name||N[c])}</b><small>${N[c]} · ${(state.pawns?.[c]||[]).filter(x=>x>=1000).length}/4</small></div>`}).join('')}<div class="ptitle">EVENTS</div><div class="pevents">${(state.log||[]).slice(-6).reverse().map(x=>`<div>${esc2(x)}</div>`).join('')||'Tavolo pronto.'}</div></aside>`;
-  }
-  function renderPlayableGame(state){
-    currentState=state;
-    const root=document.getElementById('app'); if(!root)return;
-    root.innerHTML=`<main class="playable"><header class="phead"><div class="plogo">T<span>O</span>K</div><div class="proom">ROOM · ${esc2(myRoomId||'')}</div><div class="pactions"><button type="button" onclick="toggleSoundMuted()">${soundMuted?'🔇':'🔊'}</button><button type="button" onclick="openRulesPanel()">?</button><button type="button" onclick="openChatPicker()">💬</button></div></header><div class="playgrid"><section>${board(state)}</section>${side(state)}</div>${cards(state)}</main>`;
-  }
-  window.__tokSelectCard=selectCard;
-  window.__tokChooseLoop=async i=>{const idx=selectedOptions.findIndex(o=>{const d=destinationFor(o,activeColorFor(currentState,myColor));return d===BOARD.loopCells[i]});if(idx>=0)await chooseDestination(idx);};
-  window.__tokChooseHome=async(c,hi)=>{const idx=selectedOptions.findIndex(o=>o.type==='move'&&o.path?.at(-1)===1000+hi);if(idx>=0)await chooseDestination(idx);};
-  window.renderGame=renderPlayableGame;
-  window.renderGameFunctional=renderPlayableGame;
-  window.renderGameShell=()=>currentState?renderPlayableGame(currentState):renderLobby();
-  window.onStateChange=function(state){if(!state)return;currentState=state;try{maybeAdvanceBotTurn(state)}catch(e){}try{maybeAdvanceBotChat(state)}catch(e){}try{maybePlaySounds(state)}catch(e){}try{recordMoveHistoryIfFresh(state)}catch(e){}renderPlayableGame(state);};
-  // Keep the original Firebase/engine functions. Only the presentation is replaced.
-})();
-</script>
-
 </html>
