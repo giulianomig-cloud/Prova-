@@ -1,21 +1,10 @@
-# TOK — Digital Table
+# TOK — New Zero 3D
 
-Nuova interfaccia 3D per TOK/Torvaianica, con il motore di gioco originale integrato.
+Versione GitHub Pages del gioco TOK.
 
-## Pubblicazione su GitHub Pages
+## Pubblicazione
 
-1. Crea un nuovo repository GitHub.
-2. Carica tutti i file presenti in questa cartella nella root del repository.
-3. Vai in **Settings → Pages**.
-4. Seleziona **Deploy from a branch**.
-5. Seleziona `main` e `/ (root)`.
-6. Salva e apri l'indirizzo GitHub Pages generato.
+Caricare tutti i file nella root del repository GitHub e attivare:
+**Settings → Pages → Deploy from a branch → main → / (root)**.
 
-## File
-
-- `index.html` — applicazione principale.
-- `manifest.json` — configurazione PWA.
-- `sw.js` — service worker per cache/offline dell'app shell.
-- `icon-192.png` — icona PWA.
-
-Firebase viene caricato tramite CDN nel file `index.html` e il codice contiene già la configurazione Firebase presente nella versione di partenza.
+Il file principale è `index.html`.
