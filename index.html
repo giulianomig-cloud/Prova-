@@ -3331,9 +3331,14 @@ async function shareInviteLink(roomId) {
   prompt("Copia questo link per invitare i tuoi amici:", link);
 }
 
-async function continueFromRoomCode() {
+async function continueFromRoomCode(roomCodeArg = "") {
   unlockAudio();
-  const roomId = $("#room-input").value.trim().toUpperCase();
+  // V04: support both the original engine input and the new V02/V03 home input.
+  // The previous build passed the new input value as an argument but the engine
+  // ignored it and queried #room-input, which no longer existed.
+  const input = document.querySelector("#room-input") || document.querySelector("#v02-room");
+  const rawRoomId = roomCodeArg || (input ? input.value : "");
+  const roomId = String(rawRoomId || "").trim().toUpperCase();
   if (!roomId) return showToast("Inserisci un codice stanza.");
   myRoomId = roomId;
 
@@ -8025,7 +8030,7 @@ function applyInviteLinkIfPresent() {
   }
   roomId = roomId.trim().toUpperCase();
   if (!roomId) return;
-  const input = document.getElementById("room-input");
+  const input = document.getElementById("room-input") || document.getElementById("v02-room");
   if (input) input.value = roomId;
   try {
     history.replaceState(null, "", location.pathname);
