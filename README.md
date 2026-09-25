@@ -1,7 +1,6 @@
-# TOK - Ultimate 3D Edition (v2026.09.25-MOBILE)
+# TOK - Ultimate 3D Edition (v2026.09.25-FIXED)
 
-Versione ottimizzata per smartphone del tabellone tattico **TOK (Tock)** con build visibile nell'interfaccia.
+Tabellone 3D reale con griglia nativa 11x11, caselle visibili, pedine volumetriche e supporto mobile ottimizzato.
 
 ## Build Corrente
-- **BUILD ID**: `v2026.09.25-MOBILE-OPT`
-- Layout completamente responsive per dispositivi mobili.
+- **BUILD ID**: `v2026.09.25-FIXED`
