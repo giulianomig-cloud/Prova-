@@ -1,24 +1,11 @@
-# TOK — GitHub Pages
+# TOK — Cyber 3D UI
 
-Versione web/PWA del gioco TOK/Tock.
+GitHub Pages package for the TOK game.
 
-## Pubblicazione su GitHub Pages
+## Publish
+1. Create a GitHub repository.
+2. Upload all files in this folder to the repository root.
+3. Settings → Pages → Deploy from branch.
+4. Select `main` and `/ (root)`.
 
-1. Crea un repository GitHub.
-2. Carica **tutti i file mantenendo la cartella `fonts/`**.
-3. In `Settings → Pages`, scegli `Deploy from a branch`.
-4. Seleziona `main` e `/ (root)`.
-5. Apri l'URL GitHub Pages generato.
-
-## Struttura
-
-- `index.html` — applicazione completa.
-- `manifest.json` — configurazione PWA.
-- `sw.js` — service worker/offline cache.
-- `icon-192.png`, `icon-512.png` — icone PWA.
-
-## Firebase
-
-Il gioco utilizza Firebase Realtime Database tramite CDN per la sincronizzazione delle partite. Le librerie Firebase vengono caricate dall'HTML e quindi **non devono essere copiate nel repository**.
-
-> Nota: le chiavi `apiKey` Firebase web presenti nel client non sono, da sole, una password. La sicurezza del database deve essere affidata alle Firebase Security Rules.
+The game logic is preserved; this version adds the dark cyber/3D visual layer, corner player HUDs, integrated chat, and removes the old player cards below the hand.

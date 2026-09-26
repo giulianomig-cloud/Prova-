@@ -1,10 +1,6 @@
-const CACHE_VERSION = 'tok-v4.41-3d-ui';
+const CACHE_VERSION = 'tok-v10-cyber3d';
 const CORE = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
+  './', './index.html', './manifest.json', './icon-192.png', './icon-512.png'
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_VERSION).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
