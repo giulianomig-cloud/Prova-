@@ -2012,6 +2012,252 @@ body::after{
 }
 </style>
 
+
+<style id="tok-reference-b">
+/* ================================================================
+   TOK FILE B — REFERENCE 3D / PREMIUM TABLETOP UI
+   Visual layer + tiny visual emblem markup only. Game rules untouched.
+   ================================================================ */
+:root{
+  --b-bg:#02060b;
+  --b-blue:#35baff;
+  --b-blue2:#0874c4;
+  --b-cyan:#67e5ff;
+  --b-metal:#0a1825;
+  --b-glass:rgba(5,17,29,.86);
+}
+html,body{background:#01050a!important;color:#f4f8fc!important;overflow-x:hidden!important;}
+body{
+  min-height:100dvh!important;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(0,119,255,.22),transparent 34%),
+    radial-gradient(ellipse at 0% 45%,rgba(0,207,255,.09),transparent 30%),
+    radial-gradient(ellipse at 100% 65%,rgba(0,103,255,.10),transparent 30%),
+    linear-gradient(180deg,#020913 0%,#01050a 55%,#000205 100%)!important;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(ellipse at 50% 40%,transparent 35%,rgba(0,0,0,.55) 100%);}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.22;background-image:linear-gradient(rgba(64,190,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(64,190,255,.06) 1px,transparent 1px);background-size:30px 30px;mask-image:linear-gradient(to bottom,black,transparent 76%);}
+#app{max-width:430px!important;margin:0 auto!important;padding:calc(12px + env(safe-area-inset-top)) 10px calc(22px + env(safe-area-inset-bottom))!important;}
+.game-shell{position:relative!important;filter:drop-shadow(0 22px 34px rgba(0,0,0,.42));}
+/* TOP CONSOLE */
+.top-actions-row{display:flex!important;align-items:center!important;gap:8px!important;margin:0 0 9px!important;}
+.top-actions-room{height:58px!important;min-width:0!important;flex:1!important;padding:7px 13px!important;border-radius:17px!important;position:relative!important;overflow:hidden!important;background:linear-gradient(145deg,rgba(14,45,70,.94),rgba(3,14,25,.94))!important;border:1px solid rgba(68,188,255,.62)!important;box-shadow:0 0 0 1px rgba(0,89,153,.28),0 9px 20px rgba(0,0,0,.42),0 0 20px rgba(0,139,255,.20),inset 0 1px 0 rgba(255,255,255,.16),inset 0 -7px 14px rgba(0,0,0,.35)!important;}
+.top-actions-room::before{content:"";position:absolute;inset:1px;border-radius:16px;background:linear-gradient(120deg,rgba(255,255,255,.11),transparent 30%,transparent 72%,rgba(70,195,255,.08));pointer-events:none;}
+.top-actions-room-label{display:block!important;text-transform:uppercase!important;font-size:10px!important;letter-spacing:.12em!important;color:#a9c6dc!important;line-height:13px!important;}
+.top-actions-room-code{display:block!important;font-size:22px!important;font-weight:900!important;letter-spacing:.04em!important;color:#f3fbff!important;text-shadow:0 0 12px rgba(77,191,255,.48)!important;line-height:25px!important;}
+.top-actions-icons{display:flex!important;gap:5px!important;align-items:center!important;}
+.icon-btn,.icon-btn-pair{width:42px!important;height:42px!important;min-width:42px!important;border-radius:50%!important;background:radial-gradient(circle at 35% 25%,#244e73 0%,#0d2944 42%,#041321 100%)!important;border:1px solid rgba(89,188,255,.55)!important;color:#e8f7ff!important;box-shadow:0 6px 15px rgba(0,0,0,.48),0 0 10px rgba(0,137,255,.14),inset 0 2px 2px rgba(255,255,255,.14),inset 0 -5px 9px rgba(0,0,0,.36)!important;}
+.icon-btn-pair{display:flex!important;overflow:hidden!important;border-radius:22px!important;width:78px!important;min-width:78px!important;}
+.icon-btn-half{flex:1!important;background:transparent!important;color:#eaf7ff!important;border:0!important;}
+.icon-btn svg,.icon-btn-half svg{stroke:#eaf7ff!important;filter:drop-shadow(0 0 5px rgba(91,204,255,.5));}
+/* TEAM BAR */
+.identity-row{height:43px!important;margin:0 0 9px!important;padding:0 13px!important;border-radius:16px!important;display:flex!important;align-items:center!important;gap:9px!important;background:linear-gradient(180deg,rgba(9,31,49,.95),rgba(3,14,25,.96))!important;border:1px solid rgba(64,171,239,.40)!important;box-shadow:0 8px 18px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.09),inset 0 -4px 9px rgba(0,0,0,.32)!important;}
+.identity-row .swatch{width:18px!important;height:18px!important;border-radius:50%!important;box-shadow:0 0 12px currentColor,0 1px 2px #000!important;}
+.identity-name{font-size:16px!important;font-weight:800!important;color:#fff!important;}
+.identity-sep{color:#7793a8!important;font-size:14px!important;}
+.identity-team{font-size:14px!important;color:#c3d4df!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+/* BOARD CHASSIS */
+#board-wrap{position:relative!important;padding:12px!important;margin:0!important;border-radius:27px!important;background:linear-gradient(145deg,#243e50 0%,#0d1c29 18%,#030a11 54%,#1a3344 84%,#526b78 100%)!important;border:1px solid rgba(127,218,255,.72)!important;box-shadow:0 0 0 2px #02070c,0 0 0 4px rgba(34,92,122,.55),0 0 24px rgba(0,155,255,.28),0 25px 45px rgba(0,0,0,.68),inset 0 2px 0 rgba(255,255,255,.22),inset 0 -9px 16px rgba(0,0,0,.76)!important;isolation:isolate!important;}
+#board-wrap::before{content:"";position:absolute;z-index:3;inset:4px;border-radius:22px;pointer-events:none;border:1px solid rgba(104,205,255,.25);box-shadow:inset 0 0 0 2px rgba(0,0,0,.42),inset 0 0 25px rgba(0,0,0,.55);background:linear-gradient(110deg,rgba(255,255,255,.10),transparent 18%,transparent 75%,rgba(50,187,255,.10));}
+#board-wrap::after{content:"";position:absolute;z-index:4;left:9%;right:9%;top:3px;height:3px;border-radius:5px;background:linear-gradient(90deg,transparent,#8de5ff,transparent);box-shadow:0 0 10px #28bfff,0 0 22px rgba(0,161,255,.55);pointer-events:none;}
+#board-svg{position:relative!important;z-index:1!important;border:0!important;border-radius:17px!important;overflow:visible!important;background:#8c6a43!important;filter:drop-shadow(0 11px 11px rgba(0,0,0,.55))!important;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15),inset 0 0 25px rgba(0,0,0,.50),0 0 0 1px rgba(0,0,0,.75)!important;transform:perspective(1300px) rotateX(.7deg)!important;transform-origin:center bottom!important;}
+/* Board wood gets richer and darker while retaining the real SVG geometry. */
+#board-svg rect:first-of-type{filter:saturate(.9) contrast(1.08)!important;}
+#board-svg .board-cell{filter:drop-shadow(0 2px 2px rgba(0,0,0,.58))!important;}
+#board-svg .board-cell circle:first-child{filter:drop-shadow(0 1px 0 rgba(255,255,255,.30))!important;}
+/* PLAYER PLATES */
+#board-player-overlay{inset:12px!important;z-index:8!important;pointer-events:none!important;}
+.board-player{width:34%!important;min-width:112px!important;height:49px!important;padding:6px 8px!important;display:flex!important;align-items:center!important;gap:7px!important;border-radius:14px!important;position:absolute!important;overflow:hidden!important;background:linear-gradient(145deg,rgba(5,18,30,.97),rgba(11,37,54,.82))!important;border:1px solid color-mix(in srgb,var(--player-color) 72%,#8fdcff)!important;box-shadow:0 7px 0 rgba(0,0,0,.42),0 0 18px color-mix(in srgb,var(--player-color) 30%,transparent),inset 0 1px 0 rgba(255,255,255,.18),inset 0 -5px 10px rgba(0,0,0,.38)!important;backdrop-filter:blur(8px)!important;}
+.board-player::before{content:"";position:absolute;inset:1px;border-radius:13px;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.12),transparent 28%,transparent 75%,color-mix(in srgb,var(--player-color) 12%,transparent));}
+.board-player::after{content:""!important;position:absolute!important;left:8px!important;right:8px!important;bottom:1px!important;height:2px!important;background:var(--player-color)!important;box-shadow:0 0 10px var(--player-color),0 0 18px var(--player-color)!important;}
+.board-player.red{--player-color:#ff3f4f!important;top:6px!important;left:6px!important;transform:perspective(600px) rotateY(2deg)!important;}
+.board-player.green{--player-color:#3fe0c0!important;top:6px!important;right:6px!important;transform:perspective(600px) rotateY(-2deg)!important;}
+.board-player.blue{--player-color:#249bff!important;bottom:6px!important;left:6px!important;transform:perspective(600px) rotateY(2deg)!important;}
+.board-player.yellow{--player-color:#ffc72d!important;bottom:6px!important;right:6px!important;transform:perspective(600px) rotateY(-2deg)!important;}
+.board-player.turn{box-shadow:0 7px 0 rgba(0,0,0,.42),0 0 0 1px var(--player-color),0 0 27px var(--player-color),inset 0 1px 0 rgba(255,255,255,.22)!important;filter:brightness(1.14)!important;}
+.board-player-emblem{width:25px!important;height:25px!important;display:grid!important;place-items:center!important;flex:0 0 25px!important;font-size:19px!important;font-weight:900!important;color:var(--player-color)!important;text-shadow:0 0 9px var(--player-color)!important;filter:drop-shadow(0 2px 2px #000)!important;}
+.board-player-info{min-width:0!important;flex:1!important;z-index:1!important;}
+.board-player-name{font-size:12px!important;font-weight:900!important;color:#f6fbff!important;text-shadow:0 1px 4px #000!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.board-player-team{display:none!important;}
+.board-player-pawns{width:50px!important;height:14px!important;z-index:1!important;filter:drop-shadow(0 0 4px var(--player-color))!important;}
+.board-player-dealer{width:17px!important;height:17px!important;z-index:1!important;}
+/* PAWN / CELL DEPTH */
+#board-svg circle{vector-effect:non-scaling-stroke;}
+#board-svg [data-pos],#board-svg [data-home]{filter:drop-shadow(0 2px 1px rgba(0,0,0,.60));}
+/* LOWER HUD */
+#turn-indicator{margin-top:9px!important;}
+.last-card-line,.turn-line{position:relative!important;overflow:hidden!important;border-radius:15px!important;background:linear-gradient(145deg,rgba(8,28,44,.97),rgba(3,13,23,.96))!important;border:1px solid rgba(72,190,255,.46)!important;box-shadow:0 7px 18px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.11),inset 0 -5px 9px rgba(0,0,0,.35)!important;backdrop-filter:blur(10px)!important;}
+.last-card-line{min-height:42px!important;margin-top:8px!important;}
+.turn-line{min-height:52px!important;margin-top:8px!important;border-color:rgba(255,199,53,.60)!important;box-shadow:0 7px 18px rgba(0,0,0,.45),0 0 17px rgba(255,188,35,.13),inset 0 1px 0 rgba(255,255,255,.12)!important;}
+.turn-line.my-turn{box-shadow:0 7px 18px rgba(0,0,0,.45),0 0 24px rgba(255,198,48,.28),inset 0 1px 0 rgba(255,255,255,.14)!important;}
+/* HAND DECK */
+.hand-row{position:relative!important;min-height:137px!important;padding:22px 28px 12px!important;display:flex!important;justify-content:center!important;align-items:flex-end!important;gap:0!important;perspective:700px!important;}
+.hand-row::before{content:"";position:absolute;left:8%;right:8%;bottom:6px;height:54px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,166,255,.30),transparent 68%);filter:blur(9px);box-shadow:0 0 25px rgba(0,132,255,.20);}
+.hand-row::after{content:"";position:absolute;left:13%;right:13%;bottom:2px;height:4px;border-radius:50%;background:#36bfff;box-shadow:0 0 7px #36bfff,0 0 18px rgba(0,155,255,.70);opacity:.85;}
+.card-btn{width:74px!important;height:103px!important;border-radius:10px!important;position:relative!important;z-index:2!important;background:linear-gradient(150deg,#ffffff,#f0f1ed 62%,#c8d0d1)!important;border:1px solid #d8e8ef!important;color:#101820!important;box-shadow:0 14px 18px rgba(0,0,0,.48),0 0 0 1px rgba(255,255,255,.35) inset,0 0 10px rgba(93,198,255,.12)!important;transform-origin:bottom center!important;}
+.card-btn:nth-child(1){transform:rotate(-7deg) translateY(5px)!important;}
+.card-btn:nth-child(2){transform:translateY(-7px) scale(1.04)!important;z-index:3!important;}
+.card-btn:nth-child(3){transform:rotate(7deg) translateY(5px)!important;}
+.card-btn:hover{transform:translateY(-11px) rotate(0deg) scale(1.04)!important;z-index:5!important;}
+.card-btn.selected{background:linear-gradient(145deg,#fff7b8,#ffc52e 58%,#c88b15)!important;box-shadow:0 0 0 1px #ffe27a,0 0 22px rgba(255,196,42,.42),0 15px 23px rgba(0,0,0,.55)!important;}
+/* Hide legacy player status boxes permanently. */
+#status-wrap{display:none!important;height:0!important;margin:0!important;padding:0!important;}
+/* SIDE CHAT HARDWARE */
+#chat-wrap{right:-10px!important;top:51%!important;z-index:20!important;}
+.chat-fab{width:51px!important;height:51px!important;border-radius:18px 0 0 18px!important;background:linear-gradient(145deg,#0d4d77,#031522)!important;border:1px solid #55cfff!important;border-right:0!important;box-shadow:0 8px 18px rgba(0,0,0,.55),0 0 25px rgba(0,154,255,.65),inset 0 1px 0 rgba(255,255,255,.24),inset 0 -5px 9px rgba(0,0,0,.38)!important;}
+.chat-fab svg{stroke:#eafaff!important;filter:drop-shadow(0 0 7px #4ac8ff)!important;}
+/* Bottom nav / controls */
+.bottom-nav,.bottom-actions{filter:drop-shadow(0 10px 20px rgba(0,0,0,.55));}
+/* Dialogs */
+.picker-backdrop{background:rgba(0,4,10,.78)!important;backdrop-filter:blur(12px)!important;}
+.picker-overlay{background:linear-gradient(160deg,#0b2134,#020a12)!important;border:1px solid rgba(76,198,255,.45)!important;box-shadow:0 -20px 50px rgba(0,0,0,.72),0 0 30px rgba(0,137,255,.16)!important;}
+@media(max-width:390px){
+ #app{padding-left:7px!important;padding-right:7px!important;}
+ .top-actions-room{height:54px!important;}
+ .top-actions-room-code{font-size:20px!important;}
+ .icon-btn{width:38px!important;height:38px!important;min-width:38px!important;}
+ .icon-btn-pair{width:70px!important;min-width:70px!important;height:38px!important;}
+ .board-player{width:35%!important;min-width:98px!important;height:45px!important;}
+ .board-player-pawns{width:43px!important;}
+ .board-player-emblem{width:21px!important;flex-basis:21px!important;font-size:16px!important;}
+ .card-btn{width:67px!important;height:95px!important;}
+}
+</style>
+
+
+<style id="tok-final-3d">
+/* TOK FINAL — 3D TABLETOP / PREMIUM CONSOLE LOOK
+   Visual-only layer. Existing game logic and DOM IDs are preserved. */
+:root{
+  --fx-cyan:#43d7ff; --fx-blue:#087cff; --fx-deep:#020913;
+  --wood1:#8b6a43; --wood2:#4a321d; --metal1:#29485b; --metal2:#07121c;
+}
+html,body{min-height:100%;background:#02060b!important}
+body{
+  perspective:1400px!important;
+  background:
+   radial-gradient(700px 500px at 50% 8%,rgba(0,130,255,.12),transparent 65%),
+   radial-gradient(500px 400px at 12% 75%,rgba(0,225,255,.05),transparent 70%),
+   linear-gradient(180deg,#050b12 0%,#010307 100%)!important;
+}
+#app{position:relative;isolation:isolate}
+#app:before{
+ content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.22;
+ background-image:linear-gradient(rgba(75,180,230,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(75,180,230,.045) 1px,transparent 1px);
+ background-size:28px 28px;mask-image:linear-gradient(to bottom,black,transparent 90%);
+}
+/* Main tabletop becomes a physical object */
+#board-wrap{
+ margin:4px 8px 28px!important;padding:18px!important;border-radius:34px!important;
+ transform:perspective(1300px) rotateX(2.8deg)!important;transform-style:preserve-3d!important;
+ background:linear-gradient(145deg,#3b657b 0%,#132b3b 8%,#08141e 38%,#03080e 70%,#21465b 100%)!important;
+ border:2px solid rgba(104,205,255,.72)!important;
+ box-shadow:
+  0 2px 0 rgba(255,255,255,.28) inset,
+  0 -8px 0 #01050a inset,
+  0 9px 0 #050b10,
+  0 15px 0 #07141e,
+  0 24px 0 #0b1b27,
+  0 34px 42px rgba(0,0,0,.78),
+  0 0 45px rgba(0,137,255,.19),
+  inset 0 0 35px rgba(0,0,0,.78)!important;
+}
+#board-wrap:before{
+ content:"";position:absolute;left:12px;right:12px;bottom:-30px;height:34px;z-index:-2;
+ border-radius:0 0 27px 27px;
+ background:linear-gradient(180deg,#173246 0%,#08131c 28%,#02060a 100%);
+ border:1px solid rgba(77,157,198,.42);
+ box-shadow:0 23px 26px rgba(0,0,0,.72),inset 0 3px 5px rgba(255,255,255,.07);
+}
+#board-wrap:after{
+ content:"";position:absolute;inset:7px;border-radius:27px;z-index:30;pointer-events:none;
+ border:1px solid rgba(186,237,255,.20);
+ box-shadow:inset 0 0 35px rgba(0,157,255,.13),inset 0 2px 0 rgba(255,255,255,.13),inset 0 -10px 18px rgba(0,0,0,.28);
+}
+/* wood game surface: beveled, recessed, lit from above */
+#board-svg{
+ transform:translateZ(9px)!important;transform-style:preserve-3d!important;
+ border-radius:23px!important;border:3px solid #3a2a1a!important;
+ background:linear-gradient(145deg,#9a7548,#644522 48%,#3a2818)!important;
+ box-shadow:
+  0 2px 0 rgba(255,238,194,.38) inset,
+  0 -6px 0 rgba(28,17,8,.95) inset,
+  0 5px 0 #24180e,
+  0 11px 18px rgba(0,0,0,.65),
+  inset 0 0 28px rgba(30,14,3,.52)!important;
+ filter:saturate(1.08) contrast(1.05)!important;
+}
+/* top-edge studio light */
+#board-wrap > .board-title,#board-wrap > .board-label{filter:drop-shadow(0 2px 2px #000)}
+/* Four corner player modules: physical mini-panels */
+#board-player-overlay{inset:12px!important;transform:translateZ(18px);pointer-events:none!important}
+.board-player{
+ pointer-events:auto!important;min-width:126px!important;height:48px!important;padding:6px 9px!important;
+ border-radius:13px!important;overflow:hidden!important;
+ background:linear-gradient(145deg,rgba(42,61,73,.98),rgba(4,11,17,.98))!important;
+ border:1px solid color-mix(in srgb,var(--player-color) 78%,#dff8ff 22%)!important;
+ box-shadow:
+  0 2px 0 rgba(255,255,255,.18) inset,
+  0 -4px 0 rgba(0,0,0,.55) inset,
+  0 5px 0 #02070b,
+  0 10px 16px rgba(0,0,0,.58),
+  0 0 18px color-mix(in srgb,var(--player-color) 24%,transparent)!important;
+ backdrop-filter:blur(9px);transform-style:preserve-3d!important;
+}
+.board-player:before{
+ content:"";position:absolute;left:8px;right:8px;top:3px;height:1px;
+ background:linear-gradient(90deg,transparent,var(--player-color),transparent);opacity:.8;box-shadow:0 0 8px var(--player-color)
+}
+.board-player.red{top:4px!important;left:4px!important;transform:translateZ(22px) rotateY(4deg)!important}
+.board-player.green{top:4px!important;right:4px!important;transform:translateZ(22px) rotateY(-4deg)!important}
+.board-player.blue{bottom:4px!important;left:4px!important;transform:translateZ(22px) rotateY(4deg)!important}
+.board-player.yellow{bottom:4px!important;right:4px!important;transform:translateZ(22px) rotateY(-4deg)!important}
+.board-player.turn{filter:brightness(1.25)!important;box-shadow:0 0 0 1px var(--player-color),0 0 28px color-mix(in srgb,var(--player-color) 62%,transparent),0 6px 0 #02070b!important}
+.board-player-emblem{filter:drop-shadow(0 0 5px var(--player-color))}
+.board-player-pawns{filter:drop-shadow(0 3px 3px #000) drop-shadow(0 0 5px var(--player-color))!important}
+/* side chat control is attached to the physical board */
+#chat-wrap{right:-17px!important;top:51%!important;transform:translateZ(30px)!important}
+.chat-fab{
+ width:52px!important;height:58px!important;border-radius:17px 0 0 17px!important;
+ background:linear-gradient(145deg,#1d5274,#06121d 62%,#02070c)!important;
+ border:1px solid #62d9ff!important;border-right:0!important;
+ box-shadow:0 2px 0 rgba(255,255,255,.16) inset,0 5px 0 #02070a,0 11px 22px rgba(0,0,0,.68),0 0 26px rgba(0,164,255,.62)!important;
+}
+/* status/turn hardware strips */
+.last-card-line,.turn-line{
+ border-radius:14px!important;padding:9px 12px!important;
+ background:linear-gradient(145deg,#1c3a50,#071522 58%,#02070c)!important;
+ border:1px solid rgba(95,203,255,.46)!important;
+ box-shadow:0 3px 0 #02060a,0 9px 18px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.14)!important;
+}
+.turn-line.my-turn{border-color:#eec33e!important;box-shadow:0 0 22px rgba(255,199,52,.28),0 4px 0 #02060a,inset 0 1px 0 rgba(255,255,255,.16)!important}
+/* hand is a raised card tray */
+#hand-wrap{margin-top:6px!important;padding:24px 10px 15px!important;min-height:122px!important}
+#hand-wrap:after{
+ content:"";position:absolute;left:10%;right:10%;bottom:5px;height:13px;border-radius:50%;
+ background:rgba(20,176,255,.22);filter:blur(8px);box-shadow:0 0 25px rgba(20,176,255,.42);z-index:-1
+}
+.card-btn{
+ width:73px!important;height:101px!important;border-radius:12px!important;
+ border:1px solid #d8edf2!important;
+ box-shadow:0 4px 0 #6b777c,0 15px 22px rgba(0,0,0,.58),inset 0 2px 0 #fff,inset 0 -9px 16px rgba(0,0,0,.14)!important;
+ transform:translateY(5px) rotate(var(--card-rot,0deg)) translateZ(12px)!important;
+ transform-style:preserve-3d!important;
+}
+.card-btn:hover{transform:translateY(-2px) rotate(var(--card-rot,0deg)) translateZ(18px)!important}
+.card-btn.selected{box-shadow:0 4px 0 #876a16,0 0 25px rgba(255,199,46,.62),0 17px 24px rgba(0,0,0,.6),inset 0 2px 0 #fff!important}
+/* compact lower controls, like console buttons */
+.icon-btn,.icon-btn-half{
+ border-radius:11px!important;background:linear-gradient(145deg,#203d51,#07131d)!important;
+ border:1px solid rgba(99,205,255,.45)!important;box-shadow:0 3px 0 #02070b,0 7px 12px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.13)!important;
+}
+@media(max-width:600px){
+ #board-wrap{margin-left:4px!important;margin-right:4px!important;padding:13px!important;border-radius:28px!important}
+ .board-player{min-width:108px!important;height:43px!important;padding:5px 7px!important}
+ .board-player-name{font-size:.62rem!important}.board-player-pawns{width:44px!important}
+ .card-btn{width:65px!important;min-width:65px!important;height:94px!important;margin:0 -7px!important}
+}
+</style>
 </head>
 <body class="tok-cyber3d">
 <div id="app"></div>
@@ -8331,7 +8577,9 @@ function renderBoardPlayers(state) {
     const team = TEAM_LABEL[TEAM_OF[c]] || "";
     const name = playerName(state, c);
     const player = state.players && state.players[c];
+    const emblemMap = { red: "♞", green: "☘", blue: "⛵", yellow: "◈" };
     const card = el("div", { class: `board-player ${positions[c]}${isTurn ? " turn" : ""}` });
+    card.appendChild(el("span", { class: "board-player-emblem", "aria-hidden": "true" }, emblemMap[c]));
     const info = el(
       "div", { class: "board-player-info" },
       el("div", { class: "board-player-name", title: name }, name),
@@ -10095,302 +10343,3 @@ setInterval(checkForNewVersion, VERSION_CHECK_INTERVAL_MS);
 </script>
 </body>
 </html>
-
-<style id="premium-v9-final-overrides">
-html, body { background:#06121f !important; color:#edf6ff !important; }
-#app { background:transparent; }
-.game-shell { position:relative; }
-.top-actions-row { color:#eaf4ff; }
-.top-actions-room-label { color:#6f91aa; }
-.top-actions-room-code { color:#f0f7ff; }
-.icon-btn, .icon-btn-pair { background:linear-gradient(145deg,#102c46,#081a2c); border-color:rgba(78,172,229,.38); box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 5px 12px rgba(0,0,0,.20); }
-.icon-btn:hover, .icon-btn-half:hover { background:#123b5d; border-color:#4bb9ff; }
-.icon-btn-half { color:#d8ecff; }
-
-/* ================================================================
-   TOK // CYBER 3D VISUAL SYSTEM v10
-   Pure visual layer: game logic and board coordinates are untouched.
-   ================================================================ */
-:root{
-  color-scheme:dark;
-  --ink:#eef7ff;
-  --cream:#050d18;
-  --panel:#091827;
-  --panel-border:rgba(91,188,255,.24);
-  --gold:#ffc52e;
-  --gold-deep:#d99812;
-  --gold-hover:#ffd45c;
-  --muted:#7189a0;
-  --muted-2:#8ea8bf;
-  --muted-3:#b9cde0;
-  --red:#ff4058;
-  --green:#21dfbb;
-  --yellow:#ffc52e;
-  --blue:#35a8ff;
-  --gold-metallic:linear-gradient(135deg,#fff0a8,#ffc52e 45%,#c8870c 75%,#fff0a8);
-}
-html,body{background:#020812!important;color:#eef7ff!important;}
-body{
-  background:
-    radial-gradient(circle at 50% 18%,rgba(0,140,255,.13),transparent 34%),
-    radial-gradient(circle at 10% 80%,rgba(0,140,255,.08),transparent 30%),
-    linear-gradient(180deg,#020812 0%,#061322 52%,#020711 100%)!important;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background:linear-gradient(115deg,transparent 0 45%,rgba(46,170,255,.025) 50%,transparent 55%);
-}
-#app{max-width:520px;padding:calc(16px + env(safe-area-inset-top)) 14px calc(18px + env(safe-area-inset-bottom));}
-.game-shell{position:relative;}
-.top-actions-row{
-  margin-bottom:8px;padding:8px 9px 8px 13px;border-radius:18px;
-  background:linear-gradient(145deg,rgba(13,35,57,.94),rgba(4,15,27,.96));
-  border:1px solid rgba(74,181,255,.38);
-  box-shadow:0 0 0 1px rgba(0,140,255,.08),0 10px 28px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.09),0 0 20px rgba(0,140,255,.09);
-}
-.top-actions-room-label{color:#6f9abc!important;letter-spacing:.12em;font-size:.56rem!important;}
-.top-actions-room-code{color:#f4fbff!important;font-size:1.02rem!important;text-shadow:0 0 12px rgba(50,177,255,.35);}
-.top-actions-icons{gap:5px;}
-.icon-btn,.icon-btn-pair{
-  background:linear-gradient(145deg,#123451,#07192b)!important;
-  border-color:rgba(83,187,255,.34)!important;color:#bfe7ff!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 4px 12px rgba(0,0,0,.22);
-}
-.icon-btn{width:35px;height:35px;}
-.icon-btn:hover,.icon-btn-half:hover{background:#164466!important;border-color:#39b6ff!important;}
-.icon-btn-half{color:#bfe7ff!important;}
-.identity-row{
-  margin:0 2px 9px!important;padding:7px 12px!important;border-radius:12px!important;
-  background:linear-gradient(90deg,rgba(10,28,45,.84),rgba(6,18,31,.66))!important;
-  border:1px solid rgba(70,174,239,.22)!important;color:#eef7ff!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 6px 16px rgba(0,0,0,.16);
-}
-.identity-team{color:#7894aa!important}.identity-sep{color:#3d6685!important}
-#board-wrap{
-  padding:7px!important;border-radius:24px!important;
-  background:linear-gradient(145deg,#162b3b,#050d16 42%,#102638)!important;
-  border:1px solid rgba(75,191,255,.72)!important;
-  box-shadow:0 0 0 1px rgba(0,157,255,.14),0 0 26px rgba(0,140,255,.24),0 22px 42px rgba(0,0,0,.46),inset 0 1px 0 rgba(255,255,255,.12)!important;
-}
-#board-wrap::before{border-radius:21px!important;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 22%,transparent 65%,rgba(0,174,255,.1))!important;}
-#board-svg{
-  border-color:rgba(100,204,255,.85)!important;border-radius:18px!important;
-  filter:brightness(.78) contrast(1.13) saturate(1.13);
-  box-shadow:inset 0 0 22px rgba(0,0,0,.56),0 0 20px rgba(0,150,255,.16)!important;
-}
-.board-player{
-  width:30%!important;min-width:0!important;padding:6px 8px!important;border-radius:13px!important;
-  background:linear-gradient(145deg,rgba(4,16,28,.92),rgba(12,31,48,.70))!important;
-  border-color:color-mix(in srgb,var(--player-color) 74%,#fff 6%)!important;
-  box-shadow:0 8px 20px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.1)!important;
-}
-.board-player-name{font-size:.7rem!important;color:#f4fbff!important;letter-spacing:.01em;}
-.board-player-team{display:none!important}
-.board-player-pawns{width:48px!important}
-.board-player.turn{box-shadow:0 0 18px color-mix(in srgb,var(--player-color) 44%,transparent),0 8px 20px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.12)!important;}
-#chat-wrap{right:-14px!important;top:54%!important;}
-.chat-fab{
-  width:44px!important;height:44px!important;border-radius:15px!important;
-  background:linear-gradient(145deg,#0c4169,#06192d)!important;
-  border:1px solid #38b8ff!important;
-  box-shadow:0 0 0 2px rgba(0,140,255,.10),0 0 22px rgba(0,145,255,.58),inset 0 1px 0 rgba(255,255,255,.18)!important;
-}
-.chat-fab-badge{background:#ff4058!important;border-color:#061321!important;box-shadow:0 0 10px rgba(255,64,88,.75)!important;}
-.last-card-line,.turn-line{
-  border-radius:15px!important;background:linear-gradient(145deg,rgba(10,29,47,.95),rgba(4,15,27,.94))!important;
-  border:1px solid rgba(78,176,235,.28)!important;color:#eaf6ff!important;
-  box-shadow:0 8px 22px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.06)!important;
-}
-.last-card-line{padding:7px 12px!important;margin-top:10px!important;}
-.turn-line{padding:13px 15px!important;margin-bottom:8px!important;}
-.turn-line.my-turn{
-  background:linear-gradient(145deg,rgba(67,48,7,.98),rgba(28,22,6,.96))!important;
-  border-color:rgba(255,198,46,.9)!important;box-shadow:0 0 22px rgba(255,197,46,.18),inset 0 1px 0 rgba(255,255,255,.08)!important;
-}
-.turn-timer{color:#7db5da!important}.turn-line.my-turn .turn-timer{color:#ffd96d!important}
-.hand-row{gap:10px!important;margin:8px 0 3px!important;padding:8px 0!important;justify-content:center!important;}
-.card-btn{
-  width:61px!important;height:84px!important;border-radius:11px!important;
-  border:1px solid rgba(123,190,230,.52)!important;
-  background:linear-gradient(155deg,#fffef8,#dce8ee 52%,#9eabb5)!important;
-  box-shadow:0 14px 22px rgba(0,0,0,.42),0 0 0 1px rgba(255,255,255,.12) inset,0 0 15px rgba(80,177,240,.10)!important;
-}
-.card-btn:hover{transform:translateY(-5px) rotate(-1deg)!important;box-shadow:0 18px 28px rgba(0,0,0,.5),0 0 18px rgba(65,181,255,.24)!important;}
-.card-btn.selected{background:linear-gradient(145deg,#fff0a8,#ffc52e 55%,#c78b17)!important;}
-/* Remove the old vertical player area even if JS populates it. */
-#status-wrap{display:none!important;height:0!important;margin:0!important;padding:0!important;}
-/* Glass sheets opened for chat/rules/pickers */
-.picker-backdrop{background:rgba(0,5,12,.72)!important;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);}
-.picker-overlay{
-  background:linear-gradient(160deg,#0a1b2b,#04101c)!important;color:#eef7ff!important;
-  border:1px solid rgba(75,185,255,.38)!important;
-  box-shadow:0 -18px 45px rgba(0,0,0,.52),0 0 30px rgba(0,140,255,.12)!important;
-}
-.picker-handle{background:#4d93bd!important}
-.chat-bubble{background:#0d2c45!important;color:#eaf6ff!important;border:1px solid rgba(75,181,245,.22)!important;}
-.chat-bubble-name{color:#8fcdf1!important}
-.chat-input{background:#071827!important;color:#eef7ff!important;border-color:rgba(78,176,235,.28)!important}
-.chat-send-btn{background:#0879c7!important;color:#fff!important;box-shadow:0 0 12px rgba(0,140,255,.35)!important}
-/* Make all remaining white cards in the active game shell glass-dark. */
-.game-shell .exchange-card,.game-shell .choice-box,.game-shell .status-chip{background:#081827!important;color:#eef7ff!important;border-color:rgba(78,176,235,.22)!important}
-.conn-lost{background:#4a1620!important;color:#fff!important;border-color:#ff4058!important}
-@media(max-width:390px){#app{padding-left:10px;padding-right:10px}.board-player{width:34%!important}.board-player-pawns{width:43px!important}#chat-wrap{right:-10px!important}}
-
-/* ================================================================
-   TOK CYBER 3D — FINAL POLISH v12
-   Visual-only layer. Game logic intentionally untouched.
-   ================================================================ */
-:root{
-  color-scheme: dark!important;
-  --cy-bg:#020812;
-  --cy-panel:rgba(6,18,31,.82);
-  --cy-panel-2:rgba(10,28,45,.72);
-  --cy-line:rgba(71,190,255,.34);
-  --cy-blue:#39baff;
-  --cy-blue2:#087dce;
-  --cy-white:#edf8ff;
-  --cy-muted:#7197b2;
-}
-html,body{background:#020812!important;color:var(--cy-white)!important;}
-body{
-  background:
-    radial-gradient(circle at 50% 4%,rgba(0,137,255,.14),transparent 28%),
-    radial-gradient(circle at 0 80%,rgba(0,224,255,.06),transparent 24%),
-    linear-gradient(180deg,#030b15 0%,#020710 62%,#01050b 100%)!important;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.34;
-  background-image:linear-gradient(rgba(55,170,230,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(55,170,230,.055) 1px,transparent 1px);
-  background-size:28px 28px;
-  mask-image:linear-gradient(to bottom,black,transparent 82%);
-}
-#app{padding-top:calc(18px + env(safe-area-inset-top))!important;padding-bottom:28px!important;}
-.top-actions-row{margin-bottom:8px!important;}
-.top-actions-room{padding-left:2px;}
-.icon-btn,.icon-btn-pair{box-shadow:0 5px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12)!important;}
-.identity-row{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
-
-/* Deep physical table: layered rim, bevel and glass reflection. */
-#board-wrap{
-  isolation:isolate!important;
-  padding:9px!important;
-  border-radius:27px!important;
-  background:
-    linear-gradient(145deg,#1d3a4e 0%,#071523 26%,#020b14 58%,#173349 100%)!important;
-  border:1px solid rgba(113,211,255,.72)!important;
-  box-shadow:
-    0 0 0 1px rgba(0,130,255,.18),
-    0 0 0 3px rgba(2,10,18,.72),
-    0 0 34px rgba(0,147,255,.27),
-    0 24px 52px rgba(0,0,0,.62),
-    inset 0 2px 0 rgba(255,255,255,.15),
-    inset 0 -5px 16px rgba(0,0,0,.62)!important;
-}
-#board-wrap::before{
-  inset:3px!important;
-  border-radius:23px!important;
-  background:
-    linear-gradient(115deg,rgba(255,255,255,.13),transparent 17%,transparent 58%,rgba(42,185,255,.10)),
-    radial-gradient(circle at 12% 8%,rgba(92,210,255,.12),transparent 22%)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -1px 0 rgba(0,0,0,.7);
-}
-#board-wrap::after{
-  content:"";position:absolute;inset:5px;border-radius:24px;pointer-events:none;z-index:4;
-  border:1px solid rgba(111,214,255,.12);
-  box-shadow:inset 0 0 20px rgba(0,0,0,.42);
-}
-#board-svg{
-  transform:translateZ(0)!important;
-  border-radius:19px!important;
-  filter:brightness(.74) contrast(1.18) saturate(1.16)!important;
-  box-shadow:
-    inset 0 0 30px rgba(0,0,0,.68),
-    inset 0 1px 0 rgba(255,255,255,.10),
-    0 0 0 1px rgba(111,214,255,.26),
-    0 0 24px rgba(0,142,255,.20)!important;
-}
-
-/* Corner player HUDs: compact, floating, physically attached to the board. */
-#board-player-overlay{inset:11px!important;}
-.board-player{
-  min-height:31px!important;
-  padding:5px 8px!important;
-  border-radius:11px!important;
-  background:linear-gradient(145deg,rgba(5,16,29,.94),rgba(10,32,50,.68))!important;
-  backdrop-filter:blur(12px) saturate(1.2)!important;
-  -webkit-backdrop-filter:blur(12px) saturate(1.2)!important;
-  box-shadow:0 7px 18px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.13),inset 0 -1px 0 rgba(0,0,0,.45)!important;
-}
-.board-player.red{top:7px!important;left:7px!important;transform:perspective(500px) rotateY(1.5deg);}
-.board-player.green{top:7px!important;right:7px!important;transform:perspective(500px) rotateY(-1.5deg);}
-.board-player.blue{bottom:7px!important;left:7px!important;transform:perspective(500px) rotateY(1.5deg);}
-.board-player.yellow{bottom:7px!important;right:7px!important;transform:perspective(500px) rotateY(-1.5deg);}
-.board-player::before{
-  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(120deg,rgba(255,255,255,.08),transparent 34%);
-}
-.board-player::after{height:2px!important;bottom:-1px!important;box-shadow:0 0 10px var(--player-color),0 0 3px var(--player-color)!important;}
-.board-player.turn{animation:playerHudPulse 1.8s ease-in-out infinite!important;}
-@keyframes playerHudPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.14)}}
-.board-player-name{text-shadow:0 0 10px rgba(95,196,255,.16)!important;}
-.board-player-pawns circle{filter:drop-shadow(0 1px 2px rgba(0,0,0,.55)) drop-shadow(0 0 4px var(--player-color))!important;}
-
-/* Chat is a true side-mounted hardware control. */
-#chat-wrap{right:-16px!important;top:53%!important;}
-.chat-fab{
-  width:43px!important;height:43px!important;border-radius:13px!important;
-  background:linear-gradient(145deg,#104b73,#061726 72%)!important;
-  border:1px solid rgba(92,207,255,.95)!important;
-  box-shadow:0 7px 18px rgba(0,0,0,.48),0 0 22px rgba(0,151,255,.55),inset 0 1px 0 rgba(255,255,255,.22),inset 0 -4px 8px rgba(0,0,0,.28)!important;
-}
-.chat-fab svg{filter:drop-shadow(0 0 4px rgba(84,204,255,.72));}
-
-/* Lower HUD: fewer flat boxes, more instrument-panel depth. */
-#turn-indicator{margin-top:11px!important;}
-.last-card-line,.turn-line{
-  backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;
-  position:relative;overflow:hidden;
-}
-.last-card-line::before,.turn-line::before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(105deg,rgba(255,255,255,.065),transparent 28%,transparent 70%,rgba(0,160,255,.06));
-}
-.last-card-line{min-height:38px!important;}
-.turn-line{min-height:50px!important;}
-.turn-line.my-turn{animation:turnHudPulse 1.7s ease-in-out infinite!important;}
-@keyframes turnHudPulse{0%,100%{box-shadow:0 0 20px rgba(255,197,46,.18),inset 0 1px 0 rgba(255,255,255,.08)}50%{box-shadow:0 0 30px rgba(255,197,46,.30),inset 0 1px 0 rgba(255,255,255,.10)}}
-.you-badge-strong{background:rgba(255,255,255,.10)!important;color:#bfeaff!important;border:1px solid rgba(105,203,255,.18);}
-
-/* Cards become a small physical control deck. */
-.hand-row{position:relative!important;min-height:101px;padding:12px 0 7px!important;gap:0!important;align-items:flex-end!important;}
-.hand-row::before{
-  content:"";position:absolute;left:5%;right:5%;bottom:3px;height:36px;border-radius:50%;
-  background:radial-gradient(ellipse,rgba(0,133,220,.16),transparent 68%);filter:blur(7px);pointer-events:none;
-}
-.card-btn{transform-origin:bottom center!important;position:relative;z-index:1;}
-.card-btn:nth-child(1){transform:rotate(-5deg) translateX(7px);}
-.card-btn:nth-child(2){transform:translateY(-4px);z-index:2;}
-.card-btn:nth-child(3){transform:rotate(5deg) translateX(-7px);}
-.card-btn:hover{transform:translateY(-8px) rotate(0)!important;z-index:5!important;}
-.card-btn.selected{box-shadow:0 0 0 1px rgba(255,220,92,.7),0 0 24px rgba(255,197,46,.28),0 16px 28px rgba(0,0,0,.5)!important;}
-
-/* Glass bottom sheets / dialogs keep the same cyber material. */
-.picker-overlay{backdrop-filter:blur(18px) saturate(1.15)!important;-webkit-backdrop-filter:blur(18px) saturate(1.15)!important;}
-.toast-box{background:linear-gradient(145deg,#091d2f,#030d17)!important;border:1px solid rgba(72,188,255,.35)!important;box-shadow:0 18px 42px rgba(0,0,0,.62),0 0 24px rgba(0,140,255,.14)!important;}
-
-/* Tiny hardware details: make icon controls read as machined metal. */
-.icon-btn,.icon-btn-pair{position:relative;overflow:hidden!important;}
-.icon-btn::after,.icon-btn-pair::after{
-  content:"";position:absolute;inset:1px;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(120deg,rgba(255,255,255,.09),transparent 35%);
-}
-@media(max-width:390px){
-  #board-wrap{padding:7px!important;border-radius:23px!important;}
-  #board-player-overlay{inset:9px!important;}
-  .board-player{width:34%!important;padding:5px 6px!important;}
-  .board-player-pawns{width:42px!important;}
-  #chat-wrap{right:-11px!important;}
-  .card-btn{width:57px!important;height:80px!important;}
-}
-
-</style>
