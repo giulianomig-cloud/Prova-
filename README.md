@@ -1,11 +1,6 @@
-# TOK — Cyber 3D UI
+# TOK Cyber 3D — Final v12
 
-GitHub Pages package for the TOK game.
+Final visual polish of the working TOK game. The gameplay JavaScript and rules are preserved; v12 is a visual/UI layer refinement: deep cyber dark mode, 3D table bevels, glass HUD, integrated corner players, side-mounted chat, and a physical card deck.
 
-## Publish
-1. Create a GitHub repository.
-2. Upload all files in this folder to the repository root.
-3. Settings → Pages → Deploy from branch.
-4. Select `main` and `/ (root)`.
-
-The game logic is preserved; this version adds the dark cyber/3D visual layer, corner player HUDs, integrated chat, and removes the old player cards below the hand.
+## GitHub Pages
+Upload the contents of this folder to the repository root and enable GitHub Pages from the `main` branch / root.
